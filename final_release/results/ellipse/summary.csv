@@ -1,0 +1,10 @@
+profile,method,samples,cells,median_first_nonlocal,minimum_first_nonlocal,maximum_first_nonlocal,support_failing_cells,first_nonlocal_failing_series,first_nonlocal_multiple_bar_series,support_failing_series,multiple_bar_cells,maximum_bars,ordinary_decreasing_series,capped_decreasing_series
+localized_trough,OR_kNN,20,466,28176.0,22300,34769,14,0,0,12,10,4,0,0
+localized_trough,R2_global,20,206,59918.0,58188,61984,0,0,0,0,0,1,0,0
+localized_trough,mutual_kNN,20,364,35268.5,27982,45627,0,0,0,0,0,1,0,0
+strong_cosine,OR_kNN,20,466,20775.0,18188,28151,44,0,0,16,30,8,0,0
+strong_cosine,R2_global,20,235,66560.5,63506,68674,0,0,0,0,0,1,0,0
+strong_cosine,mutual_kNN,20,455,27411.5,20061,37194,2,0,0,2,0,1,0,0
+uniform,OR_kNN,20,465,46399.5,42338,48112,0,0,0,0,0,1,0,0
+uniform,R2_global,20,403,54479.0,53280,55717,0,0,0,0,0,1,0,0
+uniform,mutual_kNN,20,456,46267.0,44631,50158,0,0,0,0,0,1,0,0

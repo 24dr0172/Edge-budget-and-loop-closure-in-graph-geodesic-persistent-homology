@@ -1,0 +1,9 @@
+# Numerical environment; Python 3.12.3.
+numpy==2.5.3
+scipy==1.18.1
+pandas==2.2.3
+matplotlib==3.11.2
+ripser==0.6.15
+persim==0.3.8
+# Used by manuscript identity verification.
+pypdf==6.10.0

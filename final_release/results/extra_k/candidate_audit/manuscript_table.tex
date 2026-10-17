@@ -1,0 +1,35 @@
+\setcounter{table}{0}
+\begin{center}
+\begin{minipage}{\textwidth}
+\centering\small
+\captionsetup{type=table}
+\caption{Fraction of samples whose ring is closed at the smallest
+connecting $k$ (``At connection'') and at $k_{\rm conn}+3$ (``$+3$''),
+in percent. There are 1,500 samples per profile at each of $n=128$,
+$512$ and $4,096$, and 500 at $n=32,768$. Profiles reuse the same seed
+at a given size. These are empirical closure rates, not tuning guarantees.}
+\label{tab:rank-scaling}
+\begin{tabular}{lr rr rr}
+\toprule
+& & \multicolumn{2}{c}{OR-$k$NN} & \multicolumn{2}{c}{Mutual-$k$NN} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Profile & $n$ & At connection & $+3$ & At connection & $+3$ \\
+\midrule
+Uniform & 128 & 34.3 & 95.1 & 28.7 & 90.1 \\
+Uniform & 512 & 32.9 & 94.7 & 28.9 & 91.1 \\
+Uniform & 4,096 & 32.2 & 95.5 & 28.7 & 91.0 \\
+Uniform & 32,768 & 31.2 & 96.6 & 29.4 & 90.8 \\
+\addlinespace
+Cosine & 128 & 33.7 & 92.1 & 23.2 & 78.7 \\
+Cosine & 512 & 33.2 & 94.1 & 27.0 & 89.2 \\
+Cosine & 4,096 & 31.8 & 95.4 & 28.2 & 91.3 \\
+Cosine & 32,768 & 30.8 & 96.6 & 29.4 & 90.6 \\
+\addlinespace
+Trough & 128 & 24.2 & 71.1 & 6.8 & 36.5 \\
+Trough & 512 & 32.7 & 94.1 & 7.1 & 38.1 \\
+Trough & 4,096 & 32.3 & 95.5 & 11.5 & 44.6 \\
+Trough & 32,768 & 31.2 & 96.6 & 14.8 & 52.8 \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{center}

@@ -1,0 +1,46 @@
+{
+  "ellipse": {
+    "samples": 60,
+    "series": 180,
+    "cells": 3516,
+    "condition_5c": 59,
+    "nn_crust_exact": 60,
+    "tau_E_min": 0.20643222332000732,
+    "tau_E_max": 0.20676642656326294,
+    "unsupported_cells": 60,
+    "multiple_bar_cells": 40,
+    "maximum_bars": 8,
+    "ordinary_decreases": 0,
+    "capped_decreases": 0,
+    "first_nonlocal_support_failures": 0,
+    "local_cells": 3099,
+    "all_local_supported": true,
+    "failed_5c_samples": [
+      {
+        "seed": 20310103,
+        "profile": "localized_trough",
+        "tau_E": 0.20645129680633545,
+        "B": 0.0888468817779052,
+        "g": 0.08955720985505244,
+        "b_star": 0.3333909809589386,
+        "margin_tau": -0.005022798600660072,
+        "margin_birth": 0.12120655747479583,
+        "condition_5c": false,
+        "nn_crust_exact_ring": true,
+        "nn_crust_extra_edges": 0,
+        "nn_crust_missing_edges": 0
+      }
+    ]
+  },
+  "noise": {
+    "cells": 19438,
+    "grid_cells": 17280,
+    "selector_records": 1440,
+    "clean_selector_records": 240,
+    "distinct_clean_cases": 60,
+    "distinct_clean_selections": 120,
+    "clean_premature": 0,
+    "largest_delta": 0.01
+  },
+  "shortest_stored_positive_lifetime": 1.210719347000122e-08
+}

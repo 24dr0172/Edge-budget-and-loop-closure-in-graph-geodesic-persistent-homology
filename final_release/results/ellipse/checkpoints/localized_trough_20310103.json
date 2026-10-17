@@ -1,0 +1,14 @@
+{
+  "seed": 20310103,
+  "profile": "localized_trough",
+  "tau_E": 0.20645129680633545,
+  "B": 0.0888468817779052,
+  "g": 0.08955720985505244,
+  "b_star": 0.3333909809589386,
+  "margin_tau": -0.005022798600660072,
+  "margin_birth": 0.12120655747479583,
+  "condition_5c": false,
+  "nn_crust_exact_ring": true,
+  "nn_crust_extra_edges": 0,
+  "nn_crust_missing_edges": 0
+}

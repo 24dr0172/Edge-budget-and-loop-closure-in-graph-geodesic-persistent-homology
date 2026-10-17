@@ -1,0 +1,40 @@
+{
+  "reviewed_on": "2026-10-16",
+  "connectivity_stopping": {
+    "decision": "Retain the current description: a simple heuristic.",
+    "stronger_practice_claim_supported": false,
+    "reason": "The checked software documentation uses a fixed neighbor default; connectivity requirements alone do not establish choosing the smallest connecting parameter.",
+    "source": "https://scikit-learn.org/stable/modules/generated/sklearn.manifold.Isomap.html",
+    "scope": "This is a wording decision from a bounded literature check, not a claim that no such reference exists."
+  },
+  "spectral_graph": {
+    "citation_key": "damrich2024",
+    "source": "https://papers.nips.cc/paper_files/paper/2024/file/4a32a646254d2e37fc74a38d65796552-Paper-Conference.pdf",
+    "locations": [
+      "Section 5",
+      "Appendix I, effective resistance and diffusion distance"
+    ],
+    "graph": "Symmetric OR kNN; the reported spectral comparisons use unweighted graphs without self-loops.",
+    "parameters": {
+      "k": [
+        15,
+        100
+      ],
+      "diffusion_time": [
+        8,
+        64
+      ]
+    },
+    "scope": "Reported robustness to shortcut edges is empirical; no immunity or transferred shortest-path theorem is asserted."
+  },
+  "cyclic_graphs": {
+    "citation_key": "adams2019",
+    "source": "https://arxiv.org/html/1812.03374v2",
+    "locations": [
+      "Section 3 definition",
+      "Theorem 1",
+      "Section 4.2"
+    ],
+    "comparison": "An inclusion filtration in one cyclic order with consistent directed edges; the Example 1 certificate rules out even varying directions in a fixed order."
+  }
+}

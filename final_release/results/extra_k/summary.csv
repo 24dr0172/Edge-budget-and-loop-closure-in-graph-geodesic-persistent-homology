@@ -1,0 +1,7 @@
+profile,method,n,samples,misses,miss_rate,median_k_conn,median_k_close,median_extra_k,q25_extra_k,q75_extra_k,q90_extra_k,min_extra_k,max_extra_k
+localized_trough,OR_kNN,512,20,10,0.5,7.0,8.0,0.5,0.0,1.25,2.0,0,3
+localized_trough,mutual_kNN,512,20,16,0.8,11.0,20.5,7.0,2.75,13.5,18.400000000000006,0,26
+strong_cosine,OR_kNN,512,20,15,0.75,7.0,8.0,1.0,0.75,2.0,3.0,0,3
+strong_cosine,mutual_kNN,512,20,14,0.7,10.0,10.5,1.0,0.0,1.0,3.0,0,3
+uniform,OR_kNN,512,20,13,0.65,7.0,8.0,1.0,0.0,2.0,2.1000000000000014,0,3
+uniform,mutual_kNN,512,20,10,0.5,10.0,11.0,0.5,0.0,1.0,2.1000000000000014,0,4

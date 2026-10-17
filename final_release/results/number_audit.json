@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "original_rank_replays": 120,
+  "maximum_postclosure_grid_e_PH": 0.0439883934106221,
+  "maximum_postclosure_grid_increase": 0.0431358076732589,
+  "maximum_increase_case": {
+    "seed": 20310119,
+    "profile": "strong_cosine",
+    "method": "OR_kNN",
+    "first_error": 0.0008525857373632,
+    "last_error": 0.0439883934106221
+  },
+  "paired_seed_calibration": [
+    {
+      "method": "OR_kNN",
+      "observed": 22,
+      "expected": 19.759999999999998,
+      "probability_at_least_observed": 0.3700721230490836,
+      "paired_seed_triple_pmf": [
+        0.5626666666666666,
+        0.11466666666666667,
+        0.09466666666666666,
+        0.228
+      ]
+    },
+    {
+      "method": "mutual_kNN",
+      "observed": 20,
+      "expected": 12.613333333333333,
+      "probability_at_least_observed": 0.040331627600114744,
+      "paired_seed_triple_pmf": [
+        0.5926666666666667,
+        0.204,
+        0.18333333333333332,
+        0.02
+      ]
+    }
+  ],
+  "shortest_original_stored_positive_lifetime": 1.1082738637924194e-07,
+  "calibration_scope": "Plug-in convolution of 20 independent seed triples from the 1500-seed empirical distribution; profiles remain paired. Descriptive, not a formal hypothesis test."
+}

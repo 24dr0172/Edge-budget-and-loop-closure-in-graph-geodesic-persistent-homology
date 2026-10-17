@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-12",
+  "status": "passed",
+  "seed_base": 2026101201,
+  "samples_per_curve": 20,
+  "support_tolerance": 1e-10,
+  "comparison_tolerance": 1e-09,
+  "small_graphs": {
+    "samples": 80,
+    "budgets": 5767,
+    "supported_budgets": 3796,
+    "empty_supported": 307,
+    "euclidean_loop_supported": 3267,
+    "nested_supported_pairs": 3487,
+    "small_gap_budgets": 974,
+    "unsupported_multibar": 362,
+    "odd_field_checks": 90
+  },
+  "witness": {
+    "s": [
+      0.0,
+      0.051,
+      0.442,
+      0.491,
+      0.543,
+      0.953
+    ],
+    "reference": [
+      [
+        0.4099999999999999,
+        0.45699999999999996
+      ]
+    ],
+    "ring_bars": [
+      [
+        0.30567097379084057,
+        0.35250037787368044
+      ]
+    ],
+    "extra_edge_bars": [
+      [
+        0.30567097379084057,
+        0.35250037787368044
+      ],
+      [
+        0.3181826601574353,
+        0.3486356142303241
+      ]
+    ],
+    "extra_edge_cost": 0.3181826601574353,
+    "euclidean_ring_death": 0.3154098979350752,
+    "beta1_at_point33_over_F2_F3_F5": 2
+  },
+  "ellipses": {
+    "coordinate_sets": 60,
+    "closure_graphs": 180,
+    "arc_supported": 180,
+    "saved_single_bar_diagrams": 180,
+    "scope": "Distances recomputed at closure; persistence diagrams reused, no ellipse grid or new ellipse persistence."
+  },
+  "checker_sha256": "678571cdddbeb05729a6ea0bf924f224dff8c68cb91307fa9f74f89dbc580891"
+}

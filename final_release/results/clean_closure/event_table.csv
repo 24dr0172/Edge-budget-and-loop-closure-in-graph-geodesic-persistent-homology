@@ -1,0 +1,12 @@
+method,event,attempted,connected,empty,nonempty
+R2_global,first_connected,60,60,60,0
+R2_global,pre_completion,60,60,60,0
+R2_global,completion,60,60,0,60
+OR_kNN,first_connected,60,60,60,0
+OR_kNN,smallest_connected_k,60,60,38,22
+OR_kNN,pre_completion,60,60,60,0
+OR_kNN,completion,60,60,0,60
+mutual_kNN,first_connected,60,60,60,0
+mutual_kNN,smallest_connected_k,60,60,40,20
+mutual_kNN,pre_completion,60,60,60,0
+mutual_kNN,completion,60,60,0,60

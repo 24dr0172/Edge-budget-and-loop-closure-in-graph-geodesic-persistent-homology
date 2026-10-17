@@ -1,0 +1,890 @@
+{
+  "status": "passed",
+  "scope": "Manuscript identity; saved clean, noise and ellipse diagrams; seed and selector replay; finite witnesses; raw rank-sweep counts, Wilson intervals and Phase 1 comparators. No full persistence regeneration.",
+  "checks_passed": 81267,
+  "checks": {
+    "release_structure": {
+      "passed": true
+    },
+    "current_manuscript_identity": {
+      "passed": true,
+      "detail": {
+        "pdf_pages": 39
+      }
+    },
+    "phase2_proof_preservation": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "phase": 5,
+        "current_source_sha256": "4a0887353aa7e38d4c40ce4cc32d62dfb99eac12a6b990d5472d45c85ba1f0ab",
+        "preserved": {
+          "definition_statements_preserved": 5,
+          "theorem_statements_preserved": 4,
+          "proposition_statements_preserved": 1,
+          "corollary_statements_preserved": 2,
+          "structurallemma_statements_preserved": 1,
+          "appendixlemma_statements_preserved": 5,
+          "remark_statements_preserved": 2,
+          "example_statements_preserved": 1,
+          "proof_environments_preserved": 8,
+          "complete_appendix_A_preserved": true,
+          "complete_appendix_B_preserved": true,
+          "adaptive_cutoff_proof_preserved": true,
+          "exact_CkNN_certificate_preserved": true,
+          "procedure_cost_derivation_preserved": true,
+          "complete_probability_derivation_preserved": true,
+          "all_original_displayed_math_preserved": 49,
+          "abstract_unchanged": true,
+          "preamble_title_authors_unchanged": true,
+          "inline_and_external_figure_source_unchanged": true,
+          "declarations_unchanged": true,
+          "bibliography_unchanged": true,
+          "no_release_url_added": true
+        },
+        "unique_labels": 76,
+        "unresolved_references": 0,
+        "theorem_numbers": {
+          "thm:loop-transition": 1,
+          "thm:circle-parameters": 2,
+          "thm:arc-supported": 3,
+          "thm:useful-diagram": 4
+        },
+        "proposition_numbers": {
+          "thm:closed-loop": 1
+        },
+        "statement_checks": "All formal statements, examples, remarks and proof environments match the input exactly. The abstract and preamble are unchanged. The capped-error example is consolidated and its two matching options are written out.",
+        "comparison": "Compared with the current input source: all 8 proof environments, Appendix A, Appendix B, cutoff argument, exact precision certificate, procedure-cost derivation, probability derivation and 49 original displayed formulas are unchanged. Requested edits affect prose, contribution qualifications and the expanded matching calculation; one displayed formula is added.",
+        "raw_data_changed": false,
+        "current_pdf_sha256": "aa950b84fc07ff714a408d1d21180cdc8f21d10fc7e0e7cb669b2eed1f404578",
+        "moved_material": {
+          "tie_examples": "Appendix A.4",
+          "cap_example": "Appendix D.2",
+          "procedure_complexity": "Appendix D.2",
+          "closure_error_table": "Table D.1 in Appendix D.2",
+          "runtime_environment": "final_release/code/README.md and results/runtime_benchmark.json",
+          "extra_noise_figure": "final_release/manuscript_figures/noise-all-errors.pdf and .png"
+        },
+        "current_tables": {
+          "tab:noise-selectors": "5",
+          "tab:closed-errors": "D.1",
+          "tab:rank-scaling": "D.2",
+          "tab:noise-comparators": "6",
+          "tab:noise-amplitudes": "7"
+        },
+        "displayed_rank_sizes": [
+          128,
+          512,
+          4096,
+          32768
+        ],
+        "all_rank_data_retained": true,
+        "compile": {
+          "status": "success",
+          "compiler": "cached local Tectonic",
+          "editor_compiler": "unavailable: TeX bundle fetch failed",
+          "unresolved_references": 0,
+          "overfull_boxes": 0,
+          "underfull_boxes": 0
+        },
+        "pdf_pages": 39,
+        "layout_review": "All 39 pages visually reviewed, with contribution, cost, noise, scope, conventions and matching pages inspected at full size; no clipped, overlapping or unreadable content.",
+        "protected_scientific_files": 932,
+        "phase3_integration": {
+          "common_order_argument": "Example 1, with all 120 orders and 14 thresholds checked in release certificate",
+          "bridgeless": "Table 3 and Appendix D.4, all three profiles; primary sizes through 32768",
+          "noise_comparators": "Table 6, paired Euclidean and connected-grid oracle comparisons",
+          "noise_all_amplitudes": "Table 7",
+          "asymmetry": "Section 4.4, circle bound separated from finite observations",
+          "spectral_comparison": "Related work, primary source construction and qualified robustness",
+          "scope": "Section 6 limitations and Section 7 conclusion: known intrinsic reference rationale, clean assumptions and separate survival requirements."
+        },
+        "references_first_page": 37,
+        "pages_without_reference_text": 36,
+        "page_count_note": "References start partway through page 37. Non-reference material occupies 36 complete pages and the beginning of that page.",
+        "phase4_integration": {
+          "abstract_words": 168,
+          "abstract_has_numbers": false,
+          "abstract_has_later_defined_terms": false,
+          "contribution_order": [
+            "Connectivity and loop retention differ.",
+            "Exact events for standard graphs on a circle.",
+            "The cost of adding edges on a circle.",
+            "A single-cycle criterion beyond the circle."
+          ],
+          "novelty_table_result_order": [
+            "Theorem 1",
+            "Proposition 1",
+            "Theorem 2",
+            "Theorem 4",
+            "Corollary 1",
+            "Theorem 3"
+          ],
+          "introductory_miss_rates": [
+            {
+              "n": 512,
+              "profile": "uniform",
+              "method": "OR_kNN",
+              "samples": 1500,
+              "miss_rate": 67.13333333333334,
+              "reported_percent": 67
+            },
+            {
+              "n": 512,
+              "profile": "uniform",
+              "method": "mutual_kNN",
+              "samples": 1500,
+              "miss_rate": 71.06666666666666,
+              "reported_percent": 71
+            },
+            {
+              "n": 512,
+              "profile": "localized_trough",
+              "method": "mutual_kNN",
+              "samples": 1500,
+              "miss_rate": 92.86666666666666,
+              "reported_percent": 93
+            }
+          ],
+          "scope_checks": [
+            "Simulation rates are tied to named profiles and tested sizes.",
+            "The first-connected radius claim retains distinct chords and the gap bound.",
+            "The kNN retention claim requires a positive reference bar.",
+            "The error ceiling is scoped to circle samples; the dense-limit ratio is not a finite-sample bound.",
+            "Ordinary-error monotonicity has its separate small-gap condition.",
+            "The common-order obstruction allows every threshold graph its own order.",
+            "The noisy advantage is an observed median comparison, with no general guarantee."
+          ]
+        },
+        "review_date": "2026-10-17",
+        "current_displayed_math": 50,
+        "review_corrections": {
+          "1": "Contribution 2 restores distinct unordered-pair chords, the gap bound, positive reference, Eq. (6), and separate miss rates.",
+          "2": "Contribution 4 restores g<1/2, positive reference and a possibly empty interval.",
+          "3": "Contribution 3 states the dense-limit ratio and finite-sample caveat.",
+          "4": "Procedure 1 contains the size limit and 78\u2013117-second representative block times.",
+          "5": "Appendix D.2 combines coordinates and bar endpoints with both normalized matching options; self-reference removed.",
+          "6": "Section 3.6 states explicitly that neighboring circle gap keys are dependent.",
+          "7": "Section 5 defines early choices in a complete sentence and states why noise does not contradict the clean corollary.",
+          "8": "Limitations item 1 explains the known intrinsic reference supplied by controlled curves and restores the specified scope sentence.",
+          "9": "Section 2.3 and the conclusion qualify order-free coincidence and selection by the clean-data hypotheses.",
+          "10": "Appendix C points to D.2 for precision and tolerances; the observed minimum lifetime is retained in D.2."
+        },
+        "matching_option_checks": [
+          {
+            "method": "R2_global",
+            "stage": "before",
+            "normalized_direct_cost": 0.12237058199026517,
+            "normalized_diagonal_cost": 0.04406429738883108,
+            "error": 0.04406429738883108
+          },
+          {
+            "method": "R2_global",
+            "stage": "after",
+            "normalized_direct_cost": 0.15605136183143195,
+            "normalized_diagonal_cost": 0.03006012024048096,
+            "error": 0.03006012024048096
+          },
+          {
+            "method": "OR_kNN",
+            "stage": "before",
+            "normalized_direct_cost": 0.12237058199026517,
+            "normalized_diagonal_cost": 0.04406429738883108,
+            "error": 0.04406429738883108
+          },
+          {
+            "method": "OR_kNN",
+            "stage": "after",
+            "normalized_direct_cost": 0.15605136183143195,
+            "normalized_diagonal_cost": 0.03006012024048096,
+            "error": 0.03006012024048096
+          },
+          {
+            "method": "mutual_kNN",
+            "stage": "before",
+            "normalized_direct_cost": 0.12237058199026517,
+            "normalized_diagonal_cost": 0.04406429738883108,
+            "error": 0.04406429738883108
+          },
+          {
+            "method": "mutual_kNN",
+            "stage": "after",
+            "normalized_direct_cost": 0.15605136183143195,
+            "normalized_diagonal_cost": 0.03006012024048096,
+            "error": 0.03006012024048096
+          }
+        ],
+        "contribution_miss_rate_checks": [
+          {
+            "profile": "uniform",
+            "method": "OR_kNN",
+            "n": 512,
+            "samples": 1500,
+            "reported_miss_percent": 67
+          },
+          {
+            "profile": "uniform",
+            "method": "mutual_kNN",
+            "n": 512,
+            "samples": 1500,
+            "reported_miss_percent": 71
+          },
+          {
+            "profile": "localized_trough",
+            "method": "mutual_kNN",
+            "n": 512,
+            "samples": 1500,
+            "reported_miss_percent": 93
+          }
+        ],
+        "table_exporter_idempotent": true,
+        "table_exporter_preserves": [
+          "longtable header and footer definitions",
+          "shared clean Euclidean baseline row",
+          "all existing data rows and source outside table bodies"
+        ]
+      }
+    },
+    "clean_native_panel": {
+      "passed": true
+    },
+    "saved_sample_scope": {
+      "passed": true
+    },
+    "eleven_event_rows": {
+      "passed": true
+    },
+    "event_empty_counts": {
+      "passed": true,
+      "detail": [
+        60,
+        60,
+        0,
+        60,
+        38,
+        60,
+        0,
+        60,
+        40,
+        60,
+        0
+      ]
+    },
+    "permuted_scale_control": {
+      "passed": true,
+      "detail": {
+        "samples": 60,
+        "condition_passes": 0,
+        "loops_before_closure_at_connectivity": 6,
+        "grid_nonempty_matches_closure": 16
+      }
+    },
+    "control_grid_matches": {
+      "passed": true
+    },
+    "180_first_closed_series": {
+      "passed": true
+    },
+    "closure_table_reports_all_errors": {
+      "passed": true
+    },
+    "180_saved_monotone_series": {
+      "passed": true,
+      "detail": {
+        "series": 180,
+        "stored_loss_tolerance": 5e-08
+      }
+    },
+    "own_closure_not_global_split": {
+      "passed": true
+    },
+    "grid_scope": {
+      "passed": true
+    },
+    "120_paired_extra_k_rows": {
+      "passed": true
+    },
+    "miss_means_unclosed_integer_layer": {
+      "passed": true
+    },
+    "miss_counts_38_and_40": {
+      "passed": true
+    },
+    "six_extra_k_groups": {
+      "passed": true
+    },
+    "coordinate_and_rank_replay": {
+      "passed": true,
+      "detail": {
+        "saved_clouds": 60,
+        "rank_cases": 120,
+        "max_coordinate_difference": 0.0
+      }
+    },
+    "certificate_counts": {
+      "passed": true
+    },
+    "CkNN_certificate_only": {
+      "passed": true
+    },
+    "useful_diagram_scope": {
+      "passed": true
+    },
+    "single_bar_fixed_birth": {
+      "passed": true,
+      "detail": 3.533271661360082e-09
+    },
+    "small_gap_sufficient_condition": {
+      "passed": true,
+      "detail": 0.0895572098550524
+    },
+    "saved_diagram_transitions": {
+      "passed": true
+    },
+    "stored_diagram_matching": {
+      "passed": true,
+      "detail": {
+        "diagrams": 3556,
+        "max_error_difference": 1.1102230246251565e-16
+      }
+    },
+    "noise_coordinates": {
+      "passed": true,
+      "detail": {
+        "seeds": 20,
+        "points_per_sample": 512,
+        "amplitudes": 6,
+        "arrays": 200,
+        "observed_clouds": 120,
+        "maximum_direct_sampler_difference": 2.7755575615628914e-17
+      }
+    },
+    "matched_noise_scope": {
+      "passed": true
+    },
+    "no_long_first_connected_bars": {
+      "passed": true
+    },
+    "noise_closure_comparison": {
+      "passed": true,
+      "detail": {
+        "observations": 80,
+        "before_closure_long_per_method": 20,
+        "closure_nonempty_per_method": 20
+      }
+    },
+    "noise_closure_event_positions": {
+      "passed": true
+    },
+    "noise_closure_diagram_inventory": {
+      "passed": true
+    },
+    "noise_closure_summary": {
+      "passed": true
+    },
+    "ellipse_scope": {
+      "passed": true
+    },
+    "ellipse_constants": {
+      "passed": true
+    },
+    "ellipse_loop_interval": {
+      "passed": true
+    },
+    "ellipse_saved_diagram_inventory": {
+      "passed": true,
+      "detail": {
+        "distinct_diagrams": 539,
+        "event_checks": 540,
+        "coincident_events": 1
+      }
+    },
+    "candidate_rank_audit": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "checks": 949,
+        "method_records": 30780,
+        "profile_seed_samples": 15390,
+        "summary_rows": 36,
+        "seed_replays": 36,
+        "poisson_integral_checks": 12,
+        "maximum_poisson_integral_error": 1.1102230246251565e-16
+      }
+    },
+    "arc_support_small_graph_scope": {
+      "passed": true,
+      "detail": {
+        "samples": 80,
+        "budgets": 5767,
+        "supported_budgets": 3796,
+        "empty_supported": 307,
+        "euclidean_loop_supported": 3267,
+        "nested_supported_pairs": 3487,
+        "small_gap_budgets": 974,
+        "unsupported_multibar": 362,
+        "odd_field_checks": 90
+      }
+    },
+    "arc_support_ellipse_closure": {
+      "passed": true,
+      "detail": {
+        "coordinate_sets": 60,
+        "closure_graphs": 180,
+        "arc_supported": 180,
+        "saved_single_bar_diagrams": 180,
+        "scope": "Distances recomputed at closure; persistence diagrams reused, no ellipse grid or new ellipse persistence."
+      }
+    },
+    "noise_and_ellipse_studies": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "checks_passed": 71594,
+        "noise_stored_graphs_checked": 17818,
+        "ellipse_graphs": 3516,
+        "nn_crust_replays": 60
+      }
+    },
+    "rank_scaling_raw_rows": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "checks_passed": 696,
+        "raw_records": 30780,
+        "summary_groups": 36,
+        "large_size_rates": [
+          {
+            "profile": "uniform",
+            "n": 262144,
+            "method": "OR_kNN",
+            "closure": {
+              "0": {
+                "count": 27,
+                "total": 100,
+                "percent": 27.0,
+                "wilson_95_percent": [
+                  19.269584149576342,
+                  36.432116767945
+                ]
+              },
+              "3": {
+                "count": 93,
+                "total": 100,
+                "percent": 93.0,
+                "wilson_95_percent": [
+                  86.25048526092651,
+                  96.56807389327273
+                ]
+              }
+            }
+          },
+          {
+            "profile": "uniform",
+            "n": 262144,
+            "method": "mutual_kNN",
+            "closure": {
+              "0": {
+                "count": 26,
+                "total": 100,
+                "percent": 26.0,
+                "wilson_95_percent": [
+                  18.404698464748133,
+                  35.37098944918718
+                ]
+              },
+              "3": {
+                "count": 88,
+                "total": 100,
+                "percent": 88.0,
+                "wilson_95_percent": [
+                  80.18790057328857,
+                  93.00059356298051
+                ]
+              }
+            }
+          },
+          {
+            "profile": "uniform",
+            "n": 1000000,
+            "method": "OR_kNN",
+            "closure": {
+              "0": {
+                "count": 14,
+                "total": 30,
+                "percent": 46.666666666666664,
+                "wilson_95_percent": [
+                  30.232388907699754,
+                  63.8577003801267
+                ]
+              },
+              "3": {
+                "count": 29,
+                "total": 30,
+                "percent": 96.66666666666667,
+                "wilson_95_percent": [
+                  83.32960900859082,
+                  99.40914096183874
+                ]
+              }
+            }
+          },
+          {
+            "profile": "uniform",
+            "n": 1000000,
+            "method": "mutual_kNN",
+            "closure": {
+              "0": {
+                "count": 7,
+                "total": 30,
+                "percent": 23.333333333333332,
+                "wilson_95_percent": [
+                  11.792388144489497,
+                  40.92832615812216
+                ]
+              },
+              "3": {
+                "count": 26,
+                "total": 30,
+                "percent": 86.66666666666667,
+                "wilson_95_percent": [
+                  70.3186733179637,
+                  94.69034451594526
+                ]
+              }
+            }
+          },
+          {
+            "profile": "strong_cosine",
+            "n": 262144,
+            "method": "OR_kNN",
+            "closure": {
+              "0": {
+                "count": 26,
+                "total": 100,
+                "percent": 26.0,
+                "wilson_95_percent": [
+                  18.404698464748133,
+                  35.37098944918718
+                ]
+              },
+              "3": {
+                "count": 93,
+                "total": 100,
+                "percent": 93.0,
+                "wilson_95_percent": [
+                  86.25048526092651,
+                  96.56807389327273
+                ]
+              }
+            }
+          },
+          {
+            "profile": "strong_cosine",
+            "n": 262144,
+            "method": "mutual_kNN",
+            "closure": {
+              "0": {
+                "count": 26,
+                "total": 100,
+                "percent": 26.0,
+                "wilson_95_percent": [
+                  18.404698464748133,
+                  35.37098944918718
+                ]
+              },
+              "3": {
+                "count": 88,
+                "total": 100,
+                "percent": 88.0,
+                "wilson_95_percent": [
+                  80.18790057328857,
+                  93.00059356298051
+                ]
+              }
+            }
+          },
+          {
+            "profile": "strong_cosine",
+            "n": 1000000,
+            "method": "OR_kNN",
+            "closure": {
+              "0": {
+                "count": 14,
+                "total": 30,
+                "percent": 46.666666666666664,
+                "wilson_95_percent": [
+                  30.232388907699754,
+                  63.8577003801267
+                ]
+              },
+              "3": {
+                "count": 29,
+                "total": 30,
+                "percent": 96.66666666666667,
+                "wilson_95_percent": [
+                  83.32960900859082,
+                  99.40914096183874
+                ]
+              }
+            }
+          },
+          {
+            "profile": "strong_cosine",
+            "n": 1000000,
+            "method": "mutual_kNN",
+            "closure": {
+              "0": {
+                "count": 7,
+                "total": 30,
+                "percent": 23.333333333333332,
+                "wilson_95_percent": [
+                  11.792388144489497,
+                  40.92832615812216
+                ]
+              },
+              "3": {
+                "count": 26,
+                "total": 30,
+                "percent": 86.66666666666667,
+                "wilson_95_percent": [
+                  70.3186733179637,
+                  94.69034451594526
+                ]
+              }
+            }
+          },
+          {
+            "profile": "localized_trough",
+            "n": 262144,
+            "method": "OR_kNN",
+            "closure": {
+              "0": {
+                "count": 27,
+                "total": 100,
+                "percent": 27.0,
+                "wilson_95_percent": [
+                  19.269584149576342,
+                  36.432116767945
+                ]
+              },
+              "3": {
+                "count": 93,
+                "total": 100,
+                "percent": 93.0,
+                "wilson_95_percent": [
+                  86.25048526092651,
+                  96.56807389327273
+                ]
+              }
+            }
+          },
+          {
+            "profile": "localized_trough",
+            "n": 262144,
+            "method": "mutual_kNN",
+            "closure": {
+              "0": {
+                "count": 12,
+                "total": 100,
+                "percent": 12.0,
+                "wilson_95_percent": [
+                  6.999406437019489,
+                  19.81209942671142
+                ]
+              },
+              "3": {
+                "count": 61,
+                "total": 100,
+                "percent": 61.0,
+                "wilson_95_percent": [
+                  51.203017045840724,
+                  69.98312599360558
+                ]
+              }
+            }
+          },
+          {
+            "profile": "localized_trough",
+            "n": 1000000,
+            "method": "OR_kNN",
+            "closure": {
+              "0": {
+                "count": 14,
+                "total": 30,
+                "percent": 46.666666666666664,
+                "wilson_95_percent": [
+                  30.232388907699754,
+                  63.8577003801267
+                ]
+              },
+              "3": {
+                "count": 29,
+                "total": 30,
+                "percent": 96.66666666666667,
+                "wilson_95_percent": [
+                  83.32960900859082,
+                  99.40914096183874
+                ]
+              }
+            }
+          },
+          {
+            "profile": "localized_trough",
+            "n": 1000000,
+            "method": "mutual_kNN",
+            "closure": {
+              "0": {
+                "count": 5,
+                "total": 30,
+                "percent": 16.666666666666664,
+                "wilson_95_percent": [
+                  7.336542371848551,
+                  33.56435050641603
+                ]
+              },
+              "3": {
+                "count": 18,
+                "total": 30,
+                "percent": 60.0,
+                "wilson_95_percent": [
+                  42.32036025332248,
+                  75.40937188319815
+                ]
+              }
+            }
+          }
+        ],
+        "paired_comparisons": [
+          {
+            "n": 32768,
+            "method": "OR_kNN",
+            "profile": "strong_cosine",
+            "paired_indicator_disagreements": {
+              "0": 12,
+              "3": 0
+            }
+          },
+          {
+            "n": 32768,
+            "method": "OR_kNN",
+            "profile": "localized_trough",
+            "paired_indicator_disagreements": {
+              "0": 2,
+              "3": 0
+            }
+          },
+          {
+            "n": 32768,
+            "method": "mutual_kNN",
+            "profile": "strong_cosine",
+            "paired_indicator_disagreements": {
+              "0": 2,
+              "3": 1
+            }
+          },
+          {
+            "n": 32768,
+            "method": "mutual_kNN",
+            "profile": "localized_trough",
+            "paired_indicator_disagreements": {
+              "0": 109,
+              "3": 216
+            }
+          },
+          {
+            "n": 262144,
+            "method": "OR_kNN",
+            "profile": "strong_cosine",
+            "paired_indicator_disagreements": {
+              "0": 1,
+              "3": 0
+            }
+          },
+          {
+            "n": 262144,
+            "method": "OR_kNN",
+            "profile": "localized_trough",
+            "paired_indicator_disagreements": {
+              "0": 0,
+              "3": 0
+            }
+          },
+          {
+            "n": 262144,
+            "method": "mutual_kNN",
+            "profile": "strong_cosine",
+            "paired_indicator_disagreements": {
+              "0": 0,
+              "3": 0
+            }
+          },
+          {
+            "n": 262144,
+            "method": "mutual_kNN",
+            "profile": "localized_trough",
+            "paired_indicator_disagreements": {
+              "0": 22,
+              "3": 37
+            }
+          },
+          {
+            "n": 1000000,
+            "method": "OR_kNN",
+            "profile": "strong_cosine",
+            "paired_indicator_disagreements": {
+              "0": 0,
+              "3": 0
+            }
+          },
+          {
+            "n": 1000000,
+            "method": "OR_kNN",
+            "profile": "localized_trough",
+            "paired_indicator_disagreements": {
+              "0": 0,
+              "3": 0
+            }
+          },
+          {
+            "n": 1000000,
+            "method": "mutual_kNN",
+            "profile": "strong_cosine",
+            "paired_indicator_disagreements": {
+              "0": 0,
+              "3": 0
+            }
+          },
+          {
+            "n": 1000000,
+            "method": "mutual_kNN",
+            "profile": "localized_trough",
+            "paired_indicator_disagreements": {
+              "0": 4,
+              "3": 10
+            }
+          }
+        ],
+        "explanation": "Profiles share uniform draws and phase. Trough/uniform OR aggregate rates agree at all three largest sizes. At n=32768 two opposite seed-level closure changes cancel; at n=262144 and n=1000000 the OR rank pairs agree seed by seed. Constant-density CDF branches preserve local counts under affine inversion; results/rank_pairing_replay.json audits the critical windows. Uniform/cosine indicators also agree at n=1000000.",
+        "interval": "Pointwise two-sided 95% Wilson score interval, z=1.959963984540054."
+      }
+    },
+    "phase1_evidence": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "checks_passed": 2196,
+        "bridge_method_records": 30120,
+        "distinct_euclidean_diagrams": 220,
+        "grid_oracle_samples": 720,
+        "scope": "Exact orientation certificate; saved bridge events and independent adjacency/DFS replays; all Euclidean input hashes, bars and bottleneck scores; grid oracles, paired comparisons and quantiles."
+      }
+    },
+    "manifest_file_inventory": {
+      "passed": true
+    },
+    "code_syntax": {
+      "passed": true
+    }
+  }
+}

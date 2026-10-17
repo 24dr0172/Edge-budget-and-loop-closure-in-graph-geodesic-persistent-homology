@@ -1,0 +1,81 @@
+{
+  "scope": "Matched first-connectivity study plus the before/at-closure comparison at delta=0.01; all observations come from the existing experiment.",
+  "n": 512,
+  "seeds": [
+    20320101,
+    20320102,
+    20320103,
+    20320104,
+    20320105,
+    20320106,
+    20320107,
+    20320108,
+    20320109,
+    20320110,
+    20320111,
+    20320112,
+    20320113,
+    20320114,
+    20320115,
+    20320116,
+    20320117,
+    20320118,
+    20320119,
+    20320120
+  ],
+  "delta": [
+    0.0,
+    0.0005,
+    0.001,
+    0.002,
+    0.005,
+    0.01
+  ],
+  "methods": [
+    "R2_global",
+    "OR_kNN"
+  ],
+  "events": [
+    "first_connected"
+  ],
+  "attempted_cells": 240,
+  "noise_model": "Uniform displacement in [-delta,delta] along clean normal; same signed vector reused across amplitudes.",
+  "matching": "Same latent points and normal displacement vector across amplitudes within seed.",
+  "closure_comparison": {
+    "delta": 0.01,
+    "events": [
+      "pre_coverage",
+      "coverage"
+    ],
+    "attempted_cells": 80,
+    "cells": "closure_comparison.csv",
+    "diagrams": "closure_diagrams.npz"
+  },
+  "coordinate_archive": {
+    "file": "coordinates.npz",
+    "exported_on": "2026-10-15",
+    "provenance": "Deterministic reconstruction from the existing 20 retained seeds and original noise arithmetic; no new sampling streams or persistence calculations.",
+    "dtype": "float64",
+    "array_count": 200,
+    "observed_clouds": 120,
+    "keys": {
+      "{seed}_latent": "Shape (512,): normalized clean arc length s in [0,1).",
+      "{seed}_clean": "Shape (512,2): clean Cartesian points on the unit-circumference circle.",
+      "{seed}_normal": "Shape (512,2): outward unit normal, evaluated as clean * (2*pi) with the original arithmetic.",
+      "{seed}_signed_draw": "Shape (512,): dimensionless uniform draws in [-1,1], RNG seed seed + 70000003.",
+      "{seed}_delta{delta:g}_observed": "Shape (512,2): clean + delta * signed_draw[:,None] * normal; delta uses Python g formatting."
+    },
+    "units": "Cartesian coordinates and delta use the unit-circumference curve length; latent coordinates are normalized arc length; normals and signed draws are dimensionless.",
+    "shared_events": "The delta=0.01 arrays are used for first connectivity and the before/at-closure observations.",
+    "reproduce": "python3 code/export_noise_coordinates.py --output ../noise_coordinates.npz"
+  },
+  "versions": {
+    "python": "3.12.3",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.5",
+    "ripser": "0.6.15",
+    "persim": "0.3.8",
+    "matplotlib": "3.11.2"
+  }
+}

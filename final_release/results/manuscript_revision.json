@@ -1,0 +1,18 @@
+{
+  "scope": "Edge budget and loop closure; accompanying manuscript and unified local release.",
+  "source": {
+    "file": "../../combined.tex",
+    "sha256": "4a0887353aa7e38d4c40ce4cc32d62dfb99eac12a6b990d5472d45c85ba1f0ab"
+  },
+  "pdf": {
+    "file": "../../combined.pdf",
+    "sha256": "aa950b84fc07ff714a408d1d21180cdc8f21d10fc7e0e7cb669b2eed1f404578",
+    "pages": 39
+  },
+  "source_checks": {
+    "unique_labels": 76,
+    "resolved_citation_keys": 53,
+    "unresolved_references": 0,
+    "unresolved_citations": 0
+  }
+}

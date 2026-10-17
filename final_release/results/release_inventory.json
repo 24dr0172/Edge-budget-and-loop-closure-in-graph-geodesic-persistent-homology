@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-16",
+  "retained_root_folders": [
+    "code",
+    "results",
+    "manuscript_figures"
+  ],
+  "manuscript_record": "results/manuscript_revision.json",
+  "verification_report": "results/verification_report.json",
+  "methods": [
+    "R2_global",
+    "OR_kNN",
+    "mutual_kNN"
+  ],
+  "saved_clean_samples": 60,
+  "clean_seed_streams": 20,
+  "clean_native_series": 180,
+  "rank_sweep_profile_seed_samples": 15390,
+  "rank_sweep_shared_seed_size_combinations": 5130,
+  "rank_sweep_method_records": 30780,
+  "matched_noise_seed_streams": 20,
+  "matched_noise_observed_clouds": 120,
+  "matched_noise_coordinate_arrays": 200,
+  "arc_support_verification": "results/arc_support_verification.json",
+  "arc_support_validation_samples": 80,
+  "ellipse_coordinate_sets": 60,
+  "ellipse_native_cases": 180,
+  "inline_conceptual_figures": 1,
+  "external_main_figures": 2,
+  "appendix_figures": 1,
+  "figure_pdf_png_pairs": 6,
+  "expanded_noise_distinct_clouds": 220,
+  "phase1_completion": "results/phase1/completion.json",
+  "payload_exclusions": [
+    "results/release_inventory.json",
+    "results/file_manifest.json",
+    "results/verification_report.json"
+  ],
+  "payload_files": 1061,
+  "payload_bytes": 40400538
+}

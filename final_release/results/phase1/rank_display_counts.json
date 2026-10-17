@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "source_sha256": "65287a8e992ff66c09a6bf579fe4ab2606c1ea6da08dc81a2abecba774d1103d",
+  "subsets": [
+    {
+      "subset": "primary_display_through_32768",
+      "sizes": [
+        128,
+        512,
+        4096,
+        32768
+      ],
+      "seed_size_combinations": 5000,
+      "profile_seed_samples": 15000,
+      "method_records": 30000,
+      "repeats_per_profile_by_size": {
+        "128": 1500,
+        "512": 1500,
+        "4096": 1500,
+        "32768": 500
+      }
+    },
+    {
+      "subset": "full_release",
+      "sizes": [
+        128,
+        512,
+        4096,
+        32768,
+        262144,
+        1000000
+      ],
+      "seed_size_combinations": 5130,
+      "profile_seed_samples": 15390,
+      "method_records": 30780,
+      "repeats_per_profile_by_size": {
+        "128": 1500,
+        "512": 1500,
+        "4096": 1500,
+        "32768": 500,
+        "262144": 100,
+        "1000000": 30
+      }
+    }
+  ]
+}

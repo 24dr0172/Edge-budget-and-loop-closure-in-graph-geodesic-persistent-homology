@@ -1,0 +1,29 @@
+{
+  "status": "complete",
+  "tasks": [
+    "1.1",
+    "1.2",
+    "1.3",
+    "1.4",
+    "1.5",
+    "1.6",
+    "1.7",
+    "1.8",
+    "1.9"
+  ],
+  "manuscript_changed_in_phase1": false,
+  "largest_bridgeless_n": 32768,
+  "bridgeless_profile_seed_samples": 15000,
+  "bridgeless_method_records": 30000,
+  "original_clean_samples": 60,
+  "distinct_euclidean_diagrams": 220,
+  "euclidean_model_amplitude_seed_rows": 240,
+  "grid_oracle_samples": 720,
+  "cyclic_orders": 120,
+  "distinct_threshold_graphs": 14,
+  "python": "3.12.3",
+  "numpy": "2.5.3",
+  "manuscript_source_sha256": "4a0887353aa7e38d4c40ce4cc32d62dfb99eac12a6b990d5472d45c85ba1f0ab",
+  "manuscript_pdf_sha256": "aa950b84fc07ff714a408d1d21180cdc8f21d10fc7e0e7cb669b2eed1f404578",
+  "original_study_inputs_preserved": true
+}

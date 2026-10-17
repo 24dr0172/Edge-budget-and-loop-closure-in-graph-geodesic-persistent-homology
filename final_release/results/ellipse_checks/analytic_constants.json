@@ -1,0 +1,10 @@
+{
+  "chord_threshold": 0.18,
+  "raw_min_normal_chord": 1.8590320061795602,
+  "perimeter_upper": 9.934588265796101,
+  "normal_chord_lower_after_normalization": 0.18712723229608225,
+  "global_chord_arc_lower_factor": 0.3183098861837907,
+  "half_perimeter_chord_lower_after_normalization": 0.20131684841794814,
+  "ellipse_axis_ratio": "2:1",
+  "normalization": "Unit perimeter; analytic perimeter upper bound pi*sqrt(10)."
+}

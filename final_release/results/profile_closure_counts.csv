@@ -1,0 +1,7 @@
+profile,method,samples,closed
+localized_trough,OR_kNN,20,10
+localized_trough,mutual_kNN,20,4
+strong_cosine,OR_kNN,20,5
+strong_cosine,mutual_kNN,20,6
+uniform,OR_kNN,20,7
+uniform,mutual_kNN,20,10

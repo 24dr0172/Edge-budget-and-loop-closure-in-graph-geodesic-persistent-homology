@@ -1,0 +1,45 @@
+{
+  "saved": {
+    "prefixes": 3556,
+    "transitions": 3376,
+    "single_bar_failures": 0,
+    "max_birth_deviation": 3.5332716613600823e-09,
+    "raw_error_drops": 0,
+    "clipped_error_drops": 0,
+    "above_to_below_baseline_crossings": 0,
+    "minimum_gap_among_raw_drops": null,
+    "maximum_raw_drop": 0,
+    "drops_ending_below_baseline": 0,
+    "max_gap": 0.08955720985505244,
+    "method_counts": {
+      "R2_global": {
+        "prefixes": 844,
+        "raw_error_drops": 0
+      },
+      "OR_kNN": {
+        "prefixes": 1418,
+        "raw_error_drops": 0
+      },
+      "mutual_kNN": {
+        "prefixes": 1294,
+        "raw_error_drops": 0
+      }
+    },
+    "matched_saved_error_rows": 3259,
+    "max_saved_error_difference": 9.996344030316351e-17,
+    "saved_samples": 60
+  },
+  "small_gap_sufficient_threshold": 0.13661977236758138,
+  "small_positive_lifetime_cutoff": 1e-12,
+  "small_assertion_tolerance": 2e-10,
+  "ripser_tolerance": 1e-07,
+  "arithmetic_scope": "Exact F2 column algebra and finite matching on float64 input; not arbitrary-precision chord geometry. Ripser uses float32 endpoints.",
+  "saved_scope": "All distinct saved closed budgets of radius, OR and mutual for the selected clean Experiment 17 seeds, with each own closure and complete graph added. Not every intervening edge.",
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.5",
+    "ripser": "0.6.15",
+    "persim": "0.3.8"
+  }
+}

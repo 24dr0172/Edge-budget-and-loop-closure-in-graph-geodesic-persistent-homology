@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "random_graph_method_checks": 360,
+  "circle_method_checks": 178,
+  "independent_method": "Explicit Cartesian ranks plus independent DFS low-link bridge traversal.",
+  "tied_layers": "All edges of one integer-k layer are inserted before testing."
+}

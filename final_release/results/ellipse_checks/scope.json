@@ -1,0 +1,51 @@
+{
+  "scope": "Floating-point consistency checks of the clean-curve locality and B-based loop bounds on the existing 60 ellipse coordinate sets; saved connectivity, pre-closure and closure diagrams are reused.",
+  "samples": 60,
+  "method_sample_cases": 180,
+  "methods": [
+    "R2_global",
+    "OR_kNN",
+    "mutual_kNN"
+  ],
+  "seeds": [
+    20310101,
+    20310102,
+    20310103,
+    20310104,
+    20310105,
+    20310106,
+    20310107,
+    20310108,
+    20310109,
+    20310110,
+    20310111,
+    20310112,
+    20310113,
+    20310114,
+    20310115,
+    20310116,
+    20310117,
+    20310118,
+    20310119,
+    20310120
+  ],
+  "reuse": "Existing coordinates and coverage diagrams; no persistence calculation performed during extraction.",
+  "endpoint_tolerance": 1e-06,
+  "source_records": {
+    "results/curve_order_checks/pasted_phase_review_check.json": {
+      "sha256": "e644d2ab21b1adb347499d2fc040c0775c4940b5315ec62cb8c96a4c91022292",
+      "selection": "Native radius, OR and mutual cases only; coordinates/diagrams, locality checks or analytic loop bounds as appropriate."
+    },
+    "results/curve_order_checks/phase3_sharpened_checks.json": {
+      "sha256": "3c8a815489a6905d9db37c73e5a13fa87b6e37c4abe9c956d97896bf70cab4e2",
+      "selection": "Native radius, OR and mutual cases only; coordinates/diagrams, locality checks or analytic loop bounds as appropriate."
+    },
+    "results/curve_order_checks/combined_theorem_bound_check.json": {
+      "sha256": "fc864fc5c574b9ed9370e1077071eb8eda8783efaa7b3b5300aff514e4c5cb44",
+      "selection": "Native radius, OR and mutual cases only; coordinates/diagrams, locality checks or analytic loop bounds as appropriate."
+    }
+  },
+  "distinct_diagrams": 539,
+  "diagram_event_checks": 540,
+  "coincident_event_count": 1
+}

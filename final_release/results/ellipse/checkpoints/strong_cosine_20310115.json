@@ -1,0 +1,14 @@
+{
+  "seed": 20310115,
+  "profile": "strong_cosine",
+  "tau_E": 0.20643624663352966,
+  "B": 0.03786238930635954,
+  "g": 0.03802723367870453,
+  "b_star": 0.3334037959575653,
+  "margin_tau": 0.020720731815394744,
+  "margin_birth": 0.1475234367670854,
+  "condition_5c": true,
+  "nn_crust_exact_ring": true,
+  "nn_crust_extra_edges": 0,
+  "nn_crust_missing_edges": 0
+}

@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "scope": "Paired uniform/trough OR ranks; full raw-indicator check and seeded replay at all three largest sizes.",
+  "samples_replayed": 630,
+  "mechanism": "On a CDF branch with constant density, inverse-CDF mapping is affine. If the two outer gap-count windows stay on that branch, both neighbor counts, and hence the OR key, are unchanged. Density-boundary windows can change keys.",
+  "results": [
+    {
+      "n": 32768,
+      "samples": 500,
+      "indicator_disagreements": {
+        "0": [
+          {
+            "seed": 20640314,
+            "uniform_extra": 0,
+            "trough_extra": 1
+          },
+          {
+            "seed": 20640420,
+            "uniform_extra": 1,
+            "trough_extra": 0
+          }
+        ],
+        "3": []
+      },
+      "different_top_rank_pairs": [
+        20640314,
+        20640420
+      ],
+      "critical_windows": 1578,
+      "windows_crossing_density_boundary": 3,
+      "closing_gaps_in_trough": 20,
+      "closing_gaps_outside_trough": 734,
+      "samples_with_all_critical_windows_affine": 497,
+      "uniform_and_trough_critical_keys_equal": 498
+    },
+    {
+      "n": 262144,
+      "samples": 100,
+      "indicator_disagreements": {
+        "0": [],
+        "3": []
+      },
+      "different_top_rank_pairs": [],
+      "critical_windows": 323,
+      "windows_crossing_density_boundary": 0,
+      "closing_gaps_in_trough": 5,
+      "closing_gaps_outside_trough": 145,
+      "samples_with_all_critical_windows_affine": 100,
+      "uniform_and_trough_critical_keys_equal": 100
+    },
+    {
+      "n": 1000000,
+      "samples": 30,
+      "indicator_disagreements": {
+        "0": [],
+        "3": []
+      },
+      "different_top_rank_pairs": [],
+      "critical_windows": 87,
+      "windows_crossing_density_boundary": 0,
+      "closing_gaps_in_trough": 3,
+      "closing_gaps_outside_trough": 55,
+      "samples_with_all_critical_windows_affine": 30,
+      "uniform_and_trough_critical_keys_equal": 30
+    }
+  ]
+}

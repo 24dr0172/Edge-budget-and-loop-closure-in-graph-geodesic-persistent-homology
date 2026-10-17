@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-11",
+  "seed_start": 20330101,
+  "profiles": [
+    "uniform",
+    "strong_cosine",
+    "localized_trough"
+  ],
+  "settings": [
+    [
+      128,
+      1500
+    ],
+    [
+      512,
+      1500
+    ],
+    [
+      4096,
+      1500
+    ],
+    [
+      32768,
+      500
+    ],
+    [
+      262144,
+      100
+    ],
+    [
+      1000000,
+      30
+    ]
+  ],
+  "validation": {
+    "samples": 240,
+    "neighbor_keys_checked": 18980,
+    "full_connectivity_checks": 480,
+    "maximum_sampler_coordinate_difference": 9.662236288843218e-13
+  },
+  "samples": 15390,
+  "method_records": 30780,
+  "protocol": "Independent seeds within n; same uniforms and phase across profiles. Exact circular local ranks; no new persistence computations. Local formula checked against full released chord ranks and actual graph connectivity.",
+  "surrogate": "Independent one-gap Poisson marks. This is a comparison model, not a proof for dependent ranks on one circle.",
+  "uncertainty": "Pointwise 95% Wilson binomial intervals, conditional on profile/n. Profiles share seeds.",
+  "runtime_seconds_this_invocation": 0.3266983670000627
+}

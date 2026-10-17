@@ -1,0 +1,21 @@
+{
+  "analysis": "Paired extra integer k required for closure",
+  "source": "results/clean_closure/rank_landmarks.csv",
+  "n": 512,
+  "independent_streams": 20,
+  "profiles": [
+    "uniform",
+    "strong_cosine",
+    "localized_trough"
+  ],
+  "methods": [
+    "OR_kNN",
+    "mutual_kNN"
+  ],
+  "sample_method_rows": 120,
+  "new_samples": false,
+  "new_persistence_runs": false,
+  "statistic": "Median of paired k_close-k_conn; not difference of marginal medians.",
+  "miss_definition": "k_conn < k_close; reference loops are positive in these clean samples.",
+  "scope": "Descriptive n=512 evidence only; no size-scaling, asymptotic or fixed extra-k guarantee."
+}

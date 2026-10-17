@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "one_bar_matching_cases": 100,
+  "ring_cocycle_vs_boundary_span_cases": 80,
+  "cumulative_vs_direct_support_cases": 240
+}

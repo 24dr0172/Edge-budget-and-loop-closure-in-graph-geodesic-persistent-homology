@@ -1,7 +1,7 @@
 {
   "reviewed_on": "2026-10-16",
   "connectivity_stopping": {
-    "decision": "Retain the current description: a simple heuristic.",
+    "decision": "Choosing the smallest connecting parameter is described as a simple heuristic.",
     "stronger_practice_claim_supported": false,
     "reason": "The checked software documentation uses a fixed neighbor default; connectivity requirements alone do not establish choosing the smallest connecting parameter.",
     "source": "https://scikit-learn.org/stable/modules/generated/sklearn.manifold.Isomap.html",

@@ -1,74 +1,95 @@
 # Code guide
 
-Run commands from `final_release/` with Python 3.12 and the versions in `requirements.txt`. The complete study and numerical conventions are described in `../README.md`.
+Run commands from `final_release/` with Python 3.12 and `code/requirements.txt`. Full verification requires `../combined.tex` and its compiled `../combined.pdf`. The [release README](../README.md) gives the complete study workflow.
 
-- `reproduce_results.py`: rebuild tables and audits from saved rows, without graph or persistence recomputation. `--rank-table-only` extracts the four main-text n=512 rank rows.
-- `build_figures.py`: export the clean-grid, noise, extra-k and schematic panel assets.
-- `verify_release.py`: check manuscript identity, release hashes and scientific results, including `verify_studies.py` and `audit_rank_scaling.py`; write `results/verification_report.json`.
-- `record_current.py`: refresh source/PDF identity and the file manifest after successful compilation and numerical checks.
-- `run_studies.py`: compute or resume all two-model noise and post-closure ellipse checkpoints. `--aggregate-only` rebuilds aggregate rows; `--validate-only` runs independent helper checks.
-- `summarize_studies.py`: rebuild the noise and ellipse summaries and their figures.
-- `audit_numbers.py`: reproduce profile closure counts, exact-closure medians, rank replay, post-closure extrema and paired-profile calibration.
-- `audit_rank_scaling.py`: verify all raw size-sweep closure fractions and pointwise Wilson intervals, and explain the paired large-size indicators.
-- `verify_arc_support.py`: deterministic small-graph checks, independent triangle-boundary calculations over F2/F3/F5, and the 180 ellipse closure certificates. Its saved report is `results/arc_support_verification.json`.
-- `verify_separation.py`: verify arc support, Betti numbers and all 1,024 curve-order orientations, and all 120 cyclic orders across the exact threshold filtration of Example 1.
-- `validate_cutoff.py`: compare adaptive and unrestricted H1 persistence.
-- `update_manuscript.py`: refresh only numerical table bodies from the saved summaries; surrounding prose and proofs stay in the manuscript source.
-- `paper1_methods.py`, `finite_diagram.py`: scientific kernel and independent finite-complex reduction/bottleneck matcher.
+## Rebuild and verify
 
-## Optional individual trial regeneration
+- `reproduce_results.py` rebuilds summaries from saved measurements, including Euclidean comparisons and grid oracles. `--rank-table-only` exports the six Table 3 rows, with connection, bridge-free and +3 rates and pointwise 95% Wilson intervals.
+- `build_figures.py` exports all six PDF/PNG asset pairs.
+- `update_manuscript.py` refreshes seven numerical table bodies in `../combined.tex`. It preserves surrounding text, Table 6's repeated headers and Table 7's shared clean Euclidean baseline.
+- `record_current.py` records the source/PDF hashes, current manuscript structure, comparison identities and release manifest. Compile the manuscript before recording it.
+- `verify_release.py` checks the manuscript, file hashes and scientific results, and writes `results/verification_report.json`.
+- `verify_manuscript_tables.py` compares the displayed values and the six-row Table 3 export with saved summaries. It is included in the release verifier.
+
+## Study calculations
+
+- `run_studies.py` computes or resumes the two-model noise and ellipse studies. `--aggregate-only` combines saved checkpoints; `--validate-only` runs small independent checks.
+- `check_knn_miss_candidate.py` computes or resumes the rank-only size sweep. `--verify-only` checks summaries, probability calculations and selected seeds.
+- `phase1_bridgeless.py --validate --clean --sweep` validates the bridge calculation, replays the 60 clean samples and runs the 30,000-record comparison through n=32,768. It needs g++ with C++17 support. The helper is compiled in a temporary folder.
+- `phase1_noise.py` computes or resumes the 220 distinct Euclidean diagrams. `--summarize-only` rebuilds comparisons from those saved diagrams.
+- `phase1_summaries.py` computes the best connected grid budget separately for each sample, then summarizes those errors. It also rebuilds both rules' all-amplitude summaries and the displayed sample counts.
+- `phase1_report.py` builds the [comparison guide](../results/phase1/README.md) and its current study record.
+- `verify_phase1.py` checks these comparisons and is included in the release verifier.
+
+The grid oracle uses the clean reference to find the smallest error on the prescribed 24-budget grid. It excludes extra diagnostic budgets and serves as a benchmark. Euclidean baselines are shared across graph methods, and clean observations are shared across noise models.
+
+The sample-size sweep uses paired profiles: the same uniform draws and phase are reused at each size and seed. Table D.2 shows four sizes through n=32,768. Results at n=262,144 and n=1,000,000 use 100 and 30 samples per profile. Their pointwise Wilson intervals are in `results/extra_k/candidate_audit/summary.csv`.
+
+## Rerun individual trials or start fresh
+
+These commands write fresh clean-circle, order-check and closure measurements outside the release:
 
 ```sh
-python3 code/regenerate_trials.py --study clean --seed 20310101 --output ../scratch
-python3 code/regenerate_trials.py --study useful --seed 20310101 --output ../scratch
-python3 code/regenerate_trials.py --study orders --seed 20310101 --output ../scratch
-python3 code/regenerate_trials.py --study ellipse --seed 20310101 --output ../scratch
-python3 code/regenerate_trials.py --study noise --seed 20320101 --output ../scratch
+for seed in $(seq 20310101 20310120)
+do
+    python3 code/regenerate_trials.py --study clean --seed "$seed" --output ../scratch
+    python3 code/regenerate_trials.py --study useful --seed "$seed" --output ../scratch
+    python3 code/regenerate_trials.py --study orders --seed "$seed" --output ../scratch
+    python3 code/regenerate_trials.py --study ellipse --seed "$seed" --output ../scratch
+done
+for seed in $(seq 20320101 20320120)
+do
+    python3 code/regenerate_trials.py --study noise --seed "$seed" --output ../scratch
+done
 ```
 
-Repeat clean/useful/orders/ellipse for seeds 20310101--20310120 and noise for 20320101--20320120. Scratch output stays outside the delivered package. `export_noise_coordinates.py --output ../noise_coordinates.npz` reconstructs the radial-coordinate arrays from the saved configuration without computing persistence.
+The ellipse option replays the connectivity and closure events; `run_studies.py` covers the full ellipse sweep. The noise option replays the matched radial first-connectivity trials; `run_studies.py` covers both models and the full grid.
 
-`check_knn_miss_candidate.py` computes the rank-only size sweep. `--verify-only` checks its summaries, probability-model values and selected seed replays. To regenerate every sample, move both `results/extra_k/candidate_audit/samples.csv` and `summary.csv` to scratch first. Profiles share uniform draws and phase at each size/seed, so profile closure rates are paired. The two largest sizes have only 100 and 30 replicates per profile; Their Wilson intervals remain in results/extra_k/candidate_audit/summary.csv; the manuscript displays sizes through 32,768 in Table D.2.
+The main study commands resume saved outputs. To start fresh, work in a copy of the release and move the outputs to a scratch folder first:
 
-## Precision, paired ranks and timing
+- Noise and ellipse: their `checkpoints/` folders under `results/noise/` and `results/ellipse/`. Keep the separate `ellipse_checks/coordinates.npz` input.
+- Rank sweep: both `samples.csv` and `summary.csv` in `results/extra_k/candidate_audit/`.
+- Bridge comparison: move both `sweep_samples.csv` and `sweep_timings.csv` from `results/phase1/bridgeless/`. The clean comparison is recomputed whenever `--clean` is used.
+- Euclidean baseline: `results/phase1/euclidean/checkpoints/`, after regenerating its noise inputs.
 
-- `check_cknn_precision.py` checks the failing CkNN insertion using exact rational edge scores and outward integer-square-root cost bounds. Its certificate is `results/order_checks/precision_check.json`; the ideal-circle cost is also reevaluated at 60 and 100 digits.
-- `check_rank_pairing.py` replays all 630 uniform/trough OR sample pairs at the three largest sizes and checks the critical inverse-CDF branches; its report is `results/rank_pairing_replay.json`.
-- `benchmark_diagrams.py --repeats 3` runs fresh serial 24-budget, three-method blocks at n=512. It writes `results/runtime_benchmark.json`. These timings exclude sampling, references, bottleneck errors, certificates and file I/O; they are not full-study generation times. The full-diagram studies stop at n=512; only the rank study reaches n=1,000,000.
+Then run the study sequence in the release README. Keep the supplied input coordinates and configuration. `export_noise_coordinates.py --output ../noise_coordinates.npz` reconstructs the matched radial inputs without computing diagrams.
 
-The selector summary includes `q1_e_PH` and `q3_e_PH`, using linear interpolation of the selected errors across the 20 seeds. `update_manuscript.py` writes the median and interquartile range into the selected-rule comparison table.
+## Supporting checks
 
-## Phase 1 computations
+- `audit_numbers.py` checks closure counts, error extremes and the small clean study's paired-seed calibration.
+- `audit_rank_scaling.py` checks every rank-sweep rate and Wilson interval.
+- `check_rank_pairing.py` replays 630 uniform/trough pairs at the three largest sizes and checks how the sampling transformation changes the relevant counts.
+- `check_cknn_precision.py` confirms the CkNN exception using exact edge-order comparisons and rigorous bounds on chord sums, with 60- and 100-digit checks.
+- `verify_arc_support.py` checks small graphs over F2, selected cases over F3/F5, and all 180 ellipse closure graphs.
+- `verify_separation.py` checks Example 1, including 1,024 curve-order orientations and all 120 cyclic orders across 14 threshold graphs.
+- `validate_cutoff.py` compares the adaptive H1 calculation with unrestricted persistence.
+- `paper1_methods.py` contains sampling, graph and persistence functions. `finite_diagram.py` independently checks the seven-point example using matrix reduction and bottleneck matching.
 
-All Phase 1 outputs and interpretation are indexed by `results/phase1/README.md`.
+## Environment and numerical conventions
 
-- `phase1_bridgeless.py --validate --clean --pilot` independently validates the incremental bridge helper and replays every original clean sample; `--sweep` completes all paired sweep seeds through n = 32,768. Recomputing this study requires g++ with C++17 support. `bridgeless_circle.cpp` is compiled into a temporary directory; no binary is distributed.
-- `phase1_noise.py` computes or resumes full unrestricted Euclidean Rips diagrams for the 220 distinct observed clouds and saves paired comparisons to the existing rules.
-- `phase1_summaries.py` reproduces sample-wise connected-grid oracles, all-amplitude medians/IQRs, display counts and the recorded literature decisions.
-- `phase1_report.py` regenerates the current completion record and results guide from those outputs.
-- `verify_phase1.py` checks all new saved evidence, including exact common-order separation, bridge-event replays, Euclidean scores, oracle choices and paired summaries. It is also included in `verify_release.py`. This saved-evidence verification needs no C++ compiler and does not recompute the large persistence study.
+`requirements.txt` pins the supported environment for summaries and verification, including pandas 2.2.3. The matched-noise configuration and useful-diagram execution record list pandas 3.0.5 with their saved measurements. Those records describe measurement generation; use the pinned requirements for the release commands.
 
-The same 24-budget grid is used for both rules and the oracle. Additional exact-event diagnostic budgets are excluded from the oracle. Euclidean baselines share clean samples at zero amplitude and are reused across graph methods.
+Main trials use SciPy Dijkstra. The arc-support checker lets SciPy choose the shortest-path algorithm. Edge costs, scores and shortest paths use float64; Ripser endpoints use float32.
 
-## Numerical conventions and representative timings
+Every finite interval returned by Ripser with death strictly greater than birth is retained. No positive-lifetime cutoff is applied to those diagrams. The separate seven-point matrix-reduction helper uses a 1e-12 tolerance and reports any smaller positive lifetime separately; no positive interval is discarded in the saved seven-point example. This helper does not supply the main study diagrams.
 
-Main trials select SciPy Dijkstra explicitly; the separate arc-support verifier uses SciPy's automatic shortest-path selection. Edge costs, scores and shortest paths use float64; Ripser endpoints use float32. Every finite returned interval with death strictly greater than birth is retained, with no added lifetime threshold. The observed minimum positive lifetime is 1.210719347e-8 raw units; it is not a universal resolution.
+Raw comparison tolerances are 5e-8 for the clean grid and stability checks, 1e-7 for selected-budget verification, and 1e-6 for ellipse comparisons. Arc support uses 1e-10. Longest-lifetime selection uses raw tolerance 1e-7 to choose the earliest grid maximum. These comparison tolerances do not change the Ripser positivity rule.
 
-Raw comparison tolerances are 5e-8 for post-closure grid/stability checks, 1e-7 for selected-budget verification and 1e-6 for ellipse interval comparisons. They do not change strict endpoint positivity. The maximum clean birth deviation is 3.54e-9 and the largest clean gap is 0.08955721.
+The shortest stored positive lifetime is 1.210719347e-8 in raw units. The largest clean birth deviation is 3.54e-9 and the largest clean gap is 0.08955721. These are observed values. Error quartiles use linear interpolation across the 20 seeds. The ellipse field `condition_5c` records the sufficient ordinary-error test in Theorem 3(c).
 
-The representative benchmark uses an AMD Ryzen 7 7445HS CPU, one serial process, and OpenBLAS/OMP/MKL thread limits of one. Each block constructs all edge orders and evaluates 24 budgets for each of the three methods, including all-pairs Dijkstra and the full finite H1 diagram at connected budgets. Noise uses the validated adaptive cutoff; clean-circle and ellipse cases use unrestricted Ripser. Sampling, intrinsic references, bottleneck errors, certificates, figures and file I/O are excluded. These are representative block times, not total study-generation times.
+Noise diagrams use the exact adaptive H1 cutoff justified in Appendix D.2. Clean-circle and ellipse diagrams use unrestricted Ripser. The independent validation compares 150 random weighted graphs and 126 saved n=512 diagrams.
 
-The following seconds are component-wise medians over three repetitions, followed by the range of total time. Full software versions and per-call timings are in `results/runtime_benchmark.json`.
+## Runtime and scale
 
-- Clean circle, uniform: orders 0.04; Dijkstra 4.04; diagrams 110.61; total 114.66, range 114.66–116.12.
-- Radial noise, delta=0.01: orders 0.05; Dijkstra 4.31; diagrams 73.91; total 78.27, range 77.43–84.32.
-- Disk noise, delta=0.01: orders 0.05; Dijkstra 4.37; diagrams 74.94; total 79.36, range 75.75–80.95.
-- Ellipse, uniform: orders 0.04; Dijkstra 4.80; diagrams 111.91; total 116.76, range 115.90–122.42.
+Full diagrams were computed up to n=512; only rank calculations reach n=1,000,000. Run `python3 code/benchmark_diagrams.py --repeats 3` to repeat the representative benchmark.
 
-Full-diagram studies use n=512. The full released rank-only study reaches n=1,000,000; its primary manuscript display stops at 32,768. All larger-size raw records, summaries and Wilson intervals are retained. The field `condition_5c` in the ellipse data identifies the sufficient ordinary-error test in the arc-support theorem, currently Theorem 3(c); the column name is a machine-readable identifier.
+The saved benchmark uses an AMD Ryzen 7 7445HS CPU, one serial process and one thread for OpenBLAS/OMP/MKL. Each block builds all three edge orders and evaluates 24 budgets per method, including shortest paths and diagrams at connected budgets. Sampling, reference diagrams, error matching, certificates, figures and file I/O are excluded.
 
-## Manuscript table consistency
+Component medians in seconds over three repetitions are:
 
-`update_manuscript.py` refreshes seven numerical table bodies in the existing `combined.tex`: the connected bridge-free comparison; selected noise errors and IQRs; Euclidean and grid-oracle errors with paired wins; all-amplitude selector medians; noise screens; ellipse results; and the primary rank display. `verify_manuscript_tables.py`, called by `verify_release.py`, reads the saved summaries independently and checks the new displayed values. It neither changes the manuscript nor recomputes persistence. The full release verifier separately validates those summaries against sample-level evidence.
+- Clean circle: orders 0.04; shortest paths 4.04; diagrams 110.61; total 114.66 (range 114.66–116.12).
+- Radial noise, delta=0.01: orders 0.05; shortest paths 4.31; diagrams 73.91; total 78.27 (77.43–84.32).
+- Disk noise, delta=0.01: orders 0.05; shortest paths 4.37; diagrams 74.94; total 79.36 (75.75–80.95).
+- Ellipse: orders 0.04; shortest paths 4.80; diagrams 111.91; total 116.76 (115.90–122.42).
 
-The table exporter preserves the repeated headers and footers of Table 6's longtable and the shared clean Euclidean baseline row in Table 7. The manuscript-table verifier checks that baseline against the saved Euclidean summary as well as the existing row-by-row comparisons. Regenerating the current seven table bodies leaves the source unchanged.
+These are representative block times. Full measurements, software versions and timing exclusions are in `results/runtime_benchmark.json`. Bridge and Euclidean timing definitions are in the comparison guide.

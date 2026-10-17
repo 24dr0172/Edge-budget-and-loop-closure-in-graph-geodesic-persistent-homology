@@ -34,12 +34,14 @@
   "small_assertion_tolerance": 2e-10,
   "ripser_tolerance": 1e-07,
   "arithmetic_scope": "Exact F2 column algebra and finite matching on float64 input; not arbitrary-precision chord geometry. Ripser uses float32 endpoints.",
-  "saved_scope": "All distinct saved closed budgets of radius, OR and mutual for the selected clean Experiment 17 seeds, with each own closure and complete graph added. Not every intervening edge.",
+  "saved_scope": "Distinct saved closed budgets for the 60 clean samples, with each method-specific closure and complete graph. Not every intervening edge count.",
   "versions": {
     "numpy": "2.5.3",
     "scipy": "1.18.1",
     "pandas": "3.0.5",
     "ripser": "0.6.15",
     "persim": "0.3.8"
-  }
+  },
+  "version_scope": "Environment recorded with these saved measurements. Use code/requirements.txt for release summary rebuilding and verification (pandas 2.2.3).",
+  "small_positive_lifetime_cutoff_scope": "Only the independent seven-point matrix-reduction helper; it does not generate the main study diagrams. No positive interval is discarded for the saved witness."
 }

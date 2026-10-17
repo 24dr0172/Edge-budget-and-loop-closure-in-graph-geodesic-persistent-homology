@@ -1,6 +1,6 @@
 # An arc-supported graph whose Rips graph is not cyclic in the curve order
 
-**Yes: six points on a round circle suffice.** Take the consecutive ring, add two chords from one vertex, and use Euclidean chord lengths as edge costs. Every graph edge is arc-supported. Nevertheless, at Rips threshold \(t=19/10\), the threshold graph admits no cyclic orientation in the geometric curve order. Its loop is still present at that threshold.
+**Six points on a round circle suffice.** Take the consecutive ring, add two chords from one vertex, and use Euclidean chord lengths as edge costs. Every graph edge is arc-supported. Nevertheless, at Rips threshold \(t=19/10\), the threshold graph admits no cyclic orientation in the geometric curve order. Its loop is still present at that threshold.
 
 ## 1. The two conditions
 
@@ -319,7 +319,7 @@ At \(t=19/10\), neither orientation of \(ab\) is possible in that order, as Sect
 
 This is a filtration obstruction. The graph at \(t=19/10\) is cyclic in the different order \((a,u,z,q,b,v)\); it is false that this individual graph is noncyclic in every order. Indeed each distinct threshold graph has an admissible order separately.
 
-The permanent checker `code/verify_separation.py` verifies all 120 orders (rotations identified; reversals retained) at all 14 distinct threshold graphs, including the empty graph. It solves the orientation implications and directly checks every returned orientation. At both proof graphs it also checks all directions by exhaustive enumeration, independently of that solver.
+The checker `code/verify_separation.py` verifies all 120 orders (rotations identified; reversals retained) at all 14 distinct threshold graphs, including the empty graph. It solves the orientation implications and directly checks every returned orientation. At both proof graphs it also checks all directions by exhaustive enumeration, independently of that solver.
 
 Metric thresholds are exact linear combinations in the basis \((1,\sqrt2,\sqrt5,\sqrt{10})/5\). Equal coefficient vectors identify tied distances; outward integer square-root bounds at 80 decimal places certify all comparisons. The certificate `results/separation_verification.json` lists all admissible orders and orientations at each threshold, together with their empty intersection.
 

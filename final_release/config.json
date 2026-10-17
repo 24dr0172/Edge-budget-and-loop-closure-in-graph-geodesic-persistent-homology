@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-16",
+  "date": "2026-10-17",
   "scope": "Edge budget and loop closure: clean-circle, noise, ellipse and rank-scaling studies",
   "python": "3.12.3",
   "packages": {
@@ -188,7 +188,8 @@
     "paired_rank_replay": "results/rank_pairing_replay.json",
     "selected_error_quartiles": "Linear interpolation at probabilities 0.25 and 0.75 across 20 samples."
   },
-  "phase1": {
+  "environment_scope": "Supported environment for release summaries and verification. Measurement-specific version records identify the environment recorded with those saved data.",
+  "comparisons": {
     "status": "complete",
     "guide": "results/phase1/README.md",
     "evidence": "results/phase1/completion.json",
@@ -196,7 +197,6 @@
     "bridgeless_method_records": 30000,
     "distinct_euclidean_clouds": 220,
     "grid_oracle_samples": 720,
-    "verifier": "code/verify_phase1.py",
-    "manuscript_changed": false
+    "verifier": "code/verify_phase1.py"
   }
 }

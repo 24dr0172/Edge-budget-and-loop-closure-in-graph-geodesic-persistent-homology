@@ -1,10 +1,25 @@
 # Edge budget and loop closure
 
-This package accompanies `../combined.tex` and `../combined.pdf`. All data, code, configuration and figure assets used by the paper are contained here. Paths below are relative to this folder.
+This release contains the data, code and figures for *Edge budget and loop closure in graph-geodesic persistent homology*. The paper asks when a connected graph still misses a sampled curve's loop, and what happens when more edges are added.
 
-## Reproduce and verify
+Run all commands below from `final_release/`. Full verification also needs `combined.tex` and its compiled `combined.pdf` in the parent folder.
 
-Use Python 3.12 and `code/requirements.txt`. From this folder:
+## Set up and check the release
+
+Use Python 3.12 and install the pinned packages:
+
+```sh
+python3 -m pip install -r code/requirements.txt
+python3 code/verify_release.py
+```
+
+The verifier checks file hashes, manuscript tables, saved diagrams, error calculations, sample coordinates, selection rules and graph events. It writes `results/verification_report.json`. It replays selected calculations rather than rerunning every persistence calculation.
+
+The supported environment is recorded in `config.json` and `code/requirements.txt`. Some measurement records list pandas 3.0.5; the supported environment for rebuilding summaries and checking the release uses pandas 2.2.3. See `code/README.md` for the numerical conventions.
+
+## Rebuild summaries and figures
+
+These commands use the saved measurements:
 
 ```sh
 python3 code/reproduce_results.py
@@ -13,55 +28,51 @@ python3 code/record_current.py
 python3 code/verify_release.py
 ```
 
-`python3 code/update_manuscript.py` refreshes the seven numerical manuscript table bodies from the saved summaries, including the connected bridge-free comparison and the Euclidean, grid-oracle and all-amplitude noise tables. It leaves prose and proofs untouched.
+The first command rebuilds the clean, noise, ellipse, Euclidean-baseline and grid-oracle summaries. It also exports all six rows of Table 3, including the connected bridge-free comparison, and updates the comparison guide.
 
-The first command rebuilds numerical summaries from saved measurements, including the noise and ellipse studies and the raw-data check of the large-sample closure rates. The second exports the figure assets. After editing the manuscript, compile its existing source in place before recording its identity. `record_current.py` records the current manuscript identity and file hashes; it does not compile or validate a PDF. The verifier checks those identities, saved diagrams and errors, seeded coordinates and displacement draws, grid selectors, NN-crust recovery, rank events, closure fractions and Wilson intervals. Its report is `results/verification_report.json`. It does not rerun every shortest-path and persistence calculation.
+To refresh the seven numerical table bodies in the manuscript, run `python3 code/update_manuscript.py`. Compile `../combined.tex` in place before running `record_current.py` and the verifier. The recording command updates the manuscript identities, structure record, comparison record and file manifest. Compilation is a separate step.
 
-## Evidence
+## Rerun the studies and checks
 
-- `results/clean_closure/`, `results/order_checks/`, `results/useful_diagram/`: clean-circle events, error curves, order certificates, controls and post-closure diagrams.
-- `results/noise/`: two noise models, six amplitudes, three methods, 20 seeds and the 24-budget grid; per-sample CSV/NPZ checkpoints include every computed diagram and the coordinates and draws needed to reconstruct it.
-- `results/matched_noise/`: first-connectivity and before/at-closure radial diagnostics on the same noise seeds.
-- `results/ellipse/`, `results/ellipse_checks/`: the full 3,516-graph sweep, 60 coordinate sets, closure diagrams, local/nonlocal certificates, cycle-specific Euclidean death and NN-crust comparisons.
-- `results/extra_k/`: the 120 paired n=512 rank measurements and the rank-only size sweep. `results/rank_scaling_audit.json` checks the displayed large-size counts, paired indicators and Wilson intervals against the raw records.
-- `results/arc_support_example/exact_calculation.md`, `results/separation_verification.json`: exact six-point calculations, the 1,024 curve-order orientations, and all 120 orders throughout the threshold filtration of Example 1.
-- `results/number_audit.json`, `results/helper_validation.json`, `results/cutoff_validation.json`: numerical audits and independent helper checks.
-- `results/order_checks/precision_check.json`: exact CkNN ordering and rigorous chord-sum bounds for the failing insertion.
-- `results/rank_pairing_replay.json`: paired uniform/trough OR replay at the three largest sizes, including the two cancelling changes at n=32,768.
-- `results/runtime_benchmark.json`: fresh serial 24-budget timings at n=512, repeated three times for four representative cases.
-- `manuscript_figures/`: the assets used by the manuscript; `config.json` records seeds, conventions and package versions.
-
-## Full calculation
+The following sequence covers the noise and ellipse measurements, rank sweep, connected bridge-free comparison, Euclidean baseline and supporting checks:
 
 ```sh
 python3 code/run_studies.py --workers 6
 python3 code/check_knn_miss_candidate.py
+python3 code/phase1_bridgeless.py --validate --clean --sweep
+python3 code/phase1_noise.py
+python3 code/reproduce_results.py
 python3 code/verify_separation.py
+python3 code/verify_arc_support.py
+python3 code/check_cknn_precision.py
+python3 code/check_rank_pairing.py
 python3 code/validate_cutoff.py
+python3 code/build_figures.py
+python3 code/record_current.py
+python3 code/verify_release.py
 ```
 
-`run_studies.py` resumes per-sample checkpoints. `--aggregate-only` rebuilds aggregate rows without recomputing graph metrics; `--validate-only` performs the small independent helper comparisons. The rank command also resumes stored samples; `--verify-only` checks stored summaries and selected seed replays. `regenerate_trials.py` supports individual clean/order/closure trials with explicit scratch output. See `code/README.md` for details.
+The study scripts reuse completed checkpoints. The bridge calculation needs g++ with C++17 support; checking the supplied release does not need a compiler. Clean-circle and matched radial-noise trials can be rerun separately with `regenerate_trials.py`. The seed loops and instructions for starting fresh in a working copy are in `code/README.md`.
 
-Clean/ellipse seeds are 20310101--20310120; noise seeds are the separate streams 20320101--20320120. Noise amplitudes are 0, 0.0005, 0.001, 0.002, 0.005 and 0.01. Each model scales a common unit displacement vector across amplitudes. The clean observations are shared across models, giving 60 distinct clean method/seed cases, each evaluated by two selectors. At delta=0.01, longest-lifetime selection has median normalized diagram error 0.0085--0.029 across the six model/method groups, versus about 0.32 for the first-nonempty rule. The selected-error summary includes the first and third quartiles, with linear interpolation across 20 seeds. These are finite empirical results.
+## Find the evidence
 
-Edges and shortest paths use float64; Ripser endpoints use float32. Every finite returned interval with death strictly greater than birth is retained, with no positive-lifetime cutoff. The retrospective selector uses raw lifetime tolerance 1e-7 to choose the earliest grid maximizer. Support uses 1e-10, ellipse monotonicity and sufficient-inequality checks use 1e-6, and same-vertex stability checks use raw additive tolerance 5e-8.
+- `results/clean_closure/`: clean-circle connectivity, closure and error measurements.
+- `results/order_checks/`: edge-order checks, the CkNN exception and the shuffled control.
+- `results/useful_diagram/`: saved diagrams after closure and the seven-point capped-error example.
+- `results/extra_k/`: paired extra-neighbor counts and the sample-size sweep.
+- `results/noise/`: both noise models, all amplitudes and both selection rules.
+- `results/matched_noise/`: radial-noise checks at connectivity and around latent closure.
+- `results/ellipse/` and `results/ellipse_checks/`: ellipse measurements, coordinates and geometric checks.
+- `results/phase1/`: bridge-free comparisons, Euclidean baselines, grid oracles and all-amplitude summaries.
+- `results/arc_support_example/`: the exact calculation for Example 1.
+- `manuscript_figures/`: six PDF assets, each with a matching 300-dpi PNG.
 
-The adaptive H1 cutoff is exact for a positive weighted graph metric: above the largest generating edge, every Rips edge is homologous to its shortest graph path by an endpoint fan. Later H1 maps are surjective; once no class survives beyond that edge, the full positive H1 barcode has been found. The fallback is the minimum vertex eccentricity, where a universal vertex makes the complex a cone. The validation report compares 150 random weighted graphs and 126 saved n=512 diagrams with unrestricted Ripser.
+The [results guide](results/README.md) explains the evidence and its limits. The [code guide](code/README.md) describes individual commands, precision and runtimes.
 
-Full persistence diagrams are computed only up to n=512. The size sweep up to n=1,000,000 uses local rank counts and does not compute diagrams. `code/benchmark_diagrams.py --repeats 3` measures the graph-order, shortest-path and diagram parts on representative samples; the results are not total study generation times.
+## Read the results
 
-## Phase 1 computations
+The clean study uses 20 seed streams and three chosen sampling profiles, giving 60 distinct samples; profiles share draws within each seed. The noise study uses 20 separate streams. Within each noise model, the same displacement vectors are scaled across amplitudes; the two models share the zero-noise observations.
 
-The computations in the current revision plan are complete; manuscript integration belongs to the later phases. The manuscript source and PDF are unchanged by this phase. `results/phase1/README.md` indexes the full connected-bridgeless sweep through n = 32,768, Euclidean Rips baselines, grid oracles, amplitude summaries, exact separation certificate and literature decisions. Existing experimental data and PDF/PNG figure pairs are preserved.
+The clean-data guarantees require the conditions stated in the paper. The two selection rules coincide under Corollary 2's assumptions. Their noise comparisons are empirical. At the largest tested noise amplitude, longest-lifetime selection has median normalized diagram error 0.0085–0.029 across the six groups, compared with about 0.32 for first-nonempty selection.
 
-Run `python3 code/verify_phase1.py` for the added saved-evidence checks, or `python3 code/verify_release.py` for the complete package. Recomputing the sparse bridge sweep additionally requires a C++17 compiler; ordinary verification does not. All work remains local.
-
-## Manuscript integration
-
-Table 3 uses the paired connected bridge-free sweep and pointwise Wilson intervals. Tables 5–7 retain selector IQRs and show the Euclidean baseline, the connected-grid oracle, paired wins and both selectors at every noise amplitude. Example 1 includes the two-threshold common-order proof. The general and circle statements retain their separate survival and monotonicity assumptions. The current structural/proof audit is in `results/manuscript_restructure.json`; the integrated verifier also checks all new table values against the released summaries.
-
-The abstract gives the plain, number-free message. The introduction reports the 1,500-seed-per-profile simulation rates, distinguishes them from theorems, and states the circle scope of the error comparison. Its four contributions and novelty table follow the audit, exact circle events, circle error comparison and general criterion. The exact common-order obstruction is stated with its individual-threshold qualification. Formal statements, complete proofs and scientific data are unchanged. Contribution qualifications, clean-data scope, the cost statement and numerical-convention pointers agree with the manuscript.
-
-The proof audit covers every proof environment, the closure proposition, the adaptive cutoff argument, the exact CkNN certificate, the circle small-gap derivation and the complete probability derivation. All 49 original displayed formulas are retained. The current PDF has 39 pages; references begin partway through page 37. Paired seeds, scientific inputs and all PDF/PNG figure pairs are unchanged.
-
-The ten-point consistency review is recorded in `results/manuscript_restructure.json`. Appendix D.2 keeps the seven-point example's coordinates, bar endpoints, direct matching and diagonal matching together, with both normalized costs checked against the saved data. Numerical precision and tolerance conventions have one home in D.2. Procedure 1 reports the representative runtime and full-diagram size limit. The table exporter preserves longtable headers and the shared clean Euclidean baseline row when regenerating the manuscript; its output is unchanged when the current tables are already up to date. Current identity and verification results are in `results/manuscript_revision.json` and `results/verification_report.json`.
+Full diagrams were computed up to n=512. The larger study, reaching n=1,000,000, computes ranks only. Table D.2 displays sizes through n=32,768; the release supplies the two larger sizes and their uncertainty intervals.

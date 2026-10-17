@@ -1,9 +1,10 @@
 """Independent F2 reduction and finite bottleneck matching for the retained seven-point witness; thresholds are float64, not exact-real chords."""
 import itertools
 import numpy as np
+# Tolerance for this independent witness helper only; study diagrams retain all positive Ripser bars.
 POSITIVE_TOL=1e-12
 def reduction_h1(d):
-    """Exact F2 column algebra at double-precision simplex thresholds."""
+    """Reduce over F2; return bars above POSITIVE_TOL and the largest omitted positive lifetime."""
     n=len(d);simplices=[]
     for size in (1,2,3):
         for v in itertools.combinations(range(n),size):

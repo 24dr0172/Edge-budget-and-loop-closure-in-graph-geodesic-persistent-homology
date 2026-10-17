@@ -77,5 +77,6 @@
     "ripser": "0.6.15",
     "persim": "0.3.8",
     "matplotlib": "3.11.2"
-  }
+  },
+  "version_scope": "Environment recorded with these saved measurements. Use code/requirements.txt for release summary rebuilding and verification (pandas 2.2.3)."
 }

@@ -1,6 +1,6 @@
 # Circle rank study and probability model
 
-The study combines the exact local rank identity with a rank-only sample-size experiment. It measures closure at connectivity and after extra integer-k steps on uniform, cosine and trough profiles. The probability model describes independent one-gap marks; it does not establish a universal law for dependent circle gaps.
+This study counts the extra neighbor steps needed to close a connected graph. It uses uniform, cosine and trough samples at several sizes. The count formula is exact under the stated circle assumptions. The probability model treats gap counts as independent; counts from one circle share points, so the model is a heuristic.
 
 ## What the local identity proves
 
@@ -28,14 +28,14 @@ The data support these statements:
 - Uniform n=128 through 32,768: closure at connectivity stays between 31.2% and 34.3% for OR, and between 28.7% and 29.4% for mutual. More samples do not make connectivity a reliable closure rule in these tested settings.
 - At n=512, k_conn+3 closes 94.7% of uniform OR samples (pointwise 95% Wilson interval 93.5–95.8%) and 91.1% of uniform mutual samples (89.5–92.4%).
 - At n=512 in the trough, the corresponding rates are 94.1% for OR (92.8–95.2%) and **38.1% for mutual** (35.6–40.6%). The largest extra-k requirements are 25 and 71, respectively.
-- At n=128, the trough OR rate is only **71.1%** (68.8–73.4%). Thus “OR is unchanged by a density jump” and “add three works at any n” overstate even this numerical evidence.
+- At n=128, the trough OR rate is only **71.1%** (68.8–73.4%). The density jump can affect OR at finite sample sizes, and three extra steps do not always close the graph.
 - Cosine n=128 gives a mutual +3 closure rate of 78.7%, rising to about 91% at n=4,096. Smooth density does not remove finite-size effects.
 
-The manuscript includes the identity, a practical paragraph and Table D.2 for all six sizes, with pointwise 95% Wilson intervals on the two exploratory large sizes. Profiles reuse uniform draws and phase: at n=1,000,000 uniform and cosine have identical closure indicators seed by seed for both methods, and trough OR matches them. The raw-record and interval checks are in results/rank_scaling_audit.json. The full extra-k distribution, including j=0 through 5 and tails beyond five, remains in the sample records. Intervals are pointwise, conditional on a profile and size; profiles are paired and should not be pooled as independent replications.
+The paper gives the local count formula in Eq. (6). Table 3 shows all six profile/method groups at n=512, including the connected bridge-free comparison. Table D.2 shows four sizes through n=32,768. The release also supplies n=262,144 and n=1,000,000, with pointwise 95% Wilson intervals. Profiles reuse uniform draws and phase: at n=1,000,000 uniform and cosine have identical closure indicators seed by seed for both methods, and trough OR matches them. The raw-record and interval checks are in results/rank_scaling_audit.json. The full extra-k distribution, including j=0 through 5 and tails beyond five, remains in the sample records. Intervals are pointwise, conditional on a profile and size; profiles are paired and should not be pooled as independent replications.
 
-The defensible practical message is: **connectivity can leave a gap even at large sample sizes; a small extra increment often closes uniform OR graphs, while mutual needs substantially more steps across the tested density jump.** The data do not guarantee an increment, establish an optimal method across other densities, or supply a general noisy-data tuning rule.
+The practical message is: **connectivity can leave a gap even at large sample sizes; a small extra increment often closes uniform OR graphs, while mutual needs substantially more steps across the tested density jump.** The data do not guarantee an increment, establish an optimal method across other densities, or supply a general noisy-data tuning rule.
 
-## The Poisson calculation: correct marginal tails, incomplete global law
+## Probability model and its limits
 
 On an infinite homogeneous Poisson line, condition on a consecutive gap X ~ Exp(1). The counts on its two exterior sides are independent Poisson(X). After integrating out X,
 
@@ -48,7 +48,7 @@ T_OR(k) = integral_0^infinity exp(-x) P(Poisson(x)>=k)^2 dx
 
 The mutual tail is T_mu(k)=2^(1-k)-T_OR(k), with both tails at zero equal to one. The script uses exact rational arithmetic for the finite sum before converting to floating point. Twelve independent numerical integral checks agree within 1.11e-16.
 
-A positive version is T_OR(k)=2^(1-k) P(Binomial(2k-1, 2/3)<=k-1). The last term in that binomial tail dominates up to a factor tending to two: consecutive term ratios, moving downward from k-1, are bounded by 1/2 and approach 1/2 for a fixed number of steps. The central-binomial estimate then gives
+An equivalent formula with positive terms is T_OR(k)=2^(1-k) P(Binomial(2k-1, 2/3)<=k-1). The last term in that binomial tail dominates up to a factor tending to two: consecutive term ratios, moving downward from k-1, are bounded by 1/2 and approach 1/2 for a fixed number of steps. The central-binomial estimate then gives
 
 T_OR(k) ~ 3/sqrt(pi*k) * (4/9)^k.
 
@@ -64,11 +64,11 @@ Replacing the bracket by exp(-n*T(m-j)) gives the Poissonized approximation. At 
 - OR: 0.32877, 0.71449, 0.87804, 0.94773, 0.97753, 0.99032;
 - mutual: 0.27492, 0.63368, 0.81524, 0.90694, 0.95318, 0.97647.
 
-They are close to the uniform-circle simulation. Nevertheless, ranks of different gaps on one circle share surrounding points and are dependent. Marginal Poisson tails do not prove that the global two largest ranks behave like independent marks. An extreme-event dependence or clustering argument is still missing.
+These values are close to the uniform-circle simulation. Gap ranks on one circle share surrounding points and are dependent. Marginal Poisson tails do not prove that the global two largest ranks behave like independent marks. A proof would also need to account for dependence between the largest gap ranks.
 
 For the independent geometric heuristic, **(1-q)/log(1/q) is the phase-averaged unique-maximum probability**. The tie probability is its complement, **1-(1-q)/log(1/q)**, giving 0.314916 for q=4/9 and 0.278652 for q=1/2. The classical independent geometric model has lattice oscillations; these numbers are not an exact sample-size-independent distribution. The OR tail also has a k^(-1/2) factor, so substituting its limiting ratio into a pure geometric model loses finite-size information.
 
-A density jump's finite-size deviations do not themselves prove a different limiting law as n tends to infinity. Neither direction is established here. The manuscript therefore does not promote the probability model to a theorem.
+A density jump's finite-size deviations do not themselves prove a different limiting law as n tends to infinity. Neither direction is established here. The paper presents this calculation as a heuristic.
 
 ## Files and reproduction
 
@@ -78,5 +78,6 @@ Run `python3 code/check_knn_miss_candidate.py` from the release. To recompute al
 - `summary.csv`: full CDFs, Wilson intervals, medians and maxima;
 - `config.json`: seeds, sizes, sampling and validation scope;
 - `iid_predictions.csv` and `poisson_tails.csv`: independent-model computations;
-- `manuscript_table.tex`: the inline appendix table's reproducible numerical content;
+- `main_text_summary.csv`: all six Table 3 groups, with connection, bridge-free and +3 rates and intervals;
+- `manuscript_table.tex`: the numerical rows for Table D.2;
 - `verification.json`: the independent tail integral and stored-summary checks.

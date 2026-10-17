@@ -1,4 +1,4 @@
-"""Phase 1 Euclidean Rips comparison; preserve all existing study outputs."""
+"""Compute Euclidean Rips baselines and paired selection-rule comparisons."""
 from pathlib import Path
 import argparse, hashlib, json, os, resource, sys, time
 sys.dont_write_bytecode = True

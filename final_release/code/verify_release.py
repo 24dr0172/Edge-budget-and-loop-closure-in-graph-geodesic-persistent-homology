@@ -1,5 +1,5 @@
-"""Verify the focused release using saved data and its extracted scientific kernel.
-Recorded seeds are replayed, including the new rank-only audit.
+"""Verify the release against saved data and the accompanying manuscript.
+Recorded seeds and rank-only results are replayed.
 No new persistence experiment or n=512 persistence recomputation is performed.
 The retained seven-point witness is checked independently with F2 reduction.
 """
@@ -72,16 +72,29 @@ def verify(root):
     verify_manuscript_identity(root, require)
     layout=json.loads((data/'manuscript_restructure.json').read_text())
     manuscript=(root.parent/'combined.tex').read_text()
-    require('phase2_proof_preservation',layout['status']=='passed' and all(layout['preserved'].values()),layout)
-    require('phase2_source_identity',hashlib.sha256((root.parent/'combined.tex').read_bytes()).hexdigest()==layout['current_source_sha256'])
-    require('phase2_pdf_identity',hashlib.sha256((root.parent/'combined.pdf').read_bytes()).hexdigest()==layout['current_pdf_sha256'])
+    require('manuscript_structure_record',layout['status']=='passed',layout)
+    environments = ('definition','theorem','proposition','corollary','structurallemma',
+                    'appendixlemma','remark','example','proof')
+    for name in environments:
+        require('manuscript_environment_'+name,
+                layout['environment_counts'][name]==manuscript.count(r'\begin{'+name+'}'))
+    from record_current import manuscript_records
+    _, _, current_layout = manuscript_records(root)
+    require('manuscript_structure_replay',layout==current_layout)
+    comparison_record=json.loads((data/'phase1/completion.json').read_text())
+    require('comparison_manuscript_source_identity',
+            comparison_record['manuscript_source_sha256']==layout['current_source_sha256'])
+    require('comparison_manuscript_pdf_identity',
+            comparison_record['manuscript_pdf_sha256']==layout['current_pdf_sha256'])
+    require('manuscript_structure_source_identity',hashlib.sha256((root.parent/'combined.tex').read_bytes()).hexdigest()==layout['current_source_sha256'])
+    require('manuscript_structure_pdf_identity',hashlib.sha256((root.parent/'combined.pdf').read_bytes()).hexdigest()==layout['current_pdf_sha256'])
     result_labels=['thm:loop-transition','thm:closed-loop','thm:circle-parameters','thm:arc-supported','thm:useful-diagram']
     positions=[manuscript.index('\\label{'+label+'}') for label in result_labels]
-    require('phase2_result_order',positions==sorted(positions) and r'\newtheorem{proposition}{Proposition}' in manuscript)
+    require('manuscript_result_order',positions==sorted(positions) and r'\newtheorem{proposition}{Proposition}' in manuscript)
     rank_anchor=manuscript.index(r'\label{tab:rank-scaling}')
     rank_body=manuscript[rank_anchor:manuscript.index(r'\end{tabular}',rank_anchor)]
-    require('phase2_primary_rank_display',len([line for line in rank_body.splitlines() if line.startswith(('Uniform &','Cosine &','Trough &'))])==12 and '262,144' not in rank_body and '$10^6$' not in rank_body)
-    require('phase2_noise_figure_in_release',r'\label{fig:noise-errors}' not in manuscript and all((root/'manuscript_figures'/('noise-all-errors.'+ext)).exists() for ext in ['pdf','png']))
+    require('manuscript_primary_rank_display',len([line for line in rank_body.splitlines() if line.startswith(('Uniform &','Cosine &','Trough &'))])==12 and '262,144' not in rank_body and '$10^6$' not in rank_body)
+    require('release_noise_error_figure',r'\label{fig:noise-errors}' not in manuscript and all((root/'manuscript_figures'/('noise-all-errors.'+ext)).exists() for ext in ['pdf','png']))
 
     from verify_manuscript_tables import verify_manuscript_tables
     verify_manuscript_tables(root,require)
@@ -176,12 +189,15 @@ def verify(root):
                 max_score_difference=max(max_score_difference,abs(score-row.e_PH));stored_diagrams+=1
     require('stored_diagram_matching',max_score_difference<1e-12,{'diagrams':stored_diagrams,'max_error_difference':max_score_difference})
     witness=json.loads((data/'useful_diagram/rational_counterexample.json').read_text());s=np.array(witness['coordinates'],float)
-    true=m.intrinsic(s);ref,_=reduction_h1(true);xy=np.c_[np.cos(2*np.pi*s),np.sin(2*np.pi*s)]/(2*np.pi)
+    true=m.intrinsic(s);ref,tiny= reduction_h1(true)
+    require('seven_point_reference_no_filtered_positive_bars',tiny==0.)
+    xy=np.c_[np.cos(2*np.pi*s),np.sin(2*np.pi*s)]/(2*np.pi)
     chord,iu,ju,length,orders,keys=m.build_orders(xy)
     for method,record in witness['methods'].items():
         scores=[]
         for stage in ['before','after']:
-            row=record[stage];d=m.graph_metric(orders[method],iu,ju,length,row['M'],len(s));bar,_=reduction_h1(d)
+            row=record[stage];d=m.graph_metric(orders[method],iu,ju,length,row['M'],len(s));bar,tiny=reduction_h1(d)
+            require(f'seven_point_{method}_{stage}_no_filtered_positive_bars',tiny==0.)
             score=matching_distance(bar,ref)/true.max();scores.append(score)
             require(f'seven_point_{method}_{stage}',np.max(np.abs(bar-np.array(record['diagrams'][0 if stage=='before' else 1])))<1e-12 and abs(score-row['e_PH'])<1e-12)
         require(f'capped_witness_{method}',scores[1]<scores[0] and abs(min(scores[0],record['before']['P_star'])-min(scores[1],record['before']['P_star']))<1e-12)
@@ -240,7 +256,7 @@ def verify(root):
     require('rank_scaling_raw_rows',rank_audit['status']=='passed',rank_audit)
     from verify_phase1 import verify_phase1
     phase1=verify_phase1(root)
-    require('phase1_evidence',phase1['status']=='passed',phase1)
+    require('study_comparison_evidence',phase1['status']=='passed',phase1)
     # File hashes exclude this verifier's own report to avoid a circular digest.
     manifest=data/'file_manifest.json'
     if manifest.exists():
@@ -253,7 +269,7 @@ def verify(root):
     require('code_syntax',True)
     summary_names={'release_structure','clean_native_panel','saved_sample_scope','eleven_event_rows','180_first_closed_series','closure_table_reports_all_errors','own_closure_not_global_split','grid_scope','120_paired_extra_k_rows','miss_means_unclosed_integer_layer','miss_counts_38_and_40','six_extra_k_groups','certificate_counts','CkNN_certificate_only','useful_diagram_scope','saved_diagram_transitions','matched_noise_scope','no_long_first_connected_bars','ellipse_scope','ellipse_constants','ellipse_loop_interval','ellipse_saved_diagram_inventory','manifest_file_inventory','code_syntax','permuted_scale_control','control_grid_matches','noise_closure_comparison','noise_closure_event_positions','noise_closure_diagram_inventory','noise_closure_summary'}
     summary={name:item for name,item in checks.items() if name in summary_names or 'detail' in item}
-    return {'status':'passed','scope':'Manuscript identity; saved clean, noise and ellipse diagrams; seed and selector replay; finite witnesses; raw rank-sweep counts, Wilson intervals and Phase 1 comparators. No full persistence regeneration.','checks_passed':len(checks)+studies['checks_passed']+rank_audit['checks_passed']+phase1['checks_passed'],'checks':summary}
+    return {'status':'passed','scope':'Manuscript identity; saved clean, noise and ellipse diagrams; seed and selector replay; finite witnesses; raw rank-sweep counts, Wilson intervals and study comparisons. No full persistence regeneration.','checks_passed':len(checks)+studies['checks_passed']+rank_audit['checks_passed']+phase1['checks_passed'],'checks':summary}
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('--release',type=Path,default=Path(__file__).resolve().parents[1]);ap.add_argument('--report',type=Path)

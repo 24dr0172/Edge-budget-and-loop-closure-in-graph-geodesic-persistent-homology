@@ -1,4 +1,4 @@
-"""Reproduce Phase 1 comparators from saved per-sample data, never pooled curves."""
+"""Rebuild study comparisons from saved per-sample measurements."""
 from pathlib import Path
 import hashlib,json,sys
 sys.dont_write_bytecode=True
@@ -81,7 +81,7 @@ def literature():
     record=dict(
         reviewed_on='2026-10-16',
         connectivity_stopping=dict(
-            decision='Retain the current description: a simple heuristic.',
+            decision='Choosing the smallest connecting parameter is described as a simple heuristic.',
             stronger_practice_claim_supported=False,
             reason='The checked software documentation uses a fixed neighbor default; connectivity requirements alone do not establish choosing the smallest connecting parameter.',
             source='https://scikit-learn.org/stable/modules/generated/sklearn.manifold.Isomap.html',

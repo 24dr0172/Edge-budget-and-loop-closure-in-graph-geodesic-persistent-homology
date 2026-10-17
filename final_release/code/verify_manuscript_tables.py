@@ -1,4 +1,4 @@
-"""Check the displayed Phase 3 comparisons against the saved scientific summaries."""
+"""Check the current manuscript tables and Table 3 export against the saved scientific summaries."""
 from pathlib import Path
 import csv,re
 
@@ -23,6 +23,20 @@ def verify_manuscript_tables(root,require):
         row=next(r for r in bridge if int(r['n'])==512 and r['profile']==profile and r['method']==method)
         expected=[rounded(100*float(row[event+'_'+field]),1) for event in ['connection','bridgeless','plus3'] for field in ['rate','wilson_lo','wilson_hi']]
         require('manuscript_bridge_table_'+profile+'_'+method,numbers(line)==expected)
+    exported=rows('extra_k/candidate_audit/main_text_summary.csv')
+    ranks=rows('extra_k/candidate_audit/summary.csv')
+    require('table3_export_scope',len(exported)==6 and
+            [(r['profile'],r['method']) for r in exported]==[(p,m) for p in profiles for m in methods[1:]])
+    for row in exported:
+        rank=next(r for r in ranks if r['profile']==row['profile'] and r['method']==row['method'] and int(r['n'])==512)
+        b=next(r for r in bridge if r['profile']==row['profile'] and r['method']==row['method'] and int(r['n'])==512)
+        require('table3_export_sample_count_'+row['profile']+'_'+row['method'],
+                int(row['n'])==512 and int(row['samples'])==int(rank['samples'])==int(b['samples']))
+        for event, j in [('connection',0),('plus3',3),('bridgeless',None)]:
+            for field, suffix in [('rate',''),('wilson_lo','_lo'),('wilson_hi','_hi')]:
+                source=float(b[event+'_'+field]) if j is None else float(rank[f'cdf_{j}{suffix}'])
+                require('table3_export_'+row['profile']+'_'+row['method']+'_'+event+'_'+field,
+                        abs(float(row[event+'_'+field+'_percent'])-100*source)<1e-11)
     baseline=rows('phase1/euclidean/summary.csv')
     oracle=rows('phase1/grid_oracle_summary.csv')
     pairs=rows('phase1/euclidean/paired_summary.csv')

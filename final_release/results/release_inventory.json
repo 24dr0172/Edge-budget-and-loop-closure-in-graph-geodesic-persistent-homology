@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-16",
+  "date": "2026-10-17",
   "retained_root_folders": [
     "code",
     "results",
@@ -30,12 +30,12 @@
   "appendix_figures": 1,
   "figure_pdf_png_pairs": 6,
   "expanded_noise_distinct_clouds": 220,
-  "phase1_completion": "results/phase1/completion.json",
   "payload_exclusions": [
     "results/release_inventory.json",
     "results/file_manifest.json",
     "results/verification_report.json"
   ],
   "payload_files": 1061,
-  "payload_bytes": 40400538
+  "payload_bytes": 40387920,
+  "comparison_record": "results/phase1/completion.json"
 }

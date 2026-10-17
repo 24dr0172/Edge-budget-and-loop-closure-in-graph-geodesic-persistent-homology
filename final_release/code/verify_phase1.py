@@ -1,4 +1,4 @@
-"""Verify Phase 1 saved evidence without regenerating the large computations."""
+"""Verify saved study comparisons without rerunning the large calculations."""
 from pathlib import Path
 import hashlib,json,sys
 sys.dont_write_bytecode=True
@@ -16,7 +16,7 @@ def verify_phase1(F):
     R=F/'results/phase1';count=0
     def require(name,condition):
         nonlocal count
-        if not bool(condition):raise AssertionError('Phase 1: '+name)
+        if not bool(condition):raise AssertionError('Study comparisons: '+name)
         count+=1
     from verify_separation import build_report
     separation=json.loads((F/'results/separation_verification.json').read_text())

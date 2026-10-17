@@ -7,21 +7,20 @@ METHODS=('R2_global','OR_kNN','mutual_kNN')
 PROFILES=('uniform','strong_cosine','localized_trough')
 
 def reproduce_rank_table(root):
-    """Extract the four main-text rows and Wilson intervals from the size sweep."""
-    folder=root/'results/extra_k/candidate_audit'
-    source=pd.read_csv(folder/'summary.csv')
-    rows=[]
-    for profile in ('uniform','localized_trough'):
-        for method in ('OR_kNN','mutual_kNN'):
-            row=source[(source.profile==profile)&(source.method==method)&(source.n==512)].iloc[0]
-            out=dict(profile=profile,method=method,n=512,samples=int(row.samples))
-            for j in (0,3):
-                for suffix in ('','_lo','_hi'):
-                    key=f'cdf_{j}{suffix}'
-                    out[key+'_percent']=100*float(row[key])
+    """Export all six Table 3 groups and their pointwise Wilson intervals."""
+    folder = root/'results/extra_k/candidate_audit'
+    source = pd.read_csv(root/'results/phase1/bridgeless/sweep_summary.csv')
+    rows = []
+    for profile in PROFILES:
+        for method in ('OR_kNN', 'mutual_kNN'):
+            row = source[(source.profile==profile)&(source.method==method)&(source.n==512)].iloc[0]
+            out = dict(profile=profile, method=method, n=512, samples=int(row.samples))
+            for event in ('connection', 'bridgeless', 'plus3'):
+                for field in ('rate', 'wilson_lo', 'wilson_hi'):
+                    out[event+'_'+field+'_percent'] = 100*float(row[event+'_'+field])
             rows.append(out)
-    pd.DataFrame(rows).to_csv(folder/'main_text_summary.csv',index=False)
-    print('Main extra-k table rebuilt: four rows, with pointwise 95% Wilson intervals.')
+    pd.DataFrame(rows).to_csv(folder/'main_text_summary.csv', index=False)
+    print('Table 3 export rebuilt: six rows, including bridge-free rates and Wilson intervals.')
 
 def reproduce(root):
     data=root/'results';clean=data/'clean_closure';extra=data/'extra_k';extra.mkdir(exist_ok=True)
@@ -86,18 +85,27 @@ def reproduce(root):
                          median_longest_over_reference=g.longest_over_reference.median(),
                          long_at_half=int((g.longest_over_reference>=.5).sum())))
     pd.DataFrame(rows).to_csv(data/'matched_noise/closure_summary.csv',index=False)
-    reproduce_rank_table(root)
     from audit_numbers import main as audit_numbers
     from summarize_studies import main as summarize_studies
     audit_numbers()
     summarize_studies(make_figures=False)
     from audit_rank_scaling import audit_rank_scaling
     audit_rank_scaling(root,write=True)
+    from phase1_bridgeless import summarize as bridge_summaries
+    from phase1_noise import summarize as euclidean_summaries
+    from phase1_summaries import main as comparison_summaries
+    from phase1_report import main as comparison_guide
+    bridge_summaries('clean')
+    bridge_summaries('sweep')
+    euclidean_summaries()
+    comparison_summaries()
+    reproduce_rank_table(root)
+    comparison_guide()
     print('Tables rebuilt: 11 event rows, 9 closure-error rows, 120 paired k gaps, 4 noise-closure rows.')
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('--release',type=Path,default=Path(__file__).resolve().parents[1])
-    ap.add_argument('--rank-table-only',action='store_true',help='Extract the compact rank-sweep table without rebuilding other outputs')
+    ap.add_argument('--rank-table-only',action='store_true',help='Export all six Table 3 groups without rebuilding other outputs')
     args=ap.parse_args()
     if args.rank_table_only:
         reproduce_rank_table(args.release.resolve())

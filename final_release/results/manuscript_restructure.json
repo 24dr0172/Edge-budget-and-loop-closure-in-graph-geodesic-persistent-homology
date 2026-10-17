@@ -1,230 +1,53 @@
 {
   "status": "passed",
-  "phase": 5,
-  "current_source_sha256": "4a0887353aa7e38d4c40ce4cc32d62dfb99eac12a6b990d5472d45c85ba1f0ab",
-  "preserved": {
-    "definition_statements_preserved": 5,
-    "theorem_statements_preserved": 4,
-    "proposition_statements_preserved": 1,
-    "corollary_statements_preserved": 2,
-    "structurallemma_statements_preserved": 1,
-    "appendixlemma_statements_preserved": 5,
-    "remark_statements_preserved": 2,
-    "example_statements_preserved": 1,
-    "proof_environments_preserved": 8,
-    "complete_appendix_A_preserved": true,
-    "complete_appendix_B_preserved": true,
-    "adaptive_cutoff_proof_preserved": true,
-    "exact_CkNN_certificate_preserved": true,
-    "procedure_cost_derivation_preserved": true,
-    "complete_probability_derivation_preserved": true,
-    "all_original_displayed_math_preserved": 49,
-    "abstract_unchanged": true,
-    "preamble_title_authors_unchanged": true,
-    "inline_and_external_figure_source_unchanged": true,
-    "declarations_unchanged": true,
-    "bibliography_unchanged": true,
-    "no_release_url_added": true
-  },
-  "unique_labels": 76,
-  "unresolved_references": 0,
-  "theorem_numbers": {
-    "thm:loop-transition": 1,
-    "thm:circle-parameters": 2,
-    "thm:arc-supported": 3,
-    "thm:useful-diagram": 4
-  },
-  "proposition_numbers": {
-    "thm:closed-loop": 1
-  },
-  "statement_checks": "All formal statements, examples, remarks and proof environments match the input exactly. The abstract and preamble are unchanged. The capped-error example is consolidated and its two matching options are written out.",
-  "comparison": "Compared with the current input source: all 8 proof environments, Appendix A, Appendix B, cutoff argument, exact precision certificate, procedure-cost derivation, probability derivation and 49 original displayed formulas are unchanged. Requested edits affect prose, contribution qualifications and the expanded matching calculation; one displayed formula is added.",
-  "raw_data_changed": false,
-  "current_pdf_sha256": "aa950b84fc07ff714a408d1d21180cdc8f21d10fc7e0e7cb669b2eed1f404578",
-  "moved_material": {
-    "tie_examples": "Appendix A.4",
-    "cap_example": "Appendix D.2",
-    "procedure_complexity": "Appendix D.2",
-    "closure_error_table": "Table D.1 in Appendix D.2",
-    "runtime_environment": "final_release/code/README.md and results/runtime_benchmark.json",
-    "extra_noise_figure": "final_release/manuscript_figures/noise-all-errors.pdf and .png"
-  },
-  "current_tables": {
-    "tab:noise-selectors": "5",
-    "tab:closed-errors": "D.1",
-    "tab:rank-scaling": "D.2",
-    "tab:noise-comparators": "6",
-    "tab:noise-amplitudes": "7"
-  },
-  "displayed_rank_sizes": [
-    128,
-    512,
-    4096,
-    32768
-  ],
-  "all_rank_data_retained": true,
-  "compile": {
-    "status": "success",
-    "compiler": "cached local Tectonic",
-    "editor_compiler": "unavailable: TeX bundle fetch failed",
-    "unresolved_references": 0,
-    "overfull_boxes": 0,
-    "underfull_boxes": 0
-  },
+  "scope": "Current source/PDF identities, labels, citations, environment counts and result numbering.",
+  "current_source_sha256": "864b55652327e56d636481aa151a90c5d1f3ce043c0e13fdf75f1af422673dff",
+  "current_pdf_sha256": "8c38fd3f414d337a7d86f8ec25fa9957a3788bb8226e085cf30bbda1922d3b61",
   "pdf_pages": 39,
-  "layout_review": "All 39 pages visually reviewed, with contribution, cost, noise, scope, conventions and matching pages inspected at full size; no clipped, overlapping or unreadable content.",
-  "protected_scientific_files": 932,
-  "phase3_integration": {
-    "common_order_argument": "Example 1, with all 120 orders and 14 thresholds checked in release certificate",
-    "bridgeless": "Table 3 and Appendix D.4, all three profiles; primary sizes through 32768",
-    "noise_comparators": "Table 6, paired Euclidean and connected-grid oracle comparisons",
-    "noise_all_amplitudes": "Table 7",
-    "asymmetry": "Section 4.4, circle bound separated from finite observations",
-    "spectral_comparison": "Related work, primary source construction and qualified robustness",
-    "scope": "Section 6 limitations and Section 7 conclusion: known intrinsic reference rationale, clean assumptions and separate survival requirements."
+  "source_checks": {
+    "unique_labels": 76,
+    "resolved_citation_keys": 53,
+    "unresolved_references": 0,
+    "unresolved_citations": 0
   },
-  "references_first_page": 37,
-  "pages_without_reference_text": 36,
-  "page_count_note": "References start partway through page 37. Non-reference material occupies 36 complete pages and the beginning of that page.",
-  "phase4_integration": {
-    "abstract_words": 168,
-    "abstract_has_numbers": false,
-    "abstract_has_later_defined_terms": false,
-    "contribution_order": [
-      "Connectivity and loop retention differ.",
-      "Exact events for standard graphs on a circle.",
-      "The cost of adding edges on a circle.",
-      "A single-cycle criterion beyond the circle."
-    ],
-    "novelty_table_result_order": [
-      "Theorem 1",
-      "Proposition 1",
-      "Theorem 2",
-      "Theorem 4",
-      "Corollary 1",
-      "Theorem 3"
-    ],
-    "introductory_miss_rates": [
-      {
-        "n": 512,
-        "profile": "uniform",
-        "method": "OR_kNN",
-        "samples": 1500,
-        "miss_rate": 67.13333333333334,
-        "reported_percent": 67
-      },
-      {
-        "n": 512,
-        "profile": "uniform",
-        "method": "mutual_kNN",
-        "samples": 1500,
-        "miss_rate": 71.06666666666666,
-        "reported_percent": 71
-      },
-      {
-        "n": 512,
-        "profile": "localized_trough",
-        "method": "mutual_kNN",
-        "samples": 1500,
-        "miss_rate": 92.86666666666666,
-        "reported_percent": 93
-      }
-    ],
-    "scope_checks": [
-      "Simulation rates are tied to named profiles and tested sizes.",
-      "The first-connected radius claim retains distinct chords and the gap bound.",
-      "The kNN retention claim requires a positive reference bar.",
-      "The error ceiling is scoped to circle samples; the dense-limit ratio is not a finite-sample bound.",
-      "Ordinary-error monotonicity has its separate small-gap condition.",
-      "The common-order obstruction allows every threshold graph its own order.",
-      "The noisy advantage is an observed median comparison, with no general guarantee."
-    ]
+  "environment_counts": {
+    "definition": 5,
+    "theorem": 4,
+    "proposition": 1,
+    "corollary": 2,
+    "structurallemma": 1,
+    "appendixlemma": 5,
+    "remark": 2,
+    "example": 1,
+    "proof": 8
   },
-  "review_date": "2026-10-17",
-  "current_displayed_math": 50,
-  "review_corrections": {
-    "1": "Contribution 2 restores distinct unordered-pair chords, the gap bound, positive reference, Eq. (6), and separate miss rates.",
-    "2": "Contribution 4 restores g<1/2, positive reference and a possibly empty interval.",
-    "3": "Contribution 3 states the dense-limit ratio and finite-sample caveat.",
-    "4": "Procedure 1 contains the size limit and 78\u2013117-second representative block times.",
-    "5": "Appendix D.2 combines coordinates and bar endpoints with both normalized matching options; self-reference removed.",
-    "6": "Section 3.6 states explicitly that neighboring circle gap keys are dependent.",
-    "7": "Section 5 defines early choices in a complete sentence and states why noise does not contradict the clean corollary.",
-    "8": "Limitations item 1 explains the known intrinsic reference supplied by controlled curves and restores the specified scope sentence.",
-    "9": "Section 2.3 and the conclusion qualify order-free coincidence and selection by the clean-data hypotheses.",
-    "10": "Appendix C points to D.2 for precision and tolerances; the observed minimum lifetime is retained in D.2."
+  "display_math_blocks_by_type": {
+    "bracketed": 43,
+    "equation": 7,
+    "align": 1
   },
-  "matching_option_checks": [
-    {
-      "method": "R2_global",
-      "stage": "before",
-      "normalized_direct_cost": 0.12237058199026517,
-      "normalized_diagonal_cost": 0.04406429738883108,
-      "error": 0.04406429738883108
+  "result_numbers": {
+    "theorem": {
+      "thm:loop-transition": 1,
+      "eq:h1-plateau": 1,
+      "thm:circle-parameters": 2,
+      "thm:arc-supported": 3,
+      "thm:useful-diagram": 4
     },
-    {
-      "method": "R2_global",
-      "stage": "after",
-      "normalized_direct_cost": 0.15605136183143195,
-      "normalized_diagonal_cost": 0.03006012024048096,
-      "error": 0.03006012024048096
+    "proposition": {
+      "thm:closed-loop": 1
     },
-    {
-      "method": "OR_kNN",
-      "stage": "before",
-      "normalized_direct_cost": 0.12237058199026517,
-      "normalized_diagonal_cost": 0.04406429738883108,
-      "error": 0.04406429738883108
+    "corollary": {
+      "cor:cost-ceiling": 1,
+      "cor:order-free": 2
     },
-    {
-      "method": "OR_kNN",
-      "stage": "after",
-      "normalized_direct_cost": 0.15605136183143195,
-      "normalized_diagonal_cost": 0.03006012024048096,
-      "error": 0.03006012024048096
+    "example": {
+      "ex:noncyclic": 1
     },
-    {
-      "method": "mutual_kNN",
-      "stage": "before",
-      "normalized_direct_cost": 0.12237058199026517,
-      "normalized_diagonal_cost": 0.04406429738883108,
-      "error": 0.04406429738883108
-    },
-    {
-      "method": "mutual_kNN",
-      "stage": "after",
-      "normalized_direct_cost": 0.15605136183143195,
-      "normalized_diagonal_cost": 0.03006012024048096,
-      "error": 0.03006012024048096
+    "remark": {
+      "rem:unsupported-shortcut": 1,
+      "rem:unsupported-edge": 1,
+      "rem:diagram-nonmonotone": 2
     }
-  ],
-  "contribution_miss_rate_checks": [
-    {
-      "profile": "uniform",
-      "method": "OR_kNN",
-      "n": 512,
-      "samples": 1500,
-      "reported_miss_percent": 67
-    },
-    {
-      "profile": "uniform",
-      "method": "mutual_kNN",
-      "n": 512,
-      "samples": 1500,
-      "reported_miss_percent": 71
-    },
-    {
-      "profile": "localized_trough",
-      "method": "mutual_kNN",
-      "n": 512,
-      "samples": 1500,
-      "reported_miss_percent": 93
-    }
-  ],
-  "table_exporter_idempotent": true,
-  "table_exporter_preserves": [
-    "longtable header and footer definitions",
-    "shared clean Euclidean baseline row",
-    "all existing data rows and source outside table bodies"
-  ]
+  }
 }

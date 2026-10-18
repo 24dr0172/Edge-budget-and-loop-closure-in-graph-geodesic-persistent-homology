@@ -11,15 +11,20 @@ from run_studies import finite_graph_diagram
 
 def benchmark(root,repeats=3):
     root=Path(root)
-    with (root/'results/clean_closure/budget_summary.csv').open() as f:
-        budgets=sorted({int(row['M']) for row in csv.DictReader(f)})
+    from experiment_core import grid_values,ellipse_points
+    budgets=sorted({count for label,count in grid_values()})
     cases=[]
     s,clean=m.sample_cloud(20310101,'uniform');cases.append(('clean_uniform',20310101,clean,False))
-    for model in ['radial','isotropic']:
-        with np.load(root/f'results/noise/checkpoints/{model}_20320101_delta0.01.npz') as z:
-            cases.append((model+'_delta0.01',20320101,z['observed'].copy(),True))
-    with np.load(root/'results/ellipse_checks/coordinates.npz') as z:
-        cases.append(('ellipse_uniform',20310101,z['20310101_uniform_xy'].copy(),False))
+    seed=20320101;s,clean=m.sample_cloud(seed,'uniform')
+    normal=clean*(2*np.pi)
+    draws=np.random.default_rng(seed+m.NOISE_SEED_OFFSET).uniform(-1.,1.,len(s))
+    cases.append(('radial_delta0.01',seed,clean+.01*draws[:,None]*normal,True))
+    rng=np.random.default_rng(seed+90000011)
+    radius=np.sqrt(rng.uniform(size=len(s)));angle=rng.uniform(0.,2*np.pi,len(s))
+    displacement=radius[:,None]*np.c_[np.cos(angle),np.sin(angle)]
+    cases.append(('isotropic_delta0.01',seed,clean+.01*displacement,True))
+    s,_=m.sample_cloud(20310101,'uniform')
+    cases.append(('ellipse_uniform',20310101,ellipse_points(s),False))
     m.diagram(np.array([[0.,1.,1.],[1.,0.,1.],[1.,1.,0.]]))
     measurements=[]
     for name,seed,points,adaptive in cases:

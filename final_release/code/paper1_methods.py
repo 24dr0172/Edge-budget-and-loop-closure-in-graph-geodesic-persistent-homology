@@ -1,4 +1,4 @@
-"""Paper 1 scientific kernel. Density-inversion and certificate bodies extracted from the recorded source; graph helpers retain native costs and the released rank/tie conventions."""
+"""Sampling, edge orders, shortest-path metrics and order certificates for the paper."""
 from __future__ import annotations
 from typing import List,Tuple
 import math

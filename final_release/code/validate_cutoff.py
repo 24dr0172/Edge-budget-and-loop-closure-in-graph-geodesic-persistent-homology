@@ -39,6 +39,7 @@ def main():
                     D=m.graph_metric(orders[method],iu,ju,length,row.M,len(points))
                     maximum=float(length[orders[method][:row.M]].max())
                     same(finite_graph_diagram(D,maximum),saved[f'{method}_M{row.M}'])
+                    same(finite_graph_diagram(D,maximum),m.diagram(D))
                     checked+=1
     report=dict(status='passed',random_positive_weight_graphs=150,n512_saved_unrestricted_diagrams=checked,
                 comparison='Exact equality of lexicographically sorted float32 endpoint pairs',elapsed_seconds=time.monotonic()-start,

@@ -14,7 +14,7 @@ def sha(path):
 
 def oracle():
     cells=pd.read_csv(F/'results/noise/cells.csv')
-    cfg=json.loads((F/'config.json').read_text())
+    cfg=json.loads((F/'code/config.json').read_text())
     grid=cells[cells.grid]
     assert len(grid)==17280 and set(grid.M)==set(cfg['noise']['grid_M'])
     keys=['seed','model','delta','method']
@@ -104,7 +104,7 @@ def literature():
 def main():
     OUT.mkdir(parents=True,exist_ok=True)
     oracle();amplitudes();rank_counts();literature()
-    source_names=['config.json','results/noise/cells.csv','results/noise/selectors.csv',
+    source_names=['code/config.json','results/noise/cells.csv','results/noise/selectors.csv',
                   'results/noise/selector_summary.csv','results/extra_k/candidate_audit/samples.csv']
     (OUT/'summary_inputs.json').write_text(json.dumps({name:sha(F/name) for name in source_names},indent=2)+'\n')
     print('Saved: 720 sample grid oracles, 36 oracle groups, 36 all-amplitude rows, paired rule gaps, sweep counts and literature decisions.')

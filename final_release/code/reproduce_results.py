@@ -22,7 +22,7 @@ def reproduce_rank_table(root):
     pd.DataFrame(rows).to_csv(folder/'main_text_summary.csv', index=False)
     print('Table 3 export rebuilt: six rows, including bridge-free rates and Wilson intervals.')
 
-def reproduce(root):
+def base_tables(root):
     data=root/'results';clean=data/'clean_closure';extra=data/'extra_k';extra.mkdir(exist_ok=True)
     cells=pd.read_csv(clean/'cells.csv')
     events=[('R2_global','first_connected'),('R2_global','pre_completion'),('R2_global','completion'),
@@ -78,6 +78,8 @@ def reproduce(root):
         statistic='Median of paired k_close-k_conn; not difference of marginal medians.',
         miss_definition='k_conn < k_close; reference loops are positive in these clean samples.',
         scope='Descriptive n=512 evidence only; no size-scaling, asymptotic or fixed extra-k guarantee.'),indent=2)+'\n')
+    if not (data/'matched_noise/closure_comparison.csv').exists():
+        return
     closure_noise=pd.read_csv(data/'matched_noise/closure_comparison.csv');rows=[]
     for (method,event),g in closure_noise.groupby(['method','event'],sort=True):
         rows.append(dict(delta=.01,delta_n=5.12,method=method,event=event,attempted=len(g),
@@ -85,6 +87,9 @@ def reproduce(root):
                          median_longest_over_reference=g.longest_over_reference.median(),
                          long_at_half=int((g.longest_over_reference>=.5).sum())))
     pd.DataFrame(rows).to_csv(data/'matched_noise/closure_summary.csv',index=False)
+
+def reproduce(root):
+    base_tables(root)
     from audit_numbers import main as audit_numbers
     from summarize_studies import main as summarize_studies
     audit_numbers()
@@ -105,9 +110,12 @@ def reproduce(root):
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('--release',type=Path,default=Path(__file__).resolve().parents[1])
+    ap.add_argument('--base-only',action='store_true',help='Rebuild the clean and radial summary tables only')
     ap.add_argument('--rank-table-only',action='store_true',help='Export all six Table 3 groups without rebuilding other outputs')
     args=ap.parse_args()
-    if args.rank_table_only:
+    if args.base_only:
+        base_tables(args.release.resolve())
+    elif args.rank_table_only:
         reproduce_rank_table(args.release.resolve())
     else:
         reproduce(args.release.resolve())

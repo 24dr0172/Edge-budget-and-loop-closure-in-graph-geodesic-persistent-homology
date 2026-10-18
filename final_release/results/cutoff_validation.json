@@ -3,6 +3,6 @@
   "random_positive_weight_graphs": 150,
   "n512_saved_unrestricted_diagrams": 126,
   "comparison": "Exact equality of lexicographically sorted float32 endpoint pairs",
-  "elapsed_seconds": 220.60082542700002,
+  "elapsed_seconds": 736.1282560300024,
   "justification": "Every Rips edge is homologous to its generating shortest graph path. Above the largest graph edge no positive H1 class is born; an H1-empty cutoff therefore completes the barcode. The last cutoff has a universal vertex."
 }

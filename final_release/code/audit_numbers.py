@@ -2,13 +2,13 @@
 from pathlib import Path
 import json,sys
 sys.dont_write_bytecode=True
-sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'final_release/code'))
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'code'))
 import numpy as np
 import pandas as pd
 import paper1_methods as m
-PAPER=Path(__file__).resolve().parents[2]
-SOURCE=PAPER/'final_release/results'
-OUT=PAPER/'final_release/results'
+PAPER=Path(__file__).resolve().parents[1]
+SOURCE=PAPER/'results'
+OUT=PAPER/'results'
 
 
 def main():

@@ -4,9 +4,9 @@ import argparse, concurrent.futures, itertools, json, os, sys, time
 sys.dont_write_bytecode = True
 for key in ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS'):
     os.environ[key] = '1'
-PAPER = Path(__file__).resolve().parents[2]
-SUPPORT = PAPER / 'final_release'
-RELEASE = PAPER / 'final_release'
+PAPER = Path(__file__).resolve().parents[1]
+SUPPORT = PAPER
+RELEASE = PAPER
 sys.path.insert(0, str(RELEASE / 'code'))
 import numpy as np
 import pandas as pd
@@ -144,13 +144,14 @@ def nn_crust(points):
 
 
 def grid():
-    values = pd.read_csv(RELEASE/'results/clean_closure/budget_summary.csv')
-    return sorted(values.M.unique().astype(int).tolist())
+    from experiment_core import grid_values
+    return [count for label,count in grid_values()]
 
 
 def noise_job(seed, model, delta):
     stem = f'{model}_{seed}_delta{delta:g}'
     out = SUPPORT/'results/noise/checkpoints'
+    out.mkdir(parents=True,exist_ok=True)
     csv, npz = out/f'{stem}.csv', out/f'{stem}.npz'
     if csv.exists() and npz.exists():
         return stem, 'resumed'
@@ -185,12 +186,24 @@ def noise_job(seed, model, delta):
                              M_conn=conn, M_close=close, **scores))
     pd.DataFrame(rows).to_csv(csv, index=False)
     np.savez_compressed(npz, **arrays)
+    # The Euclidean baseline uses this independently generated observed cloud.
+    import hashlib
+    from scipy.spatial.distance import cdist
+    baseline = SUPPORT/'results/phase1/euclidean/checkpoints'
+    baseline.mkdir(parents=True,exist_ok=True)
+    started=time.monotonic()
+    bars=m.diagram(cdist(points,points)); diameter=float(true.max())
+    np.savez_compressed(baseline/npz.name,bars=bars,reference=reference,
+        diameter=diameter,e_PH=one_bar_distance(bars,reference)/diameter,
+        elapsed_seconds=time.monotonic()-started,
+        source_sha256=hashlib.sha256(npz.read_bytes()).hexdigest())
     return stem, len(rows)
 
 
 def ellipse_job(seed, profile):
     stem = f'{profile}_{seed}'
     out = SUPPORT/'results/ellipse/checkpoints'
+    out.mkdir(parents=True,exist_ok=True)
     csv, npz, info = out/f'{stem}.csv', out/f'{stem}.npz', out/f'{stem}.json'
     if csv.exists() and npz.exists() and info.exists():
         return stem, 'resumed'
@@ -223,7 +236,7 @@ def ellipse_job(seed, profile):
         selected = sorted(set([M for M in budgets if M >= close] + [close, max(close, first_nonlocal)]))
         for M in selected:
             D = m.graph_metric(order, iu, ju, length, M, len(s))
-            scores, bars = measurements(D, true, reference)
+            scores, bars = measurements(D, true, reference,maximum_edge=float(length[order[:M]].max()))
             ok, failures = arc_support(D, chord, iu, ju, order[:M])
             arrays[f'{method}_M{M}'] = bars
             rows.append(dict(seed=seed, profile=profile, method=method, M=M,

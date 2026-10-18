@@ -4,7 +4,7 @@ This folder supplies the connected bridge-free, Euclidean-baseline and grid-orac
 
 ## Evidence
 
-- [Exact Example 1 certificate](../separation_verification.json): all 120 cyclic orders at 14 distinct threshold graphs. Each graph admits an order separately; no order works throughout the filtration. The [exact argument](../arc_support_example/exact_calculation.md) gives the calculations.
+- [Exact Example 1 certificate](../separation_verification.json): all 120 cyclic orders at 14 distinct threshold graphs. Each graph admits an order separately; no order works throughout the filtration. The certificate records the distances and admissible orders.
 - [Clean bridge events](bridgeless/clean_samples.csv): 60 samples and two kNN rules, checked against full Cartesian ranks and an independent bridge search. The [summary](bridgeless/clean_summary.csv) gives rates and Wilson intervals.
 - [Bridge sweep](bridgeless/sweep_samples.csv): 15,000 profile/seed/size samples and 30,000 method records through n=32,768. See the [summary](bridgeless/sweep_summary.csv), [validation](bridgeless/validation.json) and [timings](bridgeless/sweep_timings.csv).
 - [Euclidean baseline](euclidean/samples.csv): 220 distinct observed clouds. Reusing clean clouds across models gives 240 model/amplitude/seed rows. The baseline is also shared across graph methods. See [error quartiles](euclidean/summary.csv) and [paired comparisons](euclidean/paired_summary.csv).
@@ -43,7 +43,7 @@ These results describe the tested models and grid. The selection rules have no g
 
 ## Reproduction
 
-Run commands from final_release with the environment and complete sequence in the [release README](../../README.md). To rebuild these summaries and this guide from saved measurements, run:
+Run commands from the release folder with the environment and complete sequence in the [code guide](../../code/README.md). To rebuild these summaries and this guide from saved measurements, run:
 
 ```sh
 python3 code/reproduce_results.py
@@ -65,8 +65,8 @@ The bridge calculation requires g++ with C++17 support. The helper is compiled i
 
 ## Timing definitions
 
-Individual Euclidean times include distances and persistence, excluding checkpoint file I/O. Pilot and full timing records describe separate runs; the per-checkpoint times cover all 220 diagrams.
+Individual Euclidean times include distances and persistence, excluding checkpoint file I/O. The per-checkpoint times cover all 220 diagrams.
 
 Bridge times include sampling, helper startup, graph reconstruction and event calculations, excluding saved-row writing. Child RSS is the cumulative maximum across helper processes. The pilot also includes compiler memory when compilation was needed.
 
-Bridge times were measured while the serial Euclidean job was running. They show feasibility, rather than isolated benchmark performance.
+Timing records describe this run and depend on the computer and other running jobs.

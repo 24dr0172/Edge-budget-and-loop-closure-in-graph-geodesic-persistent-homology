@@ -4,7 +4,7 @@
   "profile": "localized_trough",
   "n": 512,
   "k0": 13,
-  "input_sha256": "13359ceca2e0488e5231c6499b6e1ae5f4b4d0848b0d875d88fbe898b95990ce",
+  "input_sha256": "d1e403d8909601cc4b8996c67609ea9079f9f1a57778410f571ed51aba08c33c",
   "input_coordinates_sha256": "e41632a3c9d32e5c6894b4693107798c5d7f63c29652301606825c3760c6d01f",
   "input_convention": "Float64 Cartesian sample reconstructed from saved arc parameters, then treated as exact dyadic rationals.",
   "ordering": "Exact rational fourth powers of CkNN scores; ties by endpoint labels.",

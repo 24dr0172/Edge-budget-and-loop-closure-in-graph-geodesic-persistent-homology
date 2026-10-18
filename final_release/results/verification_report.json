@@ -1,7 +1,11 @@
 {
   "status": "passed",
-  "scope": "Manuscript identity; saved clean, noise and ellipse diagrams; seed and selector replay; finite witnesses; raw rank-sweep counts, Wilson intervals and study comparisons. No full persistence regeneration.",
-  "checks_passed": 81347,
+  "manuscript_comparison": {
+    "status": "passed",
+    "location": "external"
+  },
+  "scope": "Saved clean, noise and ellipse diagrams; seed and selector replay; finite witnesses; raw rank-sweep counts, Wilson intervals and study comparisons. No full persistence regeneration.",
+  "checks_passed": 82149,
   "checks": {
     "release_structure": {
       "passed": true
@@ -17,11 +21,11 @@
       "detail": {
         "status": "passed",
         "scope": "Current source/PDF identities, labels, citations, environment counts and result numbering.",
-        "current_source_sha256": "864b55652327e56d636481aa151a90c5d1f3ce043c0e13fdf75f1af422673dff",
-        "current_pdf_sha256": "8c38fd3f414d337a7d86f8ec25fa9957a3788bb8226e085cf30bbda1922d3b61",
+        "current_source_sha256": "d6c8cf1781665e1d575a774ed9629ac4096a17ca5c051cdd924591a7be089c6e",
+        "current_pdf_sha256": "89a521a05d9ba62928e385ae65a3a524007752b840c64d218fb46d0cf305bb53",
         "pdf_pages": 39,
         "source_checks": {
-          "unique_labels": 76,
+          "unique_labels": 78,
           "resolved_citation_keys": 53,
           "unresolved_references": 0,
           "unresolved_citations": 0

@@ -2,15 +2,15 @@
   "scope": "Current accompanying manuscript.",
   "source": {
     "file": "../../combined.tex",
-    "sha256": "864b55652327e56d636481aa151a90c5d1f3ce043c0e13fdf75f1af422673dff"
+    "sha256": "d6c8cf1781665e1d575a774ed9629ac4096a17ca5c051cdd924591a7be089c6e"
   },
   "pdf": {
     "file": "../../combined.pdf",
-    "sha256": "8c38fd3f414d337a7d86f8ec25fa9957a3788bb8226e085cf30bbda1922d3b61",
+    "sha256": "89a521a05d9ba62928e385ae65a3a524007752b840c64d218fb46d0cf305bb53",
     "pages": 39
   },
   "source_checks": {
-    "unique_labels": 76,
+    "unique_labels": 78,
     "resolved_citation_keys": 53,
     "unresolved_references": 0,
     "unresolved_citations": 0

@@ -1,6 +1,7 @@
 """Build the study-comparison guide and its current evidence record."""
 from pathlib import Path
-import hashlib, json, platform, sys
+import argparse, hashlib, json, platform, sys
+from external_manuscript import locate_manuscript
 sys.dont_write_bytecode = True
 import numpy as np
 import pandas as pd
@@ -8,7 +9,7 @@ import pandas as pd
 F = Path(__file__).resolve().parents[1]
 OUT = F/'results/phase1'
 
-def main():
+def main(manuscript_dir=None):
     separation = json.loads((F/'results/separation_verification.json').read_text())['filtration']
     sweep = pd.read_csv(OUT/'bridgeless/sweep_summary.csv')
     timings = pd.read_csv(OUT/'bridgeless/sweep_timings.csv')
@@ -23,7 +24,7 @@ def main():
         '',
         '## Evidence',
         '',
-        '- [Exact Example 1 certificate](../separation_verification.json): all 120 cyclic orders at 14 distinct threshold graphs. Each graph admits an order separately; no order works throughout the filtration. The [exact argument](../arc_support_example/exact_calculation.md) gives the calculations.',
+        '- [Exact Example 1 certificate](../separation_verification.json): all 120 cyclic orders at 14 distinct threshold graphs. Each graph admits an order separately; no order works throughout the filtration. The certificate records the distances and admissible orders.',
         '- [Clean bridge events](bridgeless/clean_samples.csv): 60 samples and two kNN rules, checked against full Cartesian ranks and an independent bridge search. The [summary](bridgeless/clean_summary.csv) gives rates and Wilson intervals.',
         '- [Bridge sweep](bridgeless/sweep_samples.csv): 15,000 profile/seed/size samples and 30,000 method records through n=32,768. See the [summary](bridgeless/sweep_summary.csv), [validation](bridgeless/validation.json) and [timings](bridgeless/sweep_timings.csv).',
         '- [Euclidean baseline](euclidean/samples.csv): 220 distinct observed clouds. Reusing clean clouds across models gives 240 model/amplitude/seed rows. The baseline is also shared across graph methods. See [error quartiles](euclidean/summary.csv) and [paired comparisons](euclidean/paired_summary.csv).',
@@ -64,7 +65,7 @@ def main():
         '',
         '## Reproduction',
         '',
-        'Run commands from final_release with the environment and complete sequence in the [release README](../../README.md). To rebuild these summaries and this guide from saved measurements, run:',
+        'Run commands from the release folder with the environment and complete sequence in the [code guide](../../code/README.md). To rebuild these summaries and this guide from saved measurements, run:',
         '',
         '```sh',
         'python3 code/reproduce_results.py',
@@ -86,11 +87,11 @@ def main():
         '',
         '## Timing definitions',
         '',
-        'Individual Euclidean times include distances and persistence, excluding checkpoint file I/O. Pilot and full timing records describe separate runs; the per-checkpoint times cover all 220 diagrams.',
+        'Individual Euclidean times include distances and persistence, excluding checkpoint file I/O. The per-checkpoint times cover all 220 diagrams.',
         '',
         'Bridge times include sampling, helper startup, graph reconstruction and event calculations, excluding saved-row writing. Child RSS is the cumulative maximum across helper processes. The pilot also includes compiler memory when compilation was needed.',
         '',
-        'Bridge times were measured while the serial Euclidean job was running. They show feasibility, rather than isolated benchmark performance.',
+        'Timing records describe this run and depend on the computer and other running jobs.',
         '']
     (OUT/'README.md').write_text('\n'.join(lines).replace('`', chr(96)))
     record = dict(
@@ -101,11 +102,14 @@ def main():
         euclidean_model_amplitude_seed_rows=240, grid_oracle_samples=len(raw_oracle),
         cyclic_orders=separation['cyclic_orders_checked'],
         distinct_threshold_graphs=separation['threshold_graphs'],
-        summary_environment=dict(python=platform.python_version(), numpy=np.__version__, pandas=pd.__version__),
-        manuscript_source_sha256=hashlib.sha256((F.parent/'combined.tex').read_bytes()).hexdigest(),
-        manuscript_pdf_sha256=hashlib.sha256((F.parent/'combined.pdf').read_bytes()).hexdigest())
+        summary_environment=dict(python=platform.python_version(), numpy=np.__version__, pandas=pd.__version__))
+    paper=locate_manuscript(F,manuscript_dir)
+    if paper is not None:
+        record['manuscript_source_sha256']=hashlib.sha256((paper/'combined.tex').read_bytes()).hexdigest()
+        record['manuscript_pdf_sha256']=hashlib.sha256((paper/'combined.pdf').read_bytes()).hexdigest()
     (OUT/'completion.json').write_text(json.dumps(record, indent=2)+'\n')
     print('Study-comparison guide and current evidence record written.')
 
 if __name__ == '__main__':
-    main()
+    parser=argparse.ArgumentParser();parser.add_argument('--manuscript-dir',type=Path)
+    main(parser.parse_args().manuscript_dir)

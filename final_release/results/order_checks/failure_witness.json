@@ -1,6 +1,6 @@
 {
-  "scope": "Saved clean CkNN finite-condition failure; a failed sufficient certificate is inconclusive.",
-  "failed_rows": [
+  "status": "computed",
+  "failures": [
     {
       "seed": 20310105,
       "profile": "localized_trough",
@@ -13,11 +13,9 @@
       "a": 190.0,
       "b": 201.0,
       "interior_vertex": 200.0,
-      "outer_chord": 0.0173077044,
-      "left_chain": 0.0173135761,
-      "right_chain": 2.2653e-06
+      "outer_chord": 0.01730770437513113,
+      "left_chain": 0.01731357612075679,
+      "right_chain": 2.2652926079391733e-06
     }
-  ],
-  "arithmetic": "literal float64 comparisons with no additive cost slack",
-  "local_scale_k0": 13
+  ]
 }

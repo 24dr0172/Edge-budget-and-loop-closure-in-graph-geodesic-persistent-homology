@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 def build(root):
-    os.environ.setdefault('MPLCONFIGDIR',str(root.parent/'.work'/'matplotlib'))
+    os.environ.setdefault('MPLCONFIGDIR',str(Path(__import__('tempfile').gettempdir())/'edge-budget-matplotlib'))
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt

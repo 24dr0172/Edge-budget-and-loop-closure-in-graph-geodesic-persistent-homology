@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-11",
+  "date": "2026-10-17",
   "seed_start": 20330101,
   "profiles": [
     "uniform",
@@ -43,5 +43,5 @@
   "protocol": "Independent seeds within n; same uniforms and phase across profiles. Exact circular local ranks; no new persistence computations. Local formula checked against full released chord ranks and actual graph connectivity.",
   "surrogate": "Independent one-gap Poisson marks. This is a comparison model, not a proof for dependent ranks on one circle.",
   "uncertainty": "Pointwise 95% Wilson binomial intervals, conditional on profile/n. Profiles share seeds.",
-  "runtime_seconds_this_invocation": 0.3266983670000627
+  "runtime_seconds_this_invocation": 0.8411396419978701
 }

@@ -1,0 +1,19 @@
+{
+  "scope": "Current seed protocol and generated scientific outputs; run verify_release.py to check their agreement with the paper.",
+  "protocol_sha256": "8ade9e968747b47dac1c71939cd22fcdd987a4011282bc3d2d9d970bf10e4643",
+  "clean_samples": 60,
+  "clean_budget_evaluations": 4740,
+  "clean_closed_prefix_diagrams": 3556,
+  "rank_method_records": 30780,
+  "bridge_method_records": 30000,
+  "matched_radial_samples": 20,
+  "ellipse_coordinate_sets": 60,
+  "ellipse_sweep_samples": 60,
+  "distinct_noise_clouds": 220,
+  "distinct_euclidean_diagrams": 220,
+  "noise_budget_evaluations": 19438,
+  "noise_selector_records": 1440,
+  "figure_pdf_png_pairs": 6,
+  "generation_commands": "code/reproduce.py; individual study generators are listed in code/README.md",
+  "clock_times": "Measured again on each run; not fixed numerical targets."
+}

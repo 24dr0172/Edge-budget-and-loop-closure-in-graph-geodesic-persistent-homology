@@ -404,5 +404,5 @@
       ]
     }
   },
-  "scope": "Exact rational distinctness check; F2 reduction and matching at float64 chord thresholds, cross-checked with Ripser."
+  "scope": "Rational distinctness; F2 reduction and bottleneck matching with float64 chords."
 }

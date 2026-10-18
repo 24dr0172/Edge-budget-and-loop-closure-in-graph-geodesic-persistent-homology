@@ -56,7 +56,8 @@ def run(limit=None):
                   seconds_this_invocation=time.monotonic()-start,
                   new_diagram_seconds=measured,
                   peak_process_rss_kib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
-                  scope='Serial full unrestricted finite H1; excludes input loading and checkpoint writing from individual timings.')
+                  scope='Full unrestricted finite H1. Existing checkpoints are reused; individual times exclude input loading and checkpoint writing.',
+                  newly_computed_diagrams=len(measured))
     (OUT / ('timing.json' if limit is None else 'pilot_timing.json')).write_text(json.dumps(timing, indent=2)+'\n')
     if limit is None:
         summarize()
@@ -64,7 +65,7 @@ def run(limit=None):
 
 def summarize():
     rows = []
-    cfg = json.loads((F / 'config.json').read_text())
+    cfg = json.loads((F / 'code/config.json').read_text())
     for seed in cfg['noise']['seeds']:
         for model in ['radial', 'isotropic']:
             for delta in cfg['noise']['amplitudes']:

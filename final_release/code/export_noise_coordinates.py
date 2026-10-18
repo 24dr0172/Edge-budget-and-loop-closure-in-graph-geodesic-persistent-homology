@@ -1,8 +1,7 @@
-"""Export the existing matched-noise geometry without computing persistence.
+"""Generate the matched radial-noise coordinates from the stated seeds.
 
-The saved seeds, normal directions and signed draws are reused at every
-amplitude. This reconstructs the inputs to the retained observations; it
-does not add samples or change any released result.
+The same normal directions and signed draws are reused at every amplitude.
+This exporter does not calculate persistence diagrams.
 """
 from pathlib import Path
 import argparse
@@ -19,7 +18,7 @@ def coordinate_arrays(config):
     arrays = {}
     for seed in config['seeds']:
         latent, clean = m.sample_cloud(seed, 'uniform', n=config['n'])
-        # Keep the same arithmetic as the original noise trial reconstruction.
+        # Keep the same arithmetic as the noise trial reconstruction.
         normal = clean * (2 * np.pi)
         signed_draw = np.random.default_rng(seed + m.NOISE_SEED_OFFSET).uniform(
             -1., 1., size=config['n'])
@@ -38,16 +37,16 @@ def export(release, output):
     arrays = coordinate_arrays(config)
     with output.open('wb') as stream:
         np.savez_compressed(stream, **arrays)
-    print(f'Exported {len(arrays)} arrays for {len(config["seeds"])} retained noise seeds.')
+    print(f'Exported {len(arrays)} arrays for {len(config["seeds"])} noise seeds.')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--release', type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument('--output', type=Path, required=True,
-                        help='Scratch NPZ output outside final_release folder')
+                        help='Scratch NPZ output outside this release folder')
     args = parser.parse_args()
     release, output = args.release.resolve(), args.output.resolve()
     if output == release or output.is_relative_to(release):
-        parser.error('Choose scratch output outside final_release')
+        parser.error('Choose scratch output outside this release')
     export(release, output)

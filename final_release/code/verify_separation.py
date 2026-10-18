@@ -4,8 +4,8 @@ import itertools,json,sys
 sys.dont_write_bytecode=True
 import numpy as np
 from scipy.sparse.csgraph import shortest_path
-PAPER=Path(__file__).resolve().parents[2]
-sys.path.insert(0,str(PAPER/'final_release/code'))
+PAPER=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(PAPER/'code'))
 from verify_arc_support import supported
 
 def rank_mod(matrix,p):
@@ -193,7 +193,7 @@ def build_report():
 
 def main():
     report=build_report()
-    (PAPER/'final_release/results/separation_verification.json').write_text(json.dumps(report,indent=2)+'\n')
+    (PAPER/'results/separation_verification.json').write_text(json.dumps(report,indent=2)+'\n')
     print('Six-point separation:',report['orientations_tested'],'orientations, none cyclic; beta1=1.')
 
 if __name__=='__main__':main()

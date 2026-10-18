@@ -1,47 +1,11 @@
 {
-  "saved": {
-    "prefixes": 3556,
-    "transitions": 3376,
-    "single_bar_failures": 0,
-    "max_birth_deviation": 3.5332716613600823e-09,
-    "raw_error_drops": 0,
-    "clipped_error_drops": 0,
-    "above_to_below_baseline_crossings": 0,
-    "minimum_gap_among_raw_drops": null,
-    "maximum_raw_drop": 0,
-    "drops_ending_below_baseline": 0,
-    "max_gap": 0.08955720985505244,
-    "method_counts": {
-      "R2_global": {
-        "prefixes": 844,
-        "raw_error_drops": 0
-      },
-      "OR_kNN": {
-        "prefixes": 1418,
-        "raw_error_drops": 0
-      },
-      "mutual_kNN": {
-        "prefixes": 1294,
-        "raw_error_drops": 0
-      }
-    },
-    "matched_saved_error_rows": 3259,
-    "max_saved_error_difference": 9.996344030316351e-17,
-    "saved_samples": 60
-  },
-  "small_gap_sufficient_threshold": 0.13661977236758138,
-  "small_positive_lifetime_cutoff": 1e-12,
-  "small_assertion_tolerance": 2e-10,
-  "ripser_tolerance": 1e-07,
-  "arithmetic_scope": "Exact F2 column algebra and finite matching on float64 input; not arbitrary-precision chord geometry. Ripser uses float32 endpoints.",
-  "saved_scope": "Distinct saved closed budgets for the 60 clean samples, with each method-specific closure and complete graph. Not every intervening edge count.",
-  "versions": {
-    "numpy": "2.5.3",
-    "scipy": "1.18.1",
-    "pandas": "3.0.5",
-    "ripser": "0.6.15",
-    "persim": "0.3.8"
-  },
-  "version_scope": "Environment recorded with these saved measurements. Use code/requirements.txt for release summary rebuilding and verification (pandas 2.2.3).",
-  "small_positive_lifetime_cutoff_scope": "Only the independent seven-point matrix-reduction helper; it does not generate the main study diagrams. No positive interval is discarded for the saved witness."
+  "status": "computed_from_seeds",
+  "samples": 60,
+  "prefixes": 3556,
+  "transitions": 3376,
+  "single_bar_failures": 0,
+  "maximum_birth_deviation": 3.5332716613600823e-09,
+  "raw_error_drops": 0,
+  "capped_error_drops": 0,
+  "largest_full_diagram_n": 512
 }

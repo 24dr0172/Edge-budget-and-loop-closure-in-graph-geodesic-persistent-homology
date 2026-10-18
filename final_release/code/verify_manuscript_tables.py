@@ -1,9 +1,12 @@
 """Check the current manuscript tables and Table 3 export against the saved scientific summaries."""
 from pathlib import Path
-import csv,re
+import argparse,csv,re
+from external_manuscript import locate_manuscript
 
-def verify_manuscript_tables(root,require):
-    root=Path(root);text=(root.parent/'combined.tex').read_text()
+def verify_manuscript_tables(root,require,manuscript_dir=None):
+    root=Path(root);paper=locate_manuscript(root,manuscript_dir)
+    if paper is None:raise FileNotFoundError('Supply --manuscript-dir to compare the external paper.')
+    text=(paper/'combined.tex').read_text()
     def rows(name):
         with (root/'results'/name).open() as f:return list(csv.DictReader(f))
     def table(label,starts):
@@ -66,6 +69,68 @@ def verify_manuscript_tables(root,require):
         require('manuscript_amplitude_table_'+model+'_'+str(delta),numbers(line)==expected)
     amp=text.index('\\label{tab:noise-amplitudes}')
     require('manuscript_euclidean_zero_row','0.1154' in text[amp:text.index(r'\end{tabular}',amp)])
+    # Compare the remaining numerical displays directly with measured rows.
+    clean=rows('clean_closure/cells.csv');events=rows('clean_closure/knn_event_checks.csv')
+    landmark_lines=table('tab:landmarks',('Radius &','OR-$k$NN &','Mutual-$k$NN &'))
+    labels={'Radius':'R2_global','OR-$k$NN':'OR_kNN','Mutual-$k$NN':'mutual_kNN'}
+    for line in landmark_lines:
+        parts=line.split(' & ');method=labels[parts[0]];event=parts[1]
+        for profile,cell in zip(profiles,parts[2:]):
+            expected=list(map(int,re.findall(r'\d+',cell)))
+            if event=='First connected / before closure':
+                sets=[ [r for r in clean if r['profile']==profile and r['method']==method and r['budget_label']=='first_connected'] ]
+                sets.append([r for r in (clean if method=='R2_global' else events) if r['profile']==profile and r['method']==method and r.get('budget_label',r.get('landmark'))==('pre_completion' if method=='R2_global' else 'pre_coverage_last')])
+            elif event=='First connected integer $k$':
+                sets=[[r for r in clean if r['profile']==profile and r['method']==method and r['budget_label']=='smallest_connected_k']]
+            else:
+                sets=[[r for r in (clean if method=='R2_global' else events) if r['profile']==profile and r['method']==method and r.get('budget_label',r.get('landmark'))==('completion' if method=='R2_global' else 'own_coverage')]]
+            for index,group in enumerate(sets):
+                got=[sum(float(r['est_h1_bars'])==0 for r in group),sum(float(r['est_h1_bars'])>0 for r in group)]
+                require(f'manuscript_event_{method}_{profile}_{event}_{index}',len(group)==20 and got==expected)
+    predicted=rows('extra_k/candidate_audit/iid_predictions.csv')
+    for line in table('tab:race-model',('128 &','512 &','4,096 &','32,768 &')):
+        n=int(line.split(' & ')[0].replace(',',''));expected=[]
+        for method in methods[1:]:
+            p=next(r for r in predicted if int(r['n'])==n and r['method']==method)
+            q=next(r for r in ranks if int(r['n'])==n and r['method']==method and r['profile']=='uniform')
+            expected.extend([rounded(100*float(p['cdf_0']),1),rounded(100*float(q['cdf_0']),1)])
+        got=[float(x) for x in re.findall(r'\d+(?:\.\d+)?',' & '.join(line.split(' & ')[1:]))]
+        require(f'manuscript_race_{n}',got==expected)
+    selector_rows=rows('noise/selector_summary.csv')
+    for line,(model,method) in zip(table('tab:noise-selectors',('Radial &','Isotropic &')),[(m,k) for m in ['radial','isotropic'] for k in methods]):
+        expected=[]
+        for rule in ['first_nonempty','longest_lifetime']:
+            q=next(r for r in selector_rows if r['model']==model and r['method']==method and r['selector']==rule and float(r['delta'])==.01)
+            from math import log
+            expected.extend([float(q['before_closure']),float(q['samples']),rounded(float(q['median_M'])/(512*log(512)),2)])
+            expected.extend(rounded(q[field],4) for field in ['median_e_PH','q1_e_PH','q3_e_PH'])
+        require(f'manuscript_selectors_{model}_{method}',numbers(line)==expected)
+    ellipses=rows('ellipse/summary.csv')
+    for line,(profile,method) in zip(table('tab:ellipse-sweep',('Uniform &','Cosine &','Trough &')),[(p,m) for p in profiles for m in methods]):
+        q=next(r for r in ellipses if r['profile']==profile and r['method']==method)
+        expected=[float(q[k]) for k in ['median_first_nonlocal','cells','support_failing_cells','multiple_bar_cells']]
+        require(f'manuscript_ellipse_{profile}_{method}',numbers(line.replace(',',''))==expected)
+    screens=rows('noise/screen_summary.csv')
+    for line,(model,method) in zip(table('tab:noise',('Radial &','Isotropic &')),[(m,k) for m in ['radial','isotropic'] for k in methods]):
+        expected=[]
+        for event in ['first_connected','before_closure']:
+            q=next(r for r in screens if r['model']==model and r['method']==method and r['event']==event and float(r['delta'])==.01)
+            for field in ['quarter','half','three_quarters']:expected.extend([float(q[field]),float(q['samples'])])
+        require(f'manuscript_lifetime_screen_{model}_{method}',numbers(line)==expected)
+    exact=rows('exact_closure_errors.csv');grid_closure=rows('clean_closure/first_closed_errors.csv')
+    for line,(profile,method) in zip(table('tab:closed-errors',('Uniform &','Cosine &','Trough &')),[(p,m) for p in profiles for m in methods]):
+        e=next(r for r in exact if r['profile']==profile and r['method']==method)
+        g=next(r for r in grid_closure if r['profile']==profile and r['method']==method)
+        expected=[rounded(e[k],5) for k in ['e_inf','e_2','p1']]+[rounded(g[k],5) for k in ['median_e_inf','median_e_2','median_e_PH']]
+        require(f'manuscript_closed_errors_{profile}_{method}',numbers(line)==expected)
+    for line in table('tab:rank-scaling',('Uniform &','Cosine &','Trough &')):
+        parts=line.split(' & ');profile={'Uniform':'uniform','Cosine':'strong_cosine','Trough':'localized_trough'}[parts[0]];n=int(parts[1].replace(',',''));expected=[]
+        for method in methods[1:]:
+            q=next(r for r in ranks if r['profile']==profile and r['method']==method and int(r['n'])==n)
+            expected.extend(rounded(100*float(q[k]),1) for k in ['cdf_0','cdf_3'])
+        require(f'manuscript_rank_display_{profile}_{n}',numbers(line)==expected)
+    maximum=max(float(r['birth_deviation']) for r in rows('useful_diagram/saved_prefixes.csv'))
+    require('manuscript_birth_deviation_rounding',f'{maximum/1e-9:.2f}'+r'\times10^{-9}' in text)
 
 if __name__=='__main__':
     count=0
@@ -73,5 +138,6 @@ if __name__=='__main__':
         global count
         assert condition,name
         count+=1
-    verify_manuscript_tables(Path(__file__).resolve().parents[1],require)
+    parser=argparse.ArgumentParser();parser.add_argument('--manuscript-dir',type=Path)
+    verify_manuscript_tables(Path(__file__).resolve().parents[1],require,parser.parse_args().manuscript_dir)
     print(f'{count} manuscript table checks passed.')

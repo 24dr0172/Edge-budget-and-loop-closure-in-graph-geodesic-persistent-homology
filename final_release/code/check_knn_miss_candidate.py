@@ -173,10 +173,11 @@ def main():
         print(json.dumps(verify_candidate(),indent=2));return
     out=Path(__file__).resolve().parents[1]/'results/extra_k/candidate_audit'
     out.mkdir(parents=True,exist_ok=True)
-    seed_start=20330101;start=time.monotonic()
+    from experiment_core import CONFIG
+    seed_start=CONFIG['ranks']['seed_start'];start=time.monotonic()
     validation=audit_local(seed_start,240)
     print('Local/full-rank verification:',validation,flush=True)
-    settings=[(128,1500),(512,1500),(4096,1500),(32768,500),(262144,100),(1000000,30)]
+    settings=[tuple(pair) for pair in CONFIG['ranks']['settings']]
     rows=[];summary=[];tail=tails();predictions=[]
     if (out/'samples.csv').exists():
         with (out/'samples.csv').open() as f: rows=list(csv.DictReader(f))
@@ -228,7 +229,7 @@ def main():
                 'or_ratio':float(tail['OR_kNN'][k+1]/tail['OR_kNN'][k]),
                 'mutual_ratio':float(tail['mutual_kNN'][k+1]/tail['mutual_kNN'][k])} for k in range(1,120)]
     write_csv(out/'poisson_tails.csv',tail_rows)
-    config={'date':'2026-10-11','seed_start':seed_start,'profiles':PROFILES,'settings':settings,
+    config={'date':__import__('datetime').date.today().isoformat(),'seed_start':seed_start,'profiles':PROFILES,'settings':settings,
             'validation':validation,'samples':len(rows)//2,'method_records':len(rows),
             'protocol':'Independent seeds within n; same uniforms and phase across profiles. Exact circular local ranks; no new persistence computations. Local formula checked against full released chord ranks and actual graph connectivity.',
             'surrogate':'Independent one-gap Poisson marks. This is a comparison model, not a proof for dependent ranks on one circle.',

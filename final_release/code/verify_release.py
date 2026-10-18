@@ -10,20 +10,21 @@ import numpy as np
 import pandas as pd
 import paper1_methods as m
 from finite_diagram import reduction_h1,matching_distance
+from external_manuscript import locate_manuscript
 
 
-def verify_manuscript_identity(root, require):
+def verify_manuscript_identity(root, require, paper):
     """Bind the current records to the accompanying source and actual PDF."""
     from pypdf import PdfReader
     data = root / 'results'
     revision = json.loads((data / 'manuscript_revision.json').read_text())
     for kind, filename in [('source','combined.tex'),('pdf','combined.pdf')]:
-        path=root.parent/filename
+        path=paper/filename
         require('manuscript_'+kind+'_present',path.is_file())
         record=revision[kind]
         require('manuscript_'+kind+'_record_path',(data/record['file']).resolve()==path.resolve())
         require('manuscript_'+kind+'_sha256',record['sha256']==hashlib.sha256(path.read_bytes()).hexdigest())
-    pages=len(PdfReader(root.parent/'combined.pdf').pages)
+    pages=len(PdfReader(paper/'combined.pdf').pages)
     require('current_manuscript_identity',revision['pdf']['pages']==pages,{'pdf_pages':pages})
 
 
@@ -62,42 +63,44 @@ def verify_noise_coordinates(root, config, require):
              'maximum_direct_sampler_difference': max_difference})
 
 
-def verify(root):
+def verify(root,manuscript_dir=None,data_only=False):
     checks={}
     def require(name,condition,detail=None):
         if not bool(condition):raise AssertionError(name)
         checks[name]={'passed':True,**({'detail':detail} if detail is not None else {})}
     data=root/'results';native=set(m.METHODS)
-    require('release_structure',{p.name for p in root.iterdir()}=={'code','results','manuscript_figures','README.md','config.json'})
-    verify_manuscript_identity(root, require)
-    layout=json.loads((data/'manuscript_restructure.json').read_text())
-    manuscript=(root.parent/'combined.tex').read_text()
-    require('manuscript_structure_record',layout['status']=='passed',layout)
-    environments = ('definition','theorem','proposition','corollary','structurallemma',
-                    'appendixlemma','remark','example','proof')
-    for name in environments:
-        require('manuscript_environment_'+name,
-                layout['environment_counts'][name]==manuscript.count(r'\begin{'+name+'}'))
-    from record_current import manuscript_records
-    _, _, current_layout = manuscript_records(root)
-    require('manuscript_structure_replay',layout==current_layout)
-    comparison_record=json.loads((data/'phase1/completion.json').read_text())
-    require('comparison_manuscript_source_identity',
-            comparison_record['manuscript_source_sha256']==layout['current_source_sha256'])
-    require('comparison_manuscript_pdf_identity',
-            comparison_record['manuscript_pdf_sha256']==layout['current_pdf_sha256'])
-    require('manuscript_structure_source_identity',hashlib.sha256((root.parent/'combined.tex').read_bytes()).hexdigest()==layout['current_source_sha256'])
-    require('manuscript_structure_pdf_identity',hashlib.sha256((root.parent/'combined.pdf').read_bytes()).hexdigest()==layout['current_pdf_sha256'])
-    result_labels=['thm:loop-transition','thm:closed-loop','thm:circle-parameters','thm:arc-supported','thm:useful-diagram']
-    positions=[manuscript.index('\\label{'+label+'}') for label in result_labels]
-    require('manuscript_result_order',positions==sorted(positions) and r'\newtheorem{proposition}{Proposition}' in manuscript)
-    rank_anchor=manuscript.index(r'\label{tab:rank-scaling}')
-    rank_body=manuscript[rank_anchor:manuscript.index(r'\end{tabular}',rank_anchor)]
-    require('manuscript_primary_rank_display',len([line for line in rank_body.splitlines() if line.startswith(('Uniform &','Cosine &','Trough &'))])==12 and '262,144' not in rank_body and '$10^6$' not in rank_body)
-    require('release_noise_error_figure',r'\label{fig:noise-errors}' not in manuscript and all((root/'manuscript_figures'/('noise-all-errors.'+ext)).exists() for ext in ['pdf','png']))
+    require('release_structure',{p.name for p in root.iterdir()}=={'code','results','manuscript_figures'})
+    paper=None if data_only else locate_manuscript(root,manuscript_dir)
+    if paper is not None:
+        verify_manuscript_identity(root, require, paper)
+        layout=json.loads((data/'manuscript_restructure.json').read_text())
+        manuscript=(paper/'combined.tex').read_text()
+        require('manuscript_structure_record',layout['status']=='passed',layout)
+        environments = ('definition','theorem','proposition','corollary','structurallemma',
+                        'appendixlemma','remark','example','proof')
+        for name in environments:
+            require('manuscript_environment_'+name,
+                    layout['environment_counts'][name]==manuscript.count(r'\begin{'+name+'}'))
+        from record_current import manuscript_records
+        _, _, current_layout = manuscript_records(root,paper)
+        require('manuscript_structure_replay',layout==current_layout)
+        comparison_record=json.loads((data/'phase1/completion.json').read_text())
+        require('comparison_manuscript_source_identity',
+                comparison_record['manuscript_source_sha256']==layout['current_source_sha256'])
+        require('comparison_manuscript_pdf_identity',
+                comparison_record['manuscript_pdf_sha256']==layout['current_pdf_sha256'])
+        require('manuscript_structure_source_identity',hashlib.sha256((paper/'combined.tex').read_bytes()).hexdigest()==layout['current_source_sha256'])
+        require('manuscript_structure_pdf_identity',hashlib.sha256((paper/'combined.pdf').read_bytes()).hexdigest()==layout['current_pdf_sha256'])
+        result_labels=['thm:loop-transition','thm:closed-loop','thm:circle-parameters','thm:arc-supported','thm:useful-diagram']
+        positions=[manuscript.index('\\label{'+label+'}') for label in result_labels]
+        require('manuscript_result_order',positions==sorted(positions) and r'\newtheorem{proposition}{Proposition}' in manuscript)
+        rank_anchor=manuscript.index(r'\label{tab:rank-scaling}')
+        rank_body=manuscript[rank_anchor:manuscript.index(r'\end{tabular}',rank_anchor)]
+        require('manuscript_primary_rank_display',len([line for line in rank_body.splitlines() if line.startswith(('Uniform &','Cosine &','Trough &'))])==12 and '262,144' not in rank_body and '$10^6$' not in rank_body)
+        require('release_noise_error_figure',r'\label{fig:noise-errors}' not in manuscript and all((root/'manuscript_figures'/('noise-all-errors.'+ext)).exists() for ext in ['pdf','png']))
 
-    from verify_manuscript_tables import verify_manuscript_tables
-    verify_manuscript_tables(root,require)
+        from verify_manuscript_tables import verify_manuscript_tables
+        verify_manuscript_tables(root,require,paper)
 
     cells=pd.read_csv(data/'clean_closure/cells.csv');clouds=pd.read_csv(data/'clean_closure/clouds.csv')
     require('clean_native_panel',len(cells)==4740 and set(cells.method)==native and set(cells.noise)=={'clean'})
@@ -115,6 +118,18 @@ def verify(root):
     control=pd.read_csv(data/'order_checks/shuffled_control.csv')
     require('permuted_scale_control',len(control)==60 and not control.short_hops_first_passes.any() and (control.M_first_connected<control.M_close).all() and (control.first_connected_H1_bars>0).sum()==6 and control.first_nonempty_matches_first_closed_grid.sum()==16,{'samples':60,'condition_passes':0,'loops_before_closure_at_connectivity':6,'grid_nonempty_matches_closure':16})
     require('control_grid_matches',(control.first_nonempty_matches_first_closed_grid==(control.first_nonempty_grid_M==control.first_closed_grid_M)).all())
+    for row in control.itertuples():
+        with np.load(data/f'order_checks/checkpoints/{row.profile}_{row.seed}.npz',allow_pickle=False) as z:
+            require(f'shuffled_saved_connectivity_{row.profile}_{row.seed}',
+                    len(z['R3_permuted_first_connected'])==row.first_connected_H1_bars)
+            candidates=[(int(key.rsplit('_M',1)[1]),len(z[key])) for key in z.files if key.startswith('R3_permuted_M')]
+            positive=[count for count,bars in candidates if bars>0]
+            require(f'shuffled_saved_grid_{row.profile}_{row.seed}',min(positive)==row.first_nonempty_grid_M)
+            for key in z.files:
+                if key.endswith('_first_connected') or '_M' in key:
+                    bars=z[key]
+                    require(f'shuffled_finite_bars_{row.profile}_{row.seed}_{key}',
+                            bars.ndim==2 and bars.shape[1]==2 and np.isfinite(bars).all() and (bars[:,1]>bars[:,0]).all())
     selected=pd.read_csv(data/'clean_closure/closure_selection.csv')
     require('180_first_closed_series',len(selected)==180 and selected.certificate_holds.all() and selected.nonempty_matches_covered.all())
     ft=pd.read_csv(data/'clean_closure/first_closed_errors.csv')
@@ -229,6 +244,14 @@ def verify(root):
     noise_summary=pd.read_csv(data/'matched_noise/closure_summary.csv')
     require('noise_closure_summary',len(noise_summary)==4 and (noise_summary.attempted==20).all() and (noise_summary.empty_H1==0).all() and (noise_summary.long_at_half==20).all())
     ellipse=pd.read_csv(data/'ellipse_checks/checks.csv');constants=json.loads((data/'ellipse_checks/analytic_constants.json').read_text())
+    from experiment_core import ellipse_points
+    with np.load(data/'ellipse_checks/coordinates.npz',allow_pickle=False) as coordinates:
+        for seed,profile in ellipse[['seed','profile']].drop_duplicates().itertuples(index=False,name=None):
+            latent,_=m.sample_cloud(seed,profile)
+            expected=ellipse_points(latent)
+            require(f'ellipse_seed_coordinates_{profile}_{seed}',
+                    np.array_equal(coordinates[f'{seed}_{profile}_latent'],latent) and
+                    np.max(np.abs(coordinates[f'{seed}_{profile}_xy']-expected))<1e-12)
     require('ellipse_scope',len(ellipse)==180 and set(ellipse.method)==native and ellipse.certificate_passes.all() and ellipse.saved_bar_spans_bound.all())
     require('ellipse_constants',abs(constants['global_chord_arc_lower_factor']-1/np.pi)<1e-15 and constants['normal_chord_lower_after_normalization']>.18 and (ellipse.locality_radius_bound<.18).all() and (ellipse.B<1/(3*np.pi)).all())
     require('ellipse_loop_interval',(ellipse.analytic_lifetime_lower>0).all() and np.allclose(ellipse.guaranteed_death_lower,1/(3*np.pi)))
@@ -260,7 +283,7 @@ def verify(root):
     # File hashes exclude this verifier's own report to avoid a circular digest.
     manifest=data/'file_manifest.json'
     if manifest.exists():
-        entries=json.loads(manifest.read_text())['sha256'];actual={str(f.relative_to(root)) for f in root.rglob('*') if f.is_file() and f not in {manifest,data/'verification_report.json'}}
+        entries=json.loads(manifest.read_text())['sha256'];actual={str(f.relative_to(root)) for f in root.rglob('*') if f.is_file() and f not in {manifest,data/'verification_report.json'} and '__pycache__' not in f.parts and f.suffix!='.pyc'}
         require('manifest_file_inventory',set(entries)==actual)
         for name,want in entries.items():
             require('checksum_'+name,hashlib.sha256((root/name).read_bytes()).hexdigest()==want)
@@ -269,10 +292,14 @@ def verify(root):
     require('code_syntax',True)
     summary_names={'release_structure','clean_native_panel','saved_sample_scope','eleven_event_rows','180_first_closed_series','closure_table_reports_all_errors','own_closure_not_global_split','grid_scope','120_paired_extra_k_rows','miss_means_unclosed_integer_layer','miss_counts_38_and_40','six_extra_k_groups','certificate_counts','CkNN_certificate_only','useful_diagram_scope','saved_diagram_transitions','matched_noise_scope','no_long_first_connected_bars','ellipse_scope','ellipse_constants','ellipse_loop_interval','ellipse_saved_diagram_inventory','manifest_file_inventory','code_syntax','permuted_scale_control','control_grid_matches','noise_closure_comparison','noise_closure_event_positions','noise_closure_diagram_inventory','noise_closure_summary'}
     summary={name:item for name,item in checks.items() if name in summary_names or 'detail' in item}
-    return {'status':'passed','scope':'Manuscript identity; saved clean, noise and ellipse diagrams; seed and selector replay; finite witnesses; raw rank-sweep counts, Wilson intervals and study comparisons. No full persistence regeneration.','checks_passed':len(checks)+studies['checks_passed']+rank_audit['checks_passed']+phase1['checks_passed'],'checks':summary}
+    return {'status':'passed','manuscript_comparison':{'status':'passed' if paper is not None else 'not_run','location':'external' if paper is not None else None},'scope':'Saved clean, noise and ellipse diagrams; seed and selector replay; finite witnesses; raw rank-sweep counts, Wilson intervals and study comparisons. No full persistence regeneration.','checks_passed':len(checks)+studies['checks_passed']+rank_audit['checks_passed']+phase1['checks_passed'],'checks':summary}
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('--release',type=Path,default=Path(__file__).resolve().parents[1]);ap.add_argument('--report',type=Path)
-    args=ap.parse_args();report=verify(args.release.resolve())
+    ap.add_argument('--manuscript-dir',type=Path,help='Directory containing the external combined.tex and combined.pdf; defaults to the parent if present.')
+    ap.add_argument('--data-only',action='store_true',help='Check the numerical release without comparing a manuscript.')
+    args=ap.parse_args()
+    if args.data_only and args.manuscript_dir:ap.error('Choose --data-only or --manuscript-dir.')
+    report=verify(args.release.resolve(),args.manuscript_dir,args.data_only)
     (args.report or args.release/'results/verification_report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(f"Release verification passed: {report['checks_passed']} checks.")

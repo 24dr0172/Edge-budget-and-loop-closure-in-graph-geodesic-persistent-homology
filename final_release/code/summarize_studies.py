@@ -7,9 +7,9 @@ import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-PAPER=Path(__file__).resolve().parents[2];SUPPORT=PAPER/'final_release'
+PAPER=Path(__file__).resolve().parents[1];SUPPORT=PAPER
 RESULTS=SUPPORT/'results';FIGURES=SUPPORT/'manuscript_figures'
-sys.path.insert(0,str(PAPER/'final_release/code'))
+sys.path.insert(0,str(PAPER/'code'))
 import paper1_methods as m
 METHODS=list(m.METHODS)
 NAMES=dict(zip(METHODS,['Radius','OR-kNN','Mutual-kNN']))
@@ -22,7 +22,7 @@ def ellipse_summary():
     assert len(sample)==60
     rows=rows.merge(sample[['seed','profile','g','b_star']],on=['seed','profile'],validate='many_to_one')
     # Exact same-sample intrinsic diameter, not a continuum substitute.
-    with np.load(PAPER/'final_release/results/ellipse_checks/coordinates.npz') as z:
+    with np.load(PAPER/'results/ellipse_checks/coordinates.npz') as z:
         diam={(int(r.seed),r.profile):float(m.intrinsic(z[f'{r.seed}_{r.profile}_latent']).max()) for r in sample.itertuples()}
     rows['P_star']=[(r.b_star-r.g)/(2*diam[(int(r.seed),r.profile)]) for r in rows.itertuples()]
     series=[]

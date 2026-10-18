@@ -1,0 +1,208 @@
+{
+  "python": "3.12.3",
+  "packages": {
+    "numpy": "2.5.3",
+    "pandas": "2.2.3",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "ripser": "0.6.15",
+    "persim": "0.3.8",
+    "pypdf": "6.10.0"
+  },
+  "n": 512,
+  "noise": {
+    "seeds": [
+      20320101,
+      20320102,
+      20320103,
+      20320104,
+      20320105,
+      20320106,
+      20320107,
+      20320108,
+      20320109,
+      20320110,
+      20320111,
+      20320112,
+      20320113,
+      20320114,
+      20320115,
+      20320116,
+      20320117,
+      20320118,
+      20320119,
+      20320120
+    ],
+    "models": [
+      "radial",
+      "isotropic"
+    ],
+    "amplitudes": [
+      0,
+      0.0005,
+      0.001,
+      0.002,
+      0.005,
+      0.01
+    ],
+    "radial_seed_offset": 70000003,
+    "disk_seed_offset": 90000011,
+    "common_random_vectors_across_amplitudes": true,
+    "clean_shared_between_models": true,
+    "grid_M": [
+      1597,
+      1834,
+      2105,
+      2417,
+      2776,
+      3187,
+      3659,
+      4201,
+      4824,
+      5538,
+      6359,
+      7302,
+      8383,
+      9626,
+      11052,
+      12690,
+      14570,
+      16729,
+      19208,
+      22054,
+      25322,
+      29074,
+      33382,
+      38328
+    ],
+    "additional_events": [
+      "exact_first_connected",
+      "exact_closure_minus_one",
+      "exact_closure"
+    ],
+    "selectors_use_grid_only": true,
+    "earliest_maximum_raw_lifetime_tolerance": 1e-07,
+    "lifetime_screen_fractions": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "model_definitions": {
+      "radial": "Signed uniform displacement along the clean normal.",
+      "isotropic": "Uniform displacement in a disk."
+    }
+  },
+  "ellipse": {
+    "seeds": [
+      20310101,
+      20310102,
+      20310103,
+      20310104,
+      20310105,
+      20310106,
+      20310107,
+      20310108,
+      20310109,
+      20310110,
+      20310111,
+      20310112,
+      20310113,
+      20310114,
+      20310115,
+      20310116,
+      20310117,
+      20310118,
+      20310119,
+      20310120
+    ],
+    "profiles": [
+      "uniform",
+      "strong_cosine",
+      "localized_trough"
+    ],
+    "locality_threshold": 0.18,
+    "nonlocal_event": "first chord >= locality_threshold",
+    "include_event_beyond_grid": true,
+    "nn_crust_permutation_offset": 110000009,
+    "nn_crust": "nearest-neighbor union, then simultaneous half-neighbor additions at initial degree-one vertices",
+    "arc_grid_points": 400001
+  },
+  "arithmetic": {
+    "edge_costs": "float64",
+    "shortest_paths": "float64 Dijkstra",
+    "ripser_endpoints": "float32",
+    "positive_interval": "finite death strictly greater than birth",
+    "positive_lifetime_cutoff": null,
+    "raw_stability_tolerance": 5e-08,
+    "ellipse_monotonicity_tolerance": 1e-06,
+    "support_tolerance": 1e-10
+  },
+  "clean": {
+    "seeds": [
+      20310101,
+      20310102,
+      20310103,
+      20310104,
+      20310105,
+      20310106,
+      20310107,
+      20310108,
+      20310109,
+      20310110,
+      20310111,
+      20310112,
+      20310113,
+      20310114,
+      20310115,
+      20310116,
+      20310117,
+      20310118,
+      20310119,
+      20310120
+    ],
+    "profiles": [
+      "uniform",
+      "strong_cosine",
+      "localized_trough"
+    ],
+    "a_grid": {
+      "minimum": 0.5,
+      "maximum": 12.0,
+      "points": 24,
+      "round_decimals": 4
+    },
+    "scale_permutation_offset": 80000031,
+    "scale_permutation_n_factor": 1009
+  },
+  "ranks": {
+    "seed_start": 20330101,
+    "seed_formula": "seed_start + 10000 + 100000*size_index + repetition_index",
+    "settings": [
+      [
+        128,
+        1500
+      ],
+      [
+        512,
+        1500
+      ],
+      [
+        4096,
+        1500
+      ],
+      [
+        32768,
+        500
+      ],
+      [
+        262144,
+        100
+      ],
+      [
+        1000000,
+        30
+      ]
+    ],
+    "bridge_maximum_n": 32768
+  }
+}

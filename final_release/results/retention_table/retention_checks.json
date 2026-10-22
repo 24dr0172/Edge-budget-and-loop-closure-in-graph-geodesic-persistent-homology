@@ -1,0 +1,122 @@
+{
+  "checks": {
+    "key_uniqueness_rank": {
+      "passed": true,
+      "detail": null
+    },
+    "key_uniqueness_bridge": {
+      "passed": true,
+      "detail": null
+    },
+    "joined_records_30000": {
+      "passed": true,
+      "detail": 30000
+    },
+    "rank_values_match": {
+      "passed": true,
+      "detail": null
+    },
+    "order_kconn_le_kbr_le_kclose": {
+      "passed": true,
+      "detail": null
+    },
+    "extra_k_consistent": {
+      "passed": true,
+      "detail": null
+    },
+    "flag_closed_at_connection": {
+      "passed": true,
+      "detail": null
+    },
+    "flag_closed_at_bridgeless": {
+      "passed": true,
+      "detail": null
+    },
+    "flag_closed_at_plus3": {
+      "passed": true,
+      "detail": null
+    },
+    "all_g_below_one_third": {
+      "passed": true,
+      "detail": 0.2710618238673808
+    },
+    "max_gap_about_0.271062": {
+      "passed": true,
+      "detail": 0.2710618238673808
+    },
+    "seed_unique_per_group_and_denominators": {
+      "passed": true,
+      "detail": null
+    },
+    "same_seed_set_across_profiles_rules_per_n": {
+      "passed": true,
+      "detail": {
+        "128": 1,
+        "512": 1,
+        "4096": 1,
+        "32768": 1
+      }
+    },
+    "seeds_distinct_across_sizes": {
+      "passed": true,
+      "detail": null
+    },
+    "24_groups": {
+      "passed": true,
+      "detail": null
+    },
+    "connected_at_fixed_k_not_all": {
+      "passed": true,
+      "detail": {
+        "groups_with_disconnected_k10": 22,
+        "groups_with_disconnected_k15": 13
+      }
+    },
+    "plus3_vs_kbr_order_varies": {
+      "passed": true,
+      "detail": {
+        "records_kbr_gt_kconn_plus3": 1244,
+        "records_kbr_lt_kconn_plus3": 27554
+      }
+    },
+    "sweep_summary_counts_and_wilson": {
+      "passed": true,
+      "detail": {
+        "max_abs_diff_pct": 1.4210854715202004e-14
+      }
+    },
+    "rank_sweep_summary_cdf0_cdf3_wilson": {
+      "passed": true,
+      "detail": {
+        "max_abs_diff_pct": 1.4210854715202004e-14
+      }
+    },
+    "rank_table_wilson": {
+      "passed": true,
+      "detail": {
+        "max_abs_diff_pct": 3.552713678800501e-15
+      }
+    },
+    "n512_comparison_summary_wilson": {
+      "passed": true,
+      "detail": {
+        "rows": 6,
+        "max_abs_diff_pct": 1.4210854715202004e-14
+      }
+    },
+    "fixed_k_summary_uniform_rows": {
+      "passed": true,
+      "detail": null
+    },
+    "manuscript_table_rank_scaling_matches": {
+      "passed": true,
+      "detail": null
+    },
+    "manuscript_prose_counts": {
+      "passed": true,
+      "detail": null
+    }
+  },
+  "max_gap": 0.2710618238673808,
+  "joined_records": 30000
+}

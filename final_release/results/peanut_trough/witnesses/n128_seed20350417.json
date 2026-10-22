@@ -1,0 +1,62 @@
+{
+  "radius": {
+    "unsupported_edges": [
+      [
+        40,
+        110
+      ],
+      [
+        41,
+        110
+      ],
+      [
+        42,
+        110
+      ],
+      [
+        39,
+        110
+      ],
+      [
+        38,
+        110
+      ],
+      [
+        43,
+        110
+      ]
+    ],
+    "coordinates": "see matching checkpoint xy",
+    "distances": "recompute with graph_dist at M_close"
+  },
+  "OR": {
+    "unsupported_edges": [
+      [
+        40,
+        110
+      ],
+      [
+        41,
+        110
+      ],
+      [
+        42,
+        110
+      ],
+      [
+        39,
+        110
+      ],
+      [
+        38,
+        110
+      ],
+      [
+        43,
+        110
+      ]
+    ],
+    "coordinates": "see matching checkpoint xy",
+    "distances": "recompute with graph_dist at M_close"
+  }
+}

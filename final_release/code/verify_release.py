@@ -1,35 +1,52 @@
-"""Verify the release against saved data and the accompanying manuscript.
-Recorded seeds and rank-only results are replayed.
-No new persistence experiment or n=512 persistence recomputation is performed.
-The retained seven-point witness is checked independently with F2 reduction.
+"""Verify the release against its saved data and, optionally, the manuscript.
+
+Modes:
+  default        all saved-data checks, plus the manuscript if it is found
+  --data-only    all saved-data checks, no manuscript
+  --paper-only   only the checks behind the paper's claims, plus every file hash
+Recorded seeds and rank-only results are replayed. No sample cohort is
+generated and the full persistence studies are not rerun. Small independent
+replays cover the peanut/trough failure cases, a tiny positive-edge case and
+the seven-point example (by F2 reduction).
 """
 from pathlib import Path
 import argparse,hashlib,json,sys
 sys.dont_write_bytecode=True
 import numpy as np
 import pandas as pd
-import paper1_methods as m
+import graph_methods as m
 from finite_diagram import reduction_h1,matching_distance
-from external_manuscript import locate_manuscript
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
+from external_manuscript import locate_manuscript, manuscript_text
+
+# Figure assets kept for the additional studies (see results/additional_figures/README.md).
+ADDITIONAL_FIGURES=('clean_budget_curves','noise_budget_curves','extra_neighbor_distribution',
+                    'radial_first_connectivity','noise_amplitude_errors','unsupported_shortcut')
 
 
 def verify_manuscript_identity(root, require, paper):
-    """Bind the current records to the accompanying source and actual PDF."""
+    """Check the recorded hashes against the supplied manuscript source, PDF and inputs."""
     from pypdf import PdfReader
     data = root / 'results'
-    revision = json.loads((data / 'manuscript_revision.json').read_text())
+    record_file = json.loads((data / 'manuscript_record.json').read_text())
+    require('manuscript_portable_path_base', record_file.get('path_base') == 'manuscript_directory')
     for kind, filename in [('source','combined.tex'),('pdf','combined.pdf')]:
         path=paper/filename
         require('manuscript_'+kind+'_present',path.is_file())
-        record=revision[kind]
-        require('manuscript_'+kind+'_record_path',(data/record['file']).resolve()==path.resolve())
+        record=record_file[kind]
+        require('manuscript_'+kind+'_record_path',record['file']==filename and (paper/record['file']).resolve()==path.resolve())
         require('manuscript_'+kind+'_sha256',record['sha256']==hashlib.sha256(path.read_bytes()).hexdigest())
+    for kind in ('inputs','graphics'):
+        for record in record_file.get(kind,[]):
+            path=(paper/record['file']).resolve()
+            require('manuscript_'+kind+'_sha256_'+path.name,path.is_file() and paper.resolve() in path.parents and
+                    record['sha256']==hashlib.sha256(path.read_bytes()).hexdigest())
     pages=len(PdfReader(paper/'combined.pdf').pages)
-    require('current_manuscript_identity',revision['pdf']['pages']==pages,{'pdf_pages':pages})
+    require('manuscript_identity',record_file['pdf']['pages']==pages,{'pdf_pages':pages})
 
 
 def verify_noise_coordinates(root, config, require):
-    """Replay the original seeded inputs independently of the exporter."""
+    """Replay the seeded noise inputs independently of the exporter."""
     n = config['n']
     path = root / 'results/matched_noise/coordinates.npz'
     expected = {f'{seed}_{field}' for seed in config['seeds']
@@ -53,7 +70,7 @@ def verify_noise_coordinates(root, config, require):
                 want = clean + delta * draw[:, None] * normal
                 require(f'noise_observed_replay_{seed}_{delta:g}',
                         got.shape == (n, 2) and np.array_equal(got, want))
-                # Also compare the original sampler's direct normal displacement.
+                # Also compare with the sampler's direct normal displacement.
                 _, sampled = m.sample_cloud(seed, 'uniform', n=n, sigma=delta)
                 max_difference = max(max_difference, float(np.max(np.abs(got - sampled))))
     require('noise_coordinates', max_difference < 1e-15,
@@ -63,45 +80,198 @@ def verify_noise_coordinates(root, config, require):
              'maximum_direct_sampler_difference': max_difference})
 
 
-def verify(root,manuscript_dir=None,data_only=False):
+def verify_curve_order_records(root, require):
+    """Re-read the curve-order check (Example 1 remark) and replay its key graphs."""
+    from verify_curve_order import COLUMNS, TOL, analyse
+    data = root / 'results'
+    summary = json.loads((data / 'curve_order/summary.json').read_text())
+    rows = pd.read_csv(data / 'curve_order/curve_order_checks.csv', dtype={'seed': str},
+                       float_precision='round_trip')
+    script = root / 'code/verify_curve_order.py'
+    require('curve_order_script_hash', summary['script'] == 'code/verify_curve_order.py' and
+            summary['script_sha256'] == hashlib.sha256(script.read_bytes()).hexdigest())
+    require('curve_order_tolerance', summary['tolerance'] == TOL == 1e-10)
+    require('curve_order_columns', list(rows.columns) == COLUMNS)
+    # Scope: every saved post-closure circle prefix and every ellipse cell.
+    prefixes = pd.read_csv(data / 'useful_diagram/saved_prefixes.csv', dtype={'seed': str})
+    cells = pd.read_csv(data / 'ellipse/cells.csv', dtype={'seed': str})
+    key = ['seed', 'profile', 'method', 'M']
+    circle, ellipse = rows[rows.curve == 'circle'], rows[rows.curve == 'ellipse']
+    joined = circle.merge(prefixes, on=key, how='left', suffixes=('', '_saved'), validate='many_to_one')
+    require('curve_order_circle_scope', len(circle) == 3439 and (circle.kind == 'closure').sum() == 180 and
+            (circle.kind == 'grid').sum() == int(prefixes.is_saved_budget.sum()) and
+            joined.death_saved.notna().all() and (joined.M_close == joined.M_close_saved).all() and
+            np.allclose(joined.birth, joined.birth_saved, rtol=0, atol=1e-12) and
+            np.allclose(joined.death, joined.death_saved, rtol=0, atol=1e-12))
+    require('curve_order_ellipse_scope', len(ellipse) == len(cells) == 3516 and
+            sorted(map(tuple, ellipse[key].values.tolist())) == sorted(map(tuple, cells[key].values.tolist())))
+    require('curve_order_n', (rows.n == 512).all() and (rows.pairs == 512 * 511 // 2).all())
+    # Internal consistency of the per-graph records.
+    cert, before, alive = rows.certified_failure, rows.certified_before_death, rows.certified_while_alive
+    require('curve_order_record_consistency',
+            (cert == (rows.certified_pairs > 0)).all() and (cert == rows.first_certified_threshold.notna()).all() and
+            (before <= cert).all() and (alive <= before).all() and
+            (rows.first_certified_before_death[before] < rows.death[before]).all() and
+            (rows.first_certified_while_alive[alive] >= rows.birth[alive]).all() and
+            (rows.last_certified_while_alive[alive] <= rows.death[alive]).all() and
+            (rows.certified_alive_measure[alive] > 0).all() and
+            (rows.certified_alive_measure[alive] <= (rows.death - rows.birth)[alive]).all() and
+            (rows.certified_alive_windows[~alive] == 0).all() and
+            (rows.shorter_arc_failure == (rows.shorter_arc_failing_pairs > 0)).all())
+    def span(values):
+        values = values.dropna()
+        return [float(values.min()), float(values.max())] if len(values) else None
+    for curve, g in [('circle', circle), ('ellipse', ellipse)]:
+        want = summary[curve]
+        got = dict(graphs=len(g), certified_failure_graphs=int(g.certified_failure.sum()),
+                   certified_before_death_graphs=int(g.certified_before_death.sum()),
+                   certified_while_alive_graphs=int(g.certified_while_alive.sum()),
+                   shorter_arc_failure_graphs=int(g.shorter_arc_failure.sum()),
+                   shorter_arc_before_death_graphs=int(g.shorter_arc_before_death.sum()))
+        ranges = dict(first_certified_threshold_range=span(g.first_certified_threshold),
+                      first_certified_before_death_range=span(g.first_certified_before_death),
+                      death_range=span(g.death), shorter_arc_first_threshold_range=span(g.shorter_arc_first_threshold))
+        require(f'curve_order_summary_{curve}',
+                all(want[k] == v for k, v in got.items()) and
+                all((want[k] is None and v is None) or np.allclose(want[k], v, rtol=0, atol=1e-15)
+                    for k, v in ranges.items()), {**got, **ranges})
+    listed = summary['ellipse_shorter_arc_before_death']
+    flagged = ellipse[ellipse.shorter_arc_before_death]
+    require('curve_order_listed_graphs', sorted((r['seed'], r['profile'], r['method'], r['M']) for r in listed) ==
+            sorted(map(tuple, flagged[key].values.tolist())))
+    # Replay the arc-supported single-bar ellipse graphs from coordinates.
+    replay = flagged[(flagged.arc_supported == True) & (flagged.bars == 1)]
+    with np.load(data / 'ellipse_checks/coordinates.npz', allow_pickle=False) as coords:
+        for r in replay.itertuples():
+            s, xy = coords[f'{r.seed}_{r.profile}_latent'], coords[f'{r.seed}_{r.profile}_xy']
+            _, iu, ju, length, orders, _ = m.build_orders(xy)
+            D = m.graph_metric(orders[r.method], iu, ju, length, int(r.M), len(xy))
+            out = analyse(D, s, r.birth, r.death)
+            require(f'curve_order_replay_{r.seed}_{r.profile}_{r.method}_M{r.M}',
+                    out['certified_pairs'] == r.certified_pairs and
+                    abs(out['first_certified_threshold'] - r.first_certified_threshold) < 1e-15 and
+                    out['certified_while_alive'] == r.certified_while_alive and
+                    out['shorter_arc_failing_pairs'] == r.shorter_arc_failing_pairs)
+    if 'two_sat' in summary:
+        exact = summary['two_sat']['graphs']
+        require('curve_order_two_sat', len(exact) == len(replay) and
+                all(not sat for g in exact for sat, local in zip(g['satisfiable'], g['locally_certified']) if local),
+                {'graphs': len(exact), 'thresholds': sum(len(g['thresholds']) for g in exact),
+                 'unsatisfiable': sum(not s for g in exact for s in g['satisfiable'])})
+    require('curve_order_check', summary['status'] == 'passed',
+            {k: {f: summary[k][f] for f in ('graphs', 'certified_failure_graphs', 'certified_before_death_graphs',
+                                            'certified_while_alive_graphs', 'shorter_arc_failure_graphs')}
+             for k in ('circle', 'ellipse')} | {'replayed_ellipse_graphs': len(replay)})
+
+
+def verify_payload(root,require,required_schemas=None):
+    data=root/'results'
+    # Keep mutable execution logs and this report outside the scientific manifest.
+    manifest=data/'file_manifest.json'
+    require('manifest_present',manifest.is_file())
+    if manifest.exists():
+        record=json.loads(manifest.read_text());entries=record['sha256']
+        require('manifest_exclusion_policy',record['excluded']==[
+            'results/file_manifest.json','results/verification_report.json','results/run_logs/'])
+        actual={str(f.relative_to(root)) for f in root.rglob('*') if f.is_file()
+                and f not in {manifest,data/'verification_report.json'}
+                and data/'run_logs' not in f.parents and '__pycache__' not in f.parts and f.suffix!='.pyc'}
+        require('manifest_file_inventory',set(entries)==actual)
+        for name,want in entries.items():
+            require('checksum_'+name,hashlib.sha256((root/name).read_bytes()).hexdigest()==want)
+    import csv
+    schemas=json.loads((root/'code/result_schemas.json').read_text())
+    selected = schemas if required_schemas is None else {name:schemas[name] for name in required_schemas}
+    for name,columns in selected.items():
+        path=data/name
+        require('schema_file_'+name,path.is_file())
+        with path.open() as stream:require('schema_columns_'+name,next(csv.reader(stream))==columns)
+    for path in list((root/'code').glob('*.py'))+list((root/'tools').glob('*.py')):
+        compile(path.read_text(),str(path),'exec')
+    require('code_syntax',True)
+
+
+def verify_documentation(root,require):
+    """Every relative Markdown link in the guides resolves inside this release."""
+    import re
+    guides=sorted(root.rglob('*.md'))
+    require('documentation_guides_present',{str(g.relative_to(root)) for g in guides}>={'README.md','code/README.md','results/README.md','tools/README.md','manuscript_figures/README.md','results/comparisons/README.md'})
+    links=0
+    for guide in guides:
+        text=guide.read_text()
+        for target in re.findall(r'\]\((?:<([^>]+)>|([^)\s]+))\)',text):
+            target=(target[0] or target[1]).split('#',1)[0]
+            if not target or re.match(r'[a-z]+:',target):continue
+            path=(guide.parent/target).resolve()
+            require('documentation_link_'+str(guide.relative_to(root))+'_'+target,path.exists() and (path==root or root in path.parents))
+            links+=1
+    require('documentation_links_checked',links>0,{'guides':len(guides),'relative_links':links})
+
+
+def verify(root,manuscript_dir=None,data_only=False,paper_only=False):
     checks={}
     def require(name,condition,detail=None):
         if not bool(condition):raise AssertionError(name)
         checks[name]={'passed':True,**({'detail':detail} if detail is not None else {})}
     data=root/'results';native=set(m.METHODS)
-    require('release_structure',{p.name for p in root.iterdir()}=={'code','results','manuscript_figures'})
+    require('release_structure',{p.name for p in root.iterdir()}=={'code','tools','results','manuscript_figures','README.md','LICENSE','CITATION.cff','Dockerfile'})
+    verify_documentation(root,require)
+    require('release_no_latex_documents',not list(root.rglob('*.tex')) and not list(root.rglob('*.bib')))
+    require('release_no_paper_or_source_bundle',not any(p.name in ('combined.pdf','main.pdf','combined.tex','main.tex','overleaf.zip','manuscript-png.zip') for p in root.rglob('*')))
+    from reproduce import stages
+    commands=stages(root,1)
+    stage_paths=[root/name if name.startswith('tools/') else root/'code'/name for name,args in commands]
+    require('generation_stage_files_present',all(path.is_file() for path in stage_paths))
+    final_args=dict(commands)
+    require('generation_data_only_defaults',final_args['tools/record_current.py']==['--data-only'] and
+            final_args['verify_release.py']==['--data-only'])
     paper=None if data_only else locate_manuscript(root,manuscript_dir)
     if paper is not None:
         verify_manuscript_identity(root, require, paper)
-        layout=json.loads((data/'manuscript_restructure.json').read_text())
-        manuscript=(paper/'combined.tex').read_text()
+        layout=json.loads((data/'manuscript_structure.json').read_text())
+        manuscript=manuscript_text(paper)
         require('manuscript_structure_record',layout['status']=='passed',layout)
         environments = ('definition','theorem','proposition','corollary','structurallemma',
-                        'appendixlemma','remark','example','proof')
+                        'appendixlemma','lemma','remark','example','proof')
         for name in environments:
             require('manuscript_environment_'+name,
                     layout['environment_counts'][name]==manuscript.count(r'\begin{'+name+'}'))
         from record_current import manuscript_records
-        _, _, current_layout = manuscript_records(root,paper)
-        require('manuscript_structure_replay',layout==current_layout)
-        comparison_record=json.loads((data/'phase1/completion.json').read_text())
-        require('comparison_manuscript_source_identity',
-                comparison_record['manuscript_source_sha256']==layout['current_source_sha256'])
-        require('comparison_manuscript_pdf_identity',
-                comparison_record['manuscript_pdf_sha256']==layout['current_pdf_sha256'])
-        require('manuscript_structure_source_identity',hashlib.sha256((paper/'combined.tex').read_bytes()).hexdigest()==layout['current_source_sha256'])
-        require('manuscript_structure_pdf_identity',hashlib.sha256((paper/'combined.pdf').read_bytes()).hexdigest()==layout['current_pdf_sha256'])
-        result_labels=['thm:loop-transition','thm:closed-loop','thm:circle-parameters','thm:arc-supported','thm:useful-diagram']
+        _, _, replayed_layout = manuscript_records(root,paper)
+        require('manuscript_structure_replay',layout==replayed_layout)
+        if not paper_only:
+            comparison_record=json.loads((data/'comparisons/completion.json').read_text())
+            require('comparison_manuscript_source_identity',
+                    comparison_record['manuscript_source_sha256']==layout['source_sha256'])
+            require('comparison_manuscript_pdf_identity',
+                    comparison_record['manuscript_pdf_sha256']==layout['pdf_sha256'])
+        require('manuscript_structure_source_identity',hashlib.sha256((paper/'combined.tex').read_bytes()).hexdigest()==layout['source_sha256'])
+        require('manuscript_structure_pdf_identity',hashlib.sha256((paper/'combined.pdf').read_bytes()).hexdigest()==layout['pdf_sha256'])
+        result_labels=['thm:loop-transition','thm:arc-supported','thm:circle-parameters']
         positions=[manuscript.index('\\label{'+label+'}') for label in result_labels]
-        require('manuscript_result_order',positions==sorted(positions) and r'\newtheorem{proposition}{Proposition}' in manuscript)
-        rank_anchor=manuscript.index(r'\label{tab:rank-scaling}')
-        rank_body=manuscript[rank_anchor:manuscript.index(r'\end{tabular}',rank_anchor)]
-        require('manuscript_primary_rank_display',len([line for line in rank_body.splitlines() if line.startswith(('Uniform &','Cosine &','Trough &'))])==12 and '262,144' not in rank_body and '$10^6$' not in rank_body)
-        require('release_noise_error_figure',r'\label{fig:noise-errors}' not in manuscript and all((root/'manuscript_figures'/('noise-all-errors.'+ext)).exists() for ext in ['pdf','png']))
-
+        require('manuscript_result_order',positions==sorted(positions) and manuscript.count(r'\begin{theorem}')==3 and
+                all(layout['result_numbers']['theorem'][label]==i for i,label in enumerate(result_labels,1)))
         from verify_manuscript_tables import verify_manuscript_tables
         verify_manuscript_tables(root,require,paper)
 
+    from verify_paper_evidence import verify_paper_evidence
+    paper_evidence=verify_paper_evidence(root,require,include_additional=not paper_only)
+    require('paper_evidence',paper_evidence['status']=='passed',paper_evidence)
+    if paper_only:
+        verify_payload(root,require,['rank_table.csv','noncircular_locality/locality_check_results.csv',
+                                    'retention_extra_layers/retention.csv'])
+        return dict(status='passed',requested_scope='paper_saved_data',
+            manuscript_comparison=dict(status='passed' if paper is not None else 'not_run',
+                                       location='external' if paper is not None else None),
+            performed_checks=['Table 3 raw rank counts and export','Small examples',
+                              'Fixed-k, bridge-free, heuristic-model and diagram-cost claims',
+                              'Extra-layer counts, radius beta integral and independent finite certificates',
+                              'Every distributed payload hash and complete inventory','Code syntax']+
+                             (['Manuscript identity, structure and tables'] if paper is not None else []),
+            additional_scientific_checks='not_run',measurement_generation='not_run',
+            checks_passed=len(checks),checks=checks)
+
+    require('additional_figure_assets',all((root/'results/additional_figures'/(name+'.'+ext)).exists() for name in ADDITIONAL_FIGURES for ext in ['pdf','png']))
     cells=pd.read_csv(data/'clean_closure/cells.csv');clouds=pd.read_csv(data/'clean_closure/clouds.csv')
     require('clean_native_panel',len(cells)==4740 and set(cells.method)==native and set(cells.noise)=={'clean'})
     require('saved_sample_scope',len(clouds)==60 and (clouds.n==512).all() and clouds.seed.nunique()==20)
@@ -163,7 +333,7 @@ def verify(root,manuscript_dir=None,data_only=False):
     for _,row in es.iterrows():
         g=gaps[(gaps.profile==row.profile)&(gaps.method==row.method)];want=expected_gaps[(row.profile,row.method)]
         require(f'extra_k_summary_{row.profile}_{row.method}',(row.misses,row.median_extra_k,row.max_extra_k)==want and row.samples==len(g)==20)
-    # Replay the original saved coordinates, not a new sample-size experiment.
+    # Replay the saved coordinates from their seeds; this is not a new sample-size experiment.
     max_coordinate_difference=0.;rank_checks=0
     with np.load(data/'clean_closure/latent_coordinates.npz') as latents:
         for profile in m.PROFILES:
@@ -263,9 +433,22 @@ def verify(root,manuscript_dir=None,data_only=False):
             require(f'ellipse_preclosure_{row.seed}_{row.profile}_{row.method}',row.M_conn==row.M_second_to_last_consecutive and row.M_conn<row.M_close and len(z[prefix+str(row.M_conn)])==0 and len(z[prefix+str(row.M_close-1)])==0)
             bars=z[prefix+str(row.M_close)];tol=row.endpoint_tolerance
             require(f'ellipse_closure_{row.seed}_{row.profile}_{row.method}',np.any((bars[:,0]<=row.guaranteed_birth_upper+tol)&(bars[:,1]>=row.guaranteed_death_lower-tol)))
-    from check_knn_miss_candidate import verify_candidate
-    candidate=verify_candidate(root)
-    require('candidate_rank_audit',candidate['status']=='passed',candidate)
+    fixed=pd.read_csv(data/'extra_k/rank_sweep/fixed_k_summary.csv')
+    fixed_source=pd.read_csv(data/'extra_k/rank_sweep/samples.csv')
+    expected_scope={('uniform',method,k,n) for method in ['OR_kNN','mutual_kNN']
+                    for k in [10,15] for n in [128,512,4096,32768]}
+    require('fixed_k_summary_scope',len(fixed)==16 and
+            set(zip(fixed.profile,fixed.method,fixed.k,fixed.n))==expected_scope)
+    for row in fixed.itertuples():
+        group=fixed_source[(fixed_source.profile==row.profile)&(fixed_source.method==row.method)&(fixed_source.n==row.n)]
+        count=sum(int(k)<=row.k for k in group.k_close)
+        require(f'fixed_k_count_{row.method}_{row.k}_{row.n}',
+                len(group)==row.samples and row.samples==(500 if row.n==32768 else 1500) and
+                not group.seed.duplicated().any() and (group.largest_gap<1/3).all() and
+                count==row.closed and abs(row.closure_percent-100*count/len(group))<1e-11)
+    from rank_sweep import verify_rank_sweep
+    candidate=verify_rank_sweep(root)
+    require('rank_sweep_audit',candidate['status']=='passed',candidate)
     arc=json.loads((data/'arc_support_verification.json').read_text())
     require('arc_support_checker_hash',arc['checker_sha256']==hashlib.sha256((root/'code/verify_arc_support.py').read_bytes()).hexdigest())
     require('arc_support_small_graph_scope',arc['status']=='passed' and arc['small_graphs']['samples']==80 and arc['small_graphs']['supported_budgets']==3796 and arc['small_graphs']['empty_supported']>0 and arc['small_graphs']['small_gap_budgets']>0 and arc['small_graphs']['odd_field_checks']>0,arc['small_graphs'])
@@ -277,29 +460,27 @@ def verify(root,manuscript_dir=None,data_only=False):
     from audit_rank_scaling import audit_rank_scaling
     rank_audit=audit_rank_scaling(root)
     require('rank_scaling_raw_rows',rank_audit['status']=='passed',rank_audit)
-    from verify_phase1 import verify_phase1
-    phase1=verify_phase1(root)
-    require('study_comparison_evidence',phase1['status']=='passed',phase1)
-    # File hashes exclude this verifier's own report to avoid a circular digest.
-    manifest=data/'file_manifest.json'
-    if manifest.exists():
-        entries=json.loads(manifest.read_text())['sha256'];actual={str(f.relative_to(root)) for f in root.rglob('*') if f.is_file() and f not in {manifest,data/'verification_report.json'} and '__pycache__' not in f.parts and f.suffix!='.pyc'}
-        require('manifest_file_inventory',set(entries)==actual)
-        for name,want in entries.items():
-            require('checksum_'+name,hashlib.sha256((root/name).read_bytes()).hexdigest()==want)
-    for path in (root/'code').glob('*.py'):
-        compile(path.read_text(),str(path),'exec')
-    require('code_syntax',True)
-    summary_names={'release_structure','clean_native_panel','saved_sample_scope','eleven_event_rows','180_first_closed_series','closure_table_reports_all_errors','own_closure_not_global_split','grid_scope','120_paired_extra_k_rows','miss_means_unclosed_integer_layer','miss_counts_38_and_40','six_extra_k_groups','certificate_counts','CkNN_certificate_only','useful_diagram_scope','saved_diagram_transitions','matched_noise_scope','no_long_first_connected_bars','ellipse_scope','ellipse_constants','ellipse_loop_interval','ellipse_saved_diagram_inventory','manifest_file_inventory','code_syntax','permuted_scale_control','control_grid_matches','noise_closure_comparison','noise_closure_event_positions','noise_closure_diagram_inventory','noise_closure_summary'}
+    from verify_comparisons import verify_comparisons
+    comparisons=verify_comparisons(root)
+    require('study_comparison_evidence',comparisons['status']=='passed',comparisons)
+    require('study_comparison_report_replay',json.loads((data/'comparisons/verification.json').read_text())==comparisons)
+    verify_curve_order_records(root,require)
+    verify_payload(root,require)
+    summary_names={'release_structure','clean_native_panel','saved_sample_scope','eleven_event_rows','180_first_closed_series','closure_table_reports_all_errors','own_closure_not_global_split','grid_scope','120_paired_extra_k_rows','miss_means_unclosed_integer_layer','miss_counts_38_and_40','six_extra_k_groups','certificate_counts','CkNN_certificate_only','useful_diagram_scope','saved_diagram_transitions','matched_noise_scope','no_long_first_connected_bars','ellipse_scope','ellipse_constants','ellipse_loop_interval','ellipse_saved_diagram_inventory','manifest_file_inventory','manifest_exclusion_policy','code_syntax','permuted_scale_control','control_grid_matches','noise_closure_comparison','noise_closure_event_positions','noise_closure_diagram_inventory','noise_closure_summary'}
     summary={name:item for name,item in checks.items() if name in summary_names or 'detail' in item}
-    return {'status':'passed','manuscript_comparison':{'status':'passed' if paper is not None else 'not_run','location':'external' if paper is not None else None},'scope':'Saved clean, noise and ellipse diagrams; seed and selector replay; finite witnesses; raw rank-sweep counts, Wilson intervals and study comparisons. No full persistence regeneration.','checks_passed':len(checks)+studies['checks_passed']+rank_audit['checks_passed']+phase1['checks_passed'],'checks':summary}
+    return {'status':'passed','requested_scope':'complete_saved_data','measurement_generation':'not_run','additional_scientific_checks':'passed','manuscript_comparison':{'status':'passed' if paper is not None else 'not_run','location':'external' if paper is not None else None},'scope':'Table 3, Figure 3, the small examples and all additional studies; the varying-neck records and 240 one-edge prefix replays; the additional clean, noise and ellipse diagrams; seed and selector replay; finite witnesses; raw rank-sweep counts, Wilson intervals and study comparisons. No new samples or complete persistence-study regeneration.','checks_passed':len(checks)+studies['checks_passed']+rank_audit['checks_passed']+comparisons['checks_passed'],'checks':summary}
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('--release',type=Path,default=Path(__file__).resolve().parents[1]);ap.add_argument('--report',type=Path)
     ap.add_argument('--manuscript-dir',type=Path,help='Directory containing the external combined.tex and combined.pdf; defaults to the parent if present.')
     ap.add_argument('--data-only',action='store_true',help='Check the numerical release without comparing a manuscript.')
+    ap.add_argument('--paper-only',action='store_true',help='Only the checks behind the paper, plus every file hash; the additional studies are reported as not run.')
     args=ap.parse_args()
+    if args.paper_only and args.report is None:
+        ap.error('With --paper-only, pass --report with a path outside the release; the saved report covers the complete check.')
+    if args.paper_only and args.report is not None and args.release.resolve() in args.report.resolve().parents:
+        ap.error('Write --paper-only reports outside the release folder.')
     if args.data_only and args.manuscript_dir:ap.error('Choose --data-only or --manuscript-dir.')
-    report=verify(args.release.resolve(),args.manuscript_dir,args.data_only)
-    (args.report or args.release/'results/verification_report.json').write_text(json.dumps(report,indent=2)+'\n')
+    report=verify(args.release.resolve(),args.manuscript_dir,args.data_only,args.paper_only)
+    (args.report or args.release/('results/paper_verification_report.json' if args.paper_only else 'results/verification_report.json')).write_text(json.dumps(report,indent=2)+'\n')
     print(f"Release verification passed: {report['checks_passed']} checks.")

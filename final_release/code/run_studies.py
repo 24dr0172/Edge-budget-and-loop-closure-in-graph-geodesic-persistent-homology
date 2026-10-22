@@ -11,7 +11,7 @@ sys.path.insert(0, str(RELEASE / 'code'))
 import numpy as np
 import pandas as pd
 from ripser import ripser
-import paper1_methods as m
+import graph_methods as m
 from verify_arc_support import ring_death
 
 DELTAS = (0., .0005, .001, .002, .005, .01)
@@ -189,7 +189,7 @@ def noise_job(seed, model, delta):
     # The Euclidean baseline uses this independently generated observed cloud.
     import hashlib
     from scipy.spatial.distance import cdist
-    baseline = SUPPORT/'results/phase1/euclidean/checkpoints'
+    baseline = SUPPORT/'results/comparisons/euclidean/checkpoints'
     baseline.mkdir(parents=True,exist_ok=True)
     started=time.monotonic()
     bars=m.diagram(cdist(points,points)); diameter=float(true.max())

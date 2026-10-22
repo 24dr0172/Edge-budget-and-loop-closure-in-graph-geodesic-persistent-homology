@@ -2,7 +2,7 @@
 import argparse,concurrent.futures,json,math,time
 import numpy as np
 import pandas as pd
-import paper1_methods as m
+import graph_methods as m
 from experiment_core import ROOT,RESULTS,CONFIG,dump,table,ellipse_points,evaluate
 def coordinates():
     arrays={}

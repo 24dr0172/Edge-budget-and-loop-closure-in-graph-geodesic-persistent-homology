@@ -5,13 +5,13 @@ import numpy as np
 import pandas as pd
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import connected_components
-import paper1_methods as m
+import graph_methods as m
 ROOT=Path(__file__).resolve().parents[1]
 CONFIG=json.loads((ROOT/'code/config.json').read_text())
 SCHEMAS=json.loads((ROOT/'code/result_schemas.json').read_text())
 RESULTS=ROOT/'results'
 assert set(CONFIG['noise']['models'])=={'radial','isotropic'}, 'Unknown noise model'
-assert CONFIG['n']==512, 'The current-paper protocol uses n=512'
+assert CONFIG['n']==512, 'The full-diagram protocol uses n=512'
 
 def dump(path,value):
     path.parent.mkdir(parents=True,exist_ok=True)

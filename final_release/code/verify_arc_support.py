@@ -1,6 +1,6 @@
 """Verify the arc-support extension using finite F2 algebra and saved ellipses.
 
-The small graphs are new deterministic validation samples. Ellipse coordinates
+The small graphs are deterministic validation samples generated here. Ellipse coordinates
 and diagrams are reused; only their graph distances and support are recomputed.
 No large-sample persistence calculation is performed. Geometry is float64.
 """
@@ -20,7 +20,7 @@ import numpy as np
 from scipy.sparse.csgraph import shortest_path
 
 from finite_diagram import matching_distance, reduction_h1
-from paper1_methods import build_orders, closure, graph_metric, intrinsic
+from graph_methods import build_orders, closure, graph_metric, intrinsic
 
 SUPPORT_TOL = 1e-10
 CHECK_TOL = 1e-9

@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "extra_layer_rows": 144,
+  "peanut_clouds": 450,
+  "peanut_method_records": 1350,
+  "independent_metric_diagram_replays": 39,
+  "smallest_peanut_trough_chord": 4.246821263603781e-09,
+  "smallest_locality_check_chord": 1.4253626401672126e-07,
+  "radius_integral_checks": 12,
+  "scope": "Saved evidence and bounded independent replays; radius asymptotics are proved analytically in the paper.",
+  "checks_passed": 2541
+}

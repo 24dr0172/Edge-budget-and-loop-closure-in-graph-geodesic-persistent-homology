@@ -7,7 +7,7 @@ import argparse, hashlib, json
 import sys
 sys.dont_write_bytecode=True
 import numpy as np
-import paper1_methods as m
+import graph_methods as m
 
 def circle_costs(s, digits):
     """Independent high-precision circle evaluation from the saved arc parameters."""

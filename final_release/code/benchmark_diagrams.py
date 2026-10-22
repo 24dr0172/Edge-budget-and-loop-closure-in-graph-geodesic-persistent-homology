@@ -6,7 +6,7 @@ for key in ['OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS']:
 import sys
 sys.dont_write_bytecode=True
 import numpy as np
-import paper1_methods as m
+import graph_methods as m
 from run_studies import finite_graph_diagram
 
 def benchmark(root,repeats=3):

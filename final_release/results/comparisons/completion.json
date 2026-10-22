@@ -1,0 +1,20 @@
+{
+  "status": "complete",
+  "scope": "Bridge-free study (two n=512 proportions are cited in the paper), Example 1 certificate and the additional comparisons; this summary step reads saved measurements and does not regenerate them.",
+  "largest_bridgeless_n": 1000000,
+  "bridgeless_profile_seed_samples": 15390,
+  "bridgeless_method_records": 30780,
+  "clean_samples": 60,
+  "distinct_euclidean_diagrams": 220,
+  "euclidean_model_amplitude_seed_rows": 240,
+  "grid_oracle_samples": 720,
+  "cyclic_orders": 120,
+  "distinct_threshold_graphs": 14,
+  "summary_environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.3",
+    "pandas": "2.2.3"
+  },
+  "manuscript_source_sha256": "584df5add60d5603afd209935554fa82262c484e3b6895c5c3f407b3f40b5c1a",
+  "manuscript_pdf_sha256": "c44e1bc705eef5cc32b895e9b5c2542e5910b5f3e8397eb8769bd78dd7c77489"
+}

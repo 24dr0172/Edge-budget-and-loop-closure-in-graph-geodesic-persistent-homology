@@ -8,9 +8,9 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 PAPER=Path(__file__).resolve().parents[1];SUPPORT=PAPER
-RESULTS=SUPPORT/'results';FIGURES=SUPPORT/'manuscript_figures'
+RESULTS=SUPPORT/'results';FIGURES=SUPPORT/'results/additional_figures'
 sys.path.insert(0,str(PAPER/'code'))
-import paper1_methods as m
+import graph_methods as m
 METHODS=list(m.METHODS)
 NAMES=dict(zip(METHODS,['Radius','OR-kNN','Mutual-kNN']))
 COLORS=dict(zip(METHODS,['#2166ac','#d6604d','#4d9221']))
@@ -92,10 +92,13 @@ def noise_summary():
     return dict(cells=len(rows),grid_cells=int(rows.grid.sum()),selector_records=len(selectors),clean_selector_records=len(clean),distinct_clean_cases=len(clean.drop_duplicates(['seed','method'])),distinct_clean_selections=len(clean.drop_duplicates(['seed','method','selector'])),
                 clean_premature=0,largest_delta=.01)
 
-def curves_plot():
+def curves_plot(root=None):
+    base=Path(root) if root is not None else SUPPORT
+    RESULTS=base/'results';FIGURES=base/'results/additional_figures'
+    FIGURES.mkdir(parents=True,exist_ok=True)
     d=pd.read_csv(RESULTS/'noise/curves.csv');norm=512*np.log(512)
     plt.rcParams.update({'font.size':9,'axes.spines.top':False,'axes.spines.right':False,'savefig.bbox':'tight','pdf.fonttype':42})
-    fig,axes=plt.subplots(1,2,figsize=(7.0,2.65),sharey=True)
+    fig,axes=plt.subplots(1,2,figsize=(7.0,4.2),sharey=True)
     for ax,model in zip(axes,['radial','isotropic']):
         for method in METHODS:
             g=d[(d.model==model)&(d.delta==.01)&(d.method==method)].sort_values('M')
@@ -104,7 +107,7 @@ def curves_plot():
         ax.set(xscale='log',yscale='log',xlabel=r'$M/(n\log n)$',title=model.capitalize()+r', $\delta=0.01$')
         ax.grid(alpha=.2)
     axes[0].set_ylabel(r'Median $e_{\mathrm{PH}}$');axes[1].legend(frameon=False,fontsize=8)
-    fig.tight_layout();fig.savefig(FIGURES/'noise-eph.pdf',metadata={'CreationDate':None,'ModDate':None});fig.savefig(FIGURES/'noise-eph.png',dpi=300);plt.close(fig)
+    fig.tight_layout();fig.savefig(FIGURES/'noise_budget_curves.pdf',metadata={'CreationDate':None,'ModDate':None});fig.savefig(FIGURES/'noise_budget_curves.png',dpi=300);plt.close(fig)
     fig,axes=plt.subplots(3,2,figsize=(7.0,5.0),sharex=True)
     for col,model in enumerate(['radial','isotropic']):
         for row,(metric,label) in enumerate([('median_e_PH',r'$e_{\mathrm{PH}}$'),('median_e_inf',r'$e_\infty$'),('median_e_2',r'$e_2$')]):
@@ -122,9 +125,12 @@ def curves_plot():
     handles=[Line2D([0],[0],color=COLORS[k],label=NAMES[k]) for k in METHODS]
     handles += [Line2D([0],[0],color='gray',ls=ls,label=r'$\delta='+str(v)+'$') for v,ls in [(0,':'),(.001,'--'),(.01,'-')]]
     fig.legend(handles=handles,loc='lower center',ncol=3,frameon=False,bbox_to_anchor=(.5,-.015),fontsize=8)
-    fig.tight_layout(rect=(0,.055,1,1));fig.savefig(FIGURES/'noise-all-errors.pdf',metadata={'CreationDate':None,'ModDate':None});fig.savefig(FIGURES/'noise-all-errors.png',dpi=300);plt.close(fig)
+    fig.tight_layout(rect=(0,.055,1,1));fig.savefig(FIGURES/'noise_amplitude_errors.pdf',metadata={'CreationDate':None,'ModDate':None});fig.savefig(FIGURES/'noise_amplitude_errors.png',dpi=300);plt.close(fig)
 
-def unsupported_panel():
+def unsupported_panel(root=None):
+    base=Path(root) if root is not None else SUPPORT
+    FIGURES=base/'results/additional_figures'
+    FIGURES.mkdir(parents=True,exist_ok=True)
     plt.rcParams.update({'font.family':'serif','font.serif':['Latin Modern Roman','DejaVu Serif'],'mathtext.fontset':'cm','pdf.fonttype':42})
     values=np.array([0,.051,.442,.491,.543,.953]);xy=np.c_[np.cos(2*np.pi*values),np.sin(2*np.pi*values)]
     fig,ax=plt.subplots(figsize=(2.05,1.90))
@@ -135,7 +141,7 @@ def unsupported_panel():
     ax.scatter(xy[:,0],xy[:,1],s=12,color='black',zorder=3)
     ax.set(xlim=(-1.2,1.2),ylim=(-1.2,1.2));ax.set_aspect('equal');ax.axis('off');ax.set_title('Unsupported shortcut',fontsize=9,fontweight='bold',pad=6)
     ax.text(.5,-.12,'Two loop bars',transform=ax.transAxes,ha='center',fontsize=9)
-    fig.subplots_adjust(top=.79,bottom=.20);fig.savefig(FIGURES/'unsupported-shortcut.pdf',bbox_inches='tight',metadata={'CreationDate':None,'ModDate':None});fig.savefig(FIGURES/'unsupported-shortcut.png',dpi=300,bbox_inches='tight');plt.close(fig)
+    fig.subplots_adjust(top=.79,bottom=.20);fig.savefig(FIGURES/'unsupported_shortcut.pdf',bbox_inches='tight',metadata={'CreationDate':None,'ModDate':None});fig.savefig(FIGURES/'unsupported_shortcut.png',dpi=300,bbox_inches='tight');plt.close(fig)
 
 def main(make_figures=True):
     FIGURES.mkdir(exist_ok=True)

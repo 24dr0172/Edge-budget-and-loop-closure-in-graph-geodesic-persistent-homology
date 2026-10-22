@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-22",
+  "scope": "Submission editorial corrections; no numerical measurements regenerated.",
+  "corrections": [
+    "Abstract distinguishes the two largest gaps for radius graphs from local counts for nearest-neighbor graphs.",
+    "Appendix A.2 distinguishes observed B < 0.02 from the larger estimated locality boundaries.",
+    "Figure 2 labels are w_i in manuscript input and distributed source/PDF/PNG.",
+    "Explicit en space after Annesha Sen footnote mark fixes title spacing.",
+    "Funding is NA, following the explicit final author instruction; this supersedes the earlier no-support sentence."
+  ],
+  "citation_locators": [
+    {
+      "citation_key": "boissonnatreach2019",
+      "locator": "Lemma 3",
+      "status": "confirmed_in_published_pdf",
+      "pdf_page": 4,
+      "url": "https://research-explorer.ista.ac.at/download/6671/6741/2019_JournAppliedComputTopol_Boissonnat.pdf",
+      "claim": "Geodesic distance <= 2r arcsin(chord/(2r)) for a closed set of reach r and chord < 2r."
+    },
+    {
+      "citation_key": "federer1959",
+      "locator": "Theorem 4.18",
+      "status": "confirmed_in_published_scan",
+      "printed_page": 449,
+      "url": "https://users.math.msu.edu/users/iwenmark/Teaching/MTH995/Papers/MMod_Federer.pdf",
+      "claim": "Reach at least t is equivalent to the quadratic bound on distance to the tangent cone."
+    },
+    {
+      "citation_key": "adams2019",
+      "locator": "Theorem 2 in arXiv:1812.03374v2",
+      "status": "confirmed_preprint_only_journal_numbering_not_verified",
+      "pdf_page": 1,
+      "url": "https://arxiv.org/pdf/1812.03374v2",
+      "journal_doi": "10.1142/S0218195922500042",
+      "journal_access": "Publisher PDF and article page returned HTTP 403. The manuscript now explicitly names the preprint version and bibliography links v2; no journal theorem numbering is asserted.",
+      "claim": "Connected-arc intersections of sufficiently small chord balls give cyclic Euclidean Rips graphs."
+    }
+  ],
+  "bibliography_correction": {
+    "citation_key": "adams2019",
+    "author": "Sophia Coldren",
+    "initial": "S.",
+    "verified_with": [
+      "https://api.crossref.org/works/10.1142/S0218195922500042",
+      "https://people.clas.ufl.edu/henry-adams/research/"
+    ]
+  },
+  "optional_additions": "Not applied."
+}

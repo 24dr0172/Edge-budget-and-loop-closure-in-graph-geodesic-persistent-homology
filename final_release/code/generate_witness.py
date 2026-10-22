@@ -1,7 +1,7 @@
 """Compute the seven-point example with float64 F2 reduction and exact distinctness."""
 from fractions import Fraction
 import numpy as np
-import paper1_methods as m
+import graph_methods as m
 from finite_diagram import reduction_h1
 from experiment_core import RESULTS,dump,interval_row,transitions
 

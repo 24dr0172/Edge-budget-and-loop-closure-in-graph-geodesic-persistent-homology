@@ -1,0 +1,7 @@
+profile,method,128,512,4096,32768
+uniform,OR_kNN,34.3,32.9,32.2,31.2
+uniform,mutual_kNN,28.7,28.9,28.7,29.4
+strong_cosine,OR_kNN,33.7,33.2,31.8,30.8
+strong_cosine,mutual_kNN,23.2,27.0,28.2,29.4
+localized_trough,OR_kNN,24.2,32.7,32.3,31.2
+localized_trough,mutual_kNN,6.8,7.1,11.5,14.8

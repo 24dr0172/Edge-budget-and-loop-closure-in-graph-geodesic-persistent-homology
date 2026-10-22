@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "Please cite the paper when you use this code or data."
+title: "Edge budget and loop closure in graph-geodesic persistent homology"
+type: software
+authors:
+  - family-names: Singh
+    given-names: Shivam
+  - family-names: Sen
+    given-names: Annesha
+  - family-names: Tiwari
+    given-names: S. P.
+url: "https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology"
+repository-code: "https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology"
+license:
+  - MIT
+  - CC-BY-4.0
+preferred-citation:
+  type: manuscript
+  title: "Edge budget and loop closure in graph-geodesic persistent homology"
+  authors:
+    - family-names: Singh
+      given-names: Shivam
+    - family-names: Sen
+      given-names: Annesha
+    - family-names: Tiwari
+      given-names: S. P.
+  year: 2026

@@ -4,12 +4,12 @@ import argparse,csv,json
 import sys
 sys.dont_write_bytecode=True
 import numpy as np
-import paper1_methods as m
-from check_knn_miss_candidate import neighboring_keys,fast_inverse
+import graph_methods as m
+from rank_sweep import neighboring_keys,fast_inverse
 
 def audit(root):
     root=Path(root)
-    with (root/'results/extra_k/candidate_audit/samples.csv').open() as f:rows=list(csv.DictReader(f))
+    with (root/'results/extra_k/rank_sweep/samples.csv').open() as f:rows=list(csv.DictReader(f))
     result=[]
     for n in [32768,262144,1000000]:
         get=lambda profile:{int(r['seed']):r for r in rows if int(r['n'])==n and r['profile']==profile and r['method']=='OR_kNN'}

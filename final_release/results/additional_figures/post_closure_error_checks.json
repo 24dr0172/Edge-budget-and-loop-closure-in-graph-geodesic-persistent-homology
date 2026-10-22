@@ -1,0 +1,151 @@
+{
+  "checks": {
+    "post_closure_evaluations_3556": {
+      "passed": true,
+      "detail": 3556
+    },
+    "series_180": {
+      "passed": true,
+      "detail": null
+    },
+    "exact_closures_180": {
+      "passed": true,
+      "detail": null
+    },
+    "complete_graphs_180": {
+      "passed": true,
+      "detail": null
+    },
+    "single_bar_each": {
+      "passed": true,
+      "detail": null
+    },
+    "P_star_formula": {
+      "passed": true,
+      "detail": null
+    },
+    "g_small_gap_condition": {
+      "passed": true,
+      "detail": 0.0895572098550524
+    },
+    "error_below_finite_bound_all_3556": {
+      "passed": true,
+      "detail": {
+        "max_ratio": 1.0000003061249276,
+        "min_slack": -3.531692997771341e-08
+      }
+    },
+    "P_star_range": {
+      "passed": true,
+      "detail": [
+        0.2438360438211694,
+        0.3241900677888958
+      ]
+    },
+    "duplicate_budget_records_agree": {
+      "passed": true,
+      "detail": null
+    },
+    "every_noncomplete_prefix_joins_clean_record": {
+      "passed": true,
+      "detail": {
+        "joined": 3376,
+        "noncomplete": 3376
+      }
+    },
+    "joined_error_values_agree": {
+      "passed": true,
+      "detail": 0.0
+    },
+    "joined_bars_one": {
+      "passed": true,
+      "detail": null
+    },
+    "grid_max_0.043988": {
+      "passed": true,
+      "detail": 0.0439883934106221
+    },
+    "noncomplete_max_equals_grid_max": {
+      "passed": true,
+      "detail": 0.0439883934106221
+    },
+    "complete_graph_max_0.115561": {
+      "passed": true,
+      "detail": 0.1155607068537773
+    },
+    "complete_graph_error_equals_finite_ceiling_float32": {
+      "passed": true,
+      "detail": {
+        "max_abs_diff": 4.2349146758824396e-08,
+        "max_excess": 3.531692997771341e-08,
+        "max_abs_death_minus_chi_bstar": 2.1174539899249112e-08
+      }
+    },
+    "complete_max_exceeds_asymptotic_reference": {
+      "passed": true,
+      "detail": {
+        "complete_max": 0.1155607068537773,
+        "asymptotic": 0.11533777124487454
+      }
+    },
+    "nondecreasing_after_closure_tol_5e-8": {
+      "passed": true,
+      "detail": {
+        "decreases": 0,
+        "min_step": 0.0,
+        "tolerance": 5e-08
+      }
+    },
+    "saved_covered_monotonicity_180": {
+      "passed": true,
+      "detail": null
+    },
+    "saved_transitions_no_drop_tol_1e-7": {
+      "passed": true,
+      "detail": 0.0
+    },
+    "pre_closure_measured_empty_and_P_star": {
+      "passed": true,
+      "detail": {
+        "points": 702,
+        "max_abs": 0.0
+      }
+    },
+    "pre_closure_point_at_M_close_minus_1_every_series": {
+      "passed": true,
+      "detail": null
+    },
+    "first_connected_measured_every_series": {
+      "passed": true,
+      "detail": null
+    },
+    "clouds_gap_max_below_0.090": {
+      "passed": true,
+      "detail": 0.0895572098550524
+    }
+  },
+  "summary": {
+    "post_closure_evaluations": 3556,
+    "plotted_post_closure": 3376,
+    "complete_graph_excluded": 180,
+    "exact_closures": 180,
+    "pre_closure_measured_points": 702,
+    "grid_max": 0.0439883934106221,
+    "complete_graph_max": 0.1155607068537773,
+    "P_star_range": [
+      0.2438360438211694,
+      0.3241900677888958
+    ],
+    "finite_ceiling_range": [
+      0.11535434654571453,
+      0.1155606846530796
+    ],
+    "asymptotic_reference": 0.11533777124487454,
+    "min_step": 0.0,
+    "tolerance": 5e-08,
+    "x_range_noncomplete": [
+      -17283,
+      36695
+    ]
+  }
+}

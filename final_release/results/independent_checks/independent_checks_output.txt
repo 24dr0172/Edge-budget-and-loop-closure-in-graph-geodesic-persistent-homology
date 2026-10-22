@@ -1,0 +1,240 @@
+==============================================================================
+PART 1. Seven-point circle example (Appendix C)
+==============================================================================
+arc coordinates: [0, 0.08, 0.15, 0.161, 0.29, 0.6, 0.66]
+consecutive gaps x_i x_{i+1} (exact): ['2/25', '7/100', '11/1000', '129/1000', '31/100', '3/50', '17/50']
+  [ok]   g = 0.34 (gap x7 x1)
+  [ok]   all 21 intrinsic distances distinct => all chords distinct (chi strictly increasing)
+  [ok]   intrinsic diameter Delta* = 0.499 (pair x4 x7)
+radius order (position: pair, intrinsic distance, chord):
+    1: x3x4  d*=0.011  c=0.010998  ring
+    2: x6x7  d*=0.060  c=0.059645  ring
+    3: x2x3  d*=0.070  c=0.069437  ring
+    4: x1x2  d*=0.080  c=0.079160  ring
+    5: x2x4  d*=0.081  c=0.080129
+    6: x4x5  d*=0.129  c=0.125498  ring
+    7: x3x5  d*=0.140  c=0.135530
+    8: x1x3  d*=0.150  c=0.144510
+    9: x1x4  d*=0.161  c=0.154223
+   10: x2x5  d*=0.210  c=0.195094
+   11: x1x5  d*=0.290  c=0.251514
+   12: x5x6  d*=0.310  c=0.263268  ring
+   13: x1x7  d*=0.340  c=0.278937  ring
+   14: x5x7  d*=0.370  c=0.292130
+   15: x1x6  d*=0.400  c=0.302731
+   16: x2x7  d*=0.420  c=0.308310
+   17: x4x6  d*=0.439  c=0.312483
+   18: x3x6  d*=0.450  c=0.314391
+   19: x2x6  d*=0.480  c=0.317682
+   20: x3x7  d*=0.490  c=0.318153
+   21: x4x7  d*=0.499  c=0.318308
+  [ok]   ring insertion positions [1, 2, 3, 4, 6, 12, 13]: M_conn = mu_(n-1) = 12, M_close = 13
+  [ok]   the 14th inserted pair is x5x7 (d* = 0.37)
+  [ok]   x1..x5 are pairwise within intrinsic 0.29 (they lie on [0,0.29])
+  [ok]   G_13 = complete graph on x1..x5 plus path x5-x6-x7-x1
+intrinsic H1 bars, own F2 reduction: [(np.float64(0.34), np.float64(0.37))]  ripser: [(0.3400000035762787, 0.3700000047683716)]
+  [ok]   intrinsic reference bar [g,b*) = [0.34, 0.37)
+  [ok]   ripser agrees
+  [ok]   smallest intrinsic distance outside G_13 pairs is 0.37 (x5x7); next 0.40 (x1x6)
+  [ok]   15th smallest intrinsic distance is 0.40
+chi(0.34) = 0.2789370796
+chi(0.37) = 0.2921303704
+chi(0.31) = 0.2632679235
+chi(0.06) = 0.0596453249
+chi(0.31)+chi(0.06) = 0.3229132484
+chi(0.29) = 0.2515141521
+chi(0.08) = 0.0791604497
+chi(0.129) = 0.1254977229
+chi(0.06)+chi(0.34) = 0.3385824045
+chi(0.34)+chi(0.08) = 0.3580975293
+chi(0.31)+chi(0.129) = 0.3887656464
+chi(0.34)+chi(0.29) = 0.5304512316
+chi(0.40) = 0.3027306915   chi(0.499) = 0.3183083154
+  M=12: own-F2 bars=[]  ripser=[]  e_PH=0.0300601
+  M=13: own-F2 bars=[(np.float64(0.2789371), np.float64(0.3229132))]  ripser=[(0.278937, 0.322913)]  e_PH=0.0440643
+  M=14: own-F2 bars=[(np.float64(0.2789371), np.float64(0.2921304))]  ripser=[(0.278937, 0.29213)]  e_PH=0.0300601
+  M=15: own-F2 bars=[(np.float64(0.2789371), np.float64(0.2921304))]  ripser=[(0.278937, 0.29213)]  e_PH=0.0300601
+  M=16: own-F2 bars=[(np.float64(0.2789371), np.float64(0.2921304))]  ripser=[(0.278937, 0.29213)]  e_PH=0.0300601
+  M=17: own-F2 bars=[(np.float64(0.2789371), np.float64(0.2921304))]  ripser=[(0.278937, 0.29213)]  e_PH=0.0300601
+  M=18: own-F2 bars=[(np.float64(0.2789371), np.float64(0.2921304))]  ripser=[(0.278937, 0.29213)]  e_PH=0.0300601
+  M=19: own-F2 bars=[(np.float64(0.2789371), np.float64(0.2921304))]  ripser=[(0.278937, 0.29213)]  e_PH=0.0300601
+  M=20: own-F2 bars=[(np.float64(0.2789371), np.float64(0.2921304))]  ripser=[(0.278937, 0.29213)]  e_PH=0.0300601
+  M=21: own-F2 bars=[(np.float64(0.2789371), np.float64(0.2921304))]  ripser=[(0.278937, 0.29213)]  e_PH=0.0300601
+  [ok]   M=12 (first connected prefix, before closure): empty H1 diagram, error P*
+  [ok]   M=13 bar = [chi(0.34), chi(0.31)+chi(0.06)) = [0.2789371, 0.3229132)
+  [ok]   M=14 bar = [chi(0.34), chi(0.37)) = [0.2789371, 0.2921304)
+  [ok]   M=14: single bar with death chi(0.37) (squeezed by Thm circle-parameters(d))
+  [ok]   M=15: single bar with death chi(0.37) (squeezed by Thm circle-parameters(d))
+  [ok]   M=16: single bar with death chi(0.37) (squeezed by Thm circle-parameters(d))
+  [ok]   M=17: single bar with death chi(0.37) (squeezed by Thm circle-parameters(d))
+  [ok]   M=18: single bar with death chi(0.37) (squeezed by Thm circle-parameters(d))
+  [ok]   M=19: single bar with death chi(0.37) (squeezed by Thm circle-parameters(d))
+  [ok]   M=20: single bar with death chi(0.37) (squeezed by Thm circle-parameters(d))
+  [ok]   M=21: single bar with death chi(0.37) (squeezed by Thm circle-parameters(d))
+  [ok]   ripser (float32) agrees with own F2 reduction at M=13 within 1e-6
+  [ok]   ripser (float32) agrees with own F2 reduction at M=14 within 1e-6
+M=13 graph distances of the 8 absent pairs (sorted):
+   x5x7: D_G = 0.322913   chord = 0.292130
+   x1x6: D_G = 0.338582   chord = 0.302731
+   x2x7: D_G = 0.358098   chord = 0.308310
+   x4x6: D_G = 0.388766   chord = 0.312483
+   x3x6: D_G = 0.398798   chord = 0.314391
+   x2x6: D_G = 0.417743   chord = 0.317682
+   x3x7: D_G = 0.423447   chord = 0.318153
+   x4x7: D_G = 0.433160   chord = 0.318308
+  [ok]   smallest absent-pair D_G at M=13 is D_G(x5,x7)=chi(0.31)+chi(0.06), uniquely
+  [ok]   second smallest is D_G(x1,x6)=chi(0.06)+chi(0.34)=0.338582 > delta
+  [ok]   every edge of G_13 has D_G equal to its chord
+  [ok]   largest chord in G_13 is B = chi(0.34) < delta
+  [ok]   D_G(x6,w)=min{c56+c5w, c67+c71+c1w}, D_G(x7,w)=min{c71+c1w, c76+c65+c5w} for w in x1..x5
+  [ok]   nearest cluster chords: from x1 chi(0.08), from x5 chi(0.129)
+  [ok]   M=13, t=B: threshold graph = G_13, beta1 = 1 over F2 and Q
+  [ok]   M=13, t in (B,delta): threshold graph = G_13, beta1 = 1 over F2 and Q
+  [ok]   M=13, t=delta-: threshold graph = G_13, beta1 = 1 over F2 and Q
+  [ok]   M=13, t=delta: only x5x7 added; triangles x5x6x7 and x1x5x7 present; beta1 = 0 over F2 and Q
+  [ok]   M=13, t<B: beta1 = 0
+  [ok]   M=14: every absent pair has D_G > chi(0.37) (min 0.338582)
+  [ok]   every pair absent from G_13 has chord >= chi(0.37) (so D_G >= chi(0.37))
+  [ok]   M=14, t=B: threshold graph = G_13, beta1 = 1
+  [ok]   M=14, t=chi(0.37)-: threshold graph = G_13, beta1 = 1
+  [ok]   M=14, t=chi(0.37): graph G_14, beta1 = 0 over F2 and Q
+  [ok]   M=13, t=death: closed neighbourhood of x7 [1, 5, 6, 7] lies in that of x5 (x7 dominated by x5)
+  [ok]   M=13, t=death: after deleting x7, x6 is dominated by x5 (closed nbhd [5, 6])
+  [ok]   M=13: x1..x5 form a clique (contractible simplex)
+  [ok]   M=14, t=death: closed neighbourhood of x7 [1, 5, 6, 7] lies in that of x5 (x7 dominated by x5)
+  [ok]   M=14, t=death: after deleting x7, x6 is dominated by x5 (closed nbhd [5, 6])
+  [ok]   M=14: x1..x5 form a clique (contractible simplex)
+  triangle x5x6x7 at M=13: sides 0.263268, 0.059645, 0.322913
+  triangle x1x5x7 at M=13: sides 0.251514, 0.278937, 0.322913
+  [ok]   G_13 is arc-supported (every edge passes Definition def:arc-support)
+  [ok]   G_14 is arc-supported (every edge passes Definition def:arc-support)
+  [ok]   (arc support is only defined for graphs containing the ring; M=12 not tested)
+bottleneck matchings (raw / normalised by Delta*=0.499):
+  M=13: direct = max(|0.34-0.2789371|, |0.37-0.3229132|) = 0.06106292 -> 0.1223706; diagonal = max(0.02198808, 0.01500000) = 0.02198808 -> 0.0440643; e_PH = 0.0440643
+  M=14: direct = max(|0.34-0.2789371|, |0.37-0.2921304|) = 0.07786963 -> 0.1560514; diagonal = max(0.00659665, 0.01500000) = 0.01500000 -> 0.0300601; e_PH = 0.0300601
+  [ok]   e_PH(M=13) = 0.0440642974 ~ 0.0440643 (manuscript value)
+  [ok]   e_PH(M=14) = 0.0300601202 = P* = 0.0300601202 ~ 0.0300601 (manuscript value)
+  [ok]   direct cost M=13 = 0.1223705820 ~ 0.122371 (manuscript value)
+  [ok]   direct cost M=14 = 0.1560513618 ~ 0.156051 (manuscript value)
+  raw quantities: g-chi(g) = 0.06106292; b*-delta = 0.04708675; b*-chi(b*) = 0.07786963; (delta-chi(g))/2 = 0.02198808; (chi(b*)-chi(g))/2 = 0.00659665; (b*-g)/2 = 0.01500000
+  table row M=13: d=0.322913  |0.37-d|=0.047087  d-chi(0.34)=0.043976  0.03/0.998=0.0300601  2/pi-1/2=0.1366
+  table row M=14: d=0.292130  |0.37-d|=0.077870  d-chi(0.34)=0.013193  0.03/0.998=0.0300601  2/pi-1/2=0.1366
+  [ok]   App C hypothesis paragraph: diagonal raw cost max(0.015,(d-chi(0.34))/2) <= (delta-chi(0.34))/2 = 0.0219881 <= 0.021989 < 0.061063
+  cost ceiling (Corollary cor:cost-ceiling) = 0.1560513618
+  [ok]   direct cost at M=14 equals the cost-ceiling bound
+  [ok]   e_PH at closure exceeds P* (worse than the empty diagram at M=12)
+  [ok]   release finite_diagram.py agrees at M=13 (bars and bottleneck)
+  [ok]   release finite_diagram.py agrees at M=14 (bars and bottleneck)
+  [ok]   small-gap hypothesis g < 2/pi-1/2 = 0.136620 fails (g = 0.34)
+  [ok]   g > 1/3: positivity of the intrinsic bar is sample-specific (Lemma circle-bar's sufficient condition fails)
+  [ok]   key inequality of the corollary's proof fails: g-chi(g)=0.061063 > (b*-g)/2=0.015000
+  [ok]   geometric survival bound B < 2/(3pi) = 0.212207 fails (B = 0.278937); survival via chi(g)<=t<chi(b*) instead
+
+==============================================================================
+PART 2. Independent-key model (Section 7.2)
+==============================================================================
+  joint pmf mass on [0,80)^2 = 1 - 1.654e-24
+  [ok]   m=1: T_OR=0.333333333333, T_mutual=0.666666666667 match direct joint-pmf sums
+  [ok]   m=2: T_OR=0.129629629630, T_mutual=0.370370370370 match direct joint-pmf sums
+  [ok]   m=3: T_OR=0.052469135802, T_mutual=0.197530864198 match direct joint-pmf sums
+  [ok]   m=4: T_OR=0.021662094193, T_mutual=0.103337905807 match direct joint-pmf sums
+  [ok]   m=5: T_OR=0.009052862877, T_mutual=0.053447137123 match direct joint-pmf sums
+  [ok]   m=6: T_OR=0.003815157750, T_mutual=0.027434842250 match direct joint-pmf sums
+  [ok]   m=7: T_OR=0.001617800706, T_mutual=0.014007199294 match direct joint-pmf sums
+  [ok]   m=8: T_OR=0.000689309363, T_mutual=0.007123190637 match direct joint-pmf sums
+  [ok]   Pr(L=l)=2^{-(l+1)}, so Pr(L>=m)=2^{-m}
+  [ok]   integral representation equals closed form for m=1..12 (max diff 5.55e-17)
+  [ok]   positive form T_OR(m) = 2^{1-m} Pr{Bin(2m-1,2/3) <= m-1} (m=1..29, exact)
+  [ok]   T_OR(1)=1/3, T_mutual(1)=2/3, T_OR(2)=7/54, T_mutual(2)=10/27
+  [ok]   0 < T_OR(m) < T_mutual(m) for m=1..39
+  n=512: Pr(max OR mark tied)     = 0.32876823546796798527  (truncation bound 9.8e-70)
+  n=512: Pr(max mutual mark tied) = 0.27492279613204017441  (truncation bound 3.2e-58)
+  [ok]   OR tie probability rounds to 0.328768 (manuscript value); digits 0.3287682354
+  [ok]   mutual tie probability rounds to 0.274923 (manuscript value); digits 0.2749227961 -- NOTE: truncation would give 0.274922
+  [ok]   rounded 0.329 and 0.275 as in Section 7.2
+  n=128: OR 0.331693, mutual 0.273081
+  n=4096: OR 0.325653, mutual 0.276462
+  n=32768: OR 0.323936, mutual 0.277302
+  [ok]   Monte Carlo (4000 reps) OR tie freq 0.3367 vs exact 0.3288 (4 SE = 0.0297)
+  [ok]   Monte Carlo (4000 reps) mutual tie freq 0.2720 vs exact 0.2749 (4 SE = 0.0282)
+  m=10: T_OR / [3(4/9)^m/sqrt(pi m)] = 0.785882;  T_mutual / 2^(1-m) = 0.935233827209
+  m=50: T_OR / [3(4/9)^m/sqrt(pi m)] = 0.932708;  T_mutual / 2^(1-m) = 0.999690863137
+  m=200: T_OR / [3(4/9)^m/sqrt(pi m)] = 0.980566;  T_mutual / 2^(1-m) = 0.999999999997
+  m=100: OR ratio 0.96312969, m*(1-ratio) = 3.68703
+  m=200: OR ratio 0.98056585, m*(1-ratio) = 3.88683
+  m=400: OR ratio 0.98999944, m*(1-ratio) = 4.00022
+  [ok]   OR tail ratio increases to 1 with 1-ratio = O(1/m) (slow, as expected from Stirling corrections)
+  [ok]   binomial mass ratio a_{m,j-1}/a_{m,j} = j/(2(2m-j)) <= 1/2 for 1<=j<=m-1
+  [ok]   ratio formula exact for Bin(2m-1,2/3)
+
+==============================================================================
+PART 3. Arc-support figure (Figure 2)
+==============================================================================
+  h = c(x1,x4) = chi(0.491) = 0.31818266
+  [ok]   h in (0.31818, 0.31819)
+  [ok]   D_G(x1,x3) = 0.350611 > 0.3506
+  [ok]   D_G(x1,x5) = 0.352500 > 0.35249
+  [ok]   D_G(x4,x2) = 0.348636 > 0.34862
+  [ok]   D_G(x4,x6) = 0.357440 > 0.35742
+  smallest of the four failed support distances: 0.348636
+  [ok]   all four exceed 0.348 > h
+  [ok]   x1x4 fails arc support on both arcs from both endpoints
+  [ok]   ring edges pass
+  [ok]   Remark 2 formula D_G(i,j)=min{R_ij, R_i1+h+R_4j, R_i4+h+R_1j} holds for all pairs
+  Rips edges at t=0.33: ['x1x2(0.0508)', 'x1x4(0.3182)', 'x1x6(0.0468)', 'x2x3(0.2998)', 'x2x6(0.0976)', 'x3x4(0.0488)', 'x3x5(0.1006)', 'x4x5(0.0518)', 'x5x6(0.3057)']
+  triangles at t=0.33: ['x1x2x6', 'x3x4x5']
+  [ok]   t=0.33: nine edges; exactly the triangles x1x2x6 and x3x4x5
+  [ok]   the two Rips-only pairs at t=0.33 are x2x6 and x3x5 (not graph edges)
+  [ok]   beta1 = 2 at t=0.33 over F2 and Q
+  [ok]   joining edges x1x4, x2x3, x5x6 lie in no triangle
+  threshold graph is constant on [0.318183, 0.348636); 0.33 lies inside
+  ring chords: x2x3 = chi(0.391) = 0.299829, x5x6 = chi(0.41) = 0.305671
+  inset label angles 90-360s (mod 360): {0: 90, 0.051: 71.64, 0.442: -69.12, 0.491: -86.76, 0.543: -105.48, 0.953: 106.92}
+  [ok]   hard-coded inset label angles 71.64, -69.12, -86.76, -105.48, 106.92 equal 90-360s
+  supported panel: arc coords [0, 0.07, 0.15, 0.23, 0.3]; c(a,b) = chi(0.30) = 0.257518
+   ring-path distances from p=a=w0: [0, 0.069437, 0.148598, 0.227758, 0.297195]
+  [ok]   panel (a): every consecutive chord <= c(a,b)
+  [ok]   panel (a): D_G(p,w_i) <= c(a,b) for all i, already within ring + ab, so the dashed spokes pw2, pw3 are Rips pairs at t=c(a,b)
+  [ok]   panel (a): spokes pw2, pw3 are not graph edges (their D_G are ring paths, not chords)
+
+==============================================================================
+PART 4. Six-point ellipse (Figure 3, Example 2)
+==============================================================================
+  x0 = (1.732051, 0.500000)
+  x1 = (0.174311, 0.996195)
+  x2 = (-1.732051, 0.500000)
+  x3 = (-0.517638, -0.965926)
+  x4 = (0.684040, -0.939693)
+  x5 = (1.812616, -0.422618)
+  [ok]   fifteen chords distinct; smallest gap 0.0320
+  radius: closure at insertion 7; 8th prefix = [(0, 1), (0, 4), (0, 5), (1, 2), (1, 4), (2, 3), (3, 4), (4, 5)]
+  [ok]   radius: eighth prefix is R + x0x4 + x1x4
+  [ok]   radius: closure position 7
+  OR: closure at insertion 6; 8th prefix = [(0, 1), (0, 4), (0, 5), (1, 2), (1, 4), (2, 3), (3, 4), (4, 5)]
+  [ok]   OR: eighth prefix is R + x0x4 + x1x4
+  [ok]   OR: closure position 6
+  mutual: closure at insertion 6; 8th prefix = [(0, 1), (0, 4), (0, 5), (1, 2), (1, 4), (2, 3), (3, 4), (4, 5)]
+  [ok]   mutual: eighth prefix is R + x0x4 + x1x4
+  [ok]   mutual: closure position 6
+  c04 = 1.780742, c14 = 2.001870, c15 = 2.167273, c12 = 1.969880
+  [ok]   1.7807 < c04 < 1.7808
+  [ok]   2.0018 < c14 < 2.0019
+  [ok]   c15 = 2.16727 > 2.1672 > c14
+  [ok]   B = c12 = 1.969880 in (1.9698, 1.9699)
+  [ok]   x0x4: consecutive costs 1.2414,0.9261 and D(x4,x5) below 1.242
+  [ok]   x1x4: consecutive costs <= 1.6349 < 1.635; interior distances 1.2414,1.7807 < 1.781
+  [ok]   G is arc-supported (full check)
+  [ok]   t=2.1: threshold graph is exactly G (8 edges)
+  [ok]   t=2.1: exactly the triangles x0x1x4 and x0x4x5
+  [ok]   omitted pairs have D_G > 2.443 (min 2.4434)
+  [ok]   beta1 = 1 at t=2.1 over F2 and Q
+  [ok]   x1x2, x2x3, x3x4 in no triangle (forced block)
+  [ok]   t=2.1 > B, inside the positive bar
+  H1 bars of D_G (own F2): [(np.float64(1.9698797858832222), np.float64(3.105576193129135))]; ripser: [(1.9698797464370728, 3.105576276779175)]
+  [ok]   single H1 bar containing t=2.1
+  perimeter L = 9.688448; arc x4->x5->x0->x1 = 3.982245 (L/2 = 4.844224)
+  [ok]   x4->x5->x0->x1 is the minor arc from x4 to x1
+  [ok]   largest arc gap 2.4883 < 2.554; normalized 0.2568 < 1/3
+  [ok]   L >= 4 sqrt 5
+
+SUMMARY: ALL CHECKS PASSED

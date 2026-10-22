@@ -1,0 +1,31 @@
+{
+  "curve": "peanut r=1+0.4 cos(2 theta), length one",
+  "profile": "localized_trough",
+  "density": {
+    "trough": 0.14285714285714285,
+    "elsewhere": 1.2857142857142858,
+    "trough_arc_fraction": 0.25
+  },
+  "sizes": [
+    128,
+    256,
+    512
+  ],
+  "samples_per_size": 150,
+  "base_seed": 20350401,
+  "seed": "base + 10000*size_index + replicate",
+  "phase_seed_offset": 50000017,
+  "r_loc": 0.16618368115857343,
+  "threshold_source": "results/noncircular_locality/locality_check_summary.json",
+  "arc_length_grid": 400001,
+  "methods": [
+    "radius",
+    "OR",
+    "mutual"
+  ],
+  "event": "exact first prefix containing every consecutive pair",
+  "lifetime_cutoff": null,
+  "code_sha256": "3494915f0ad2b6d24c6b02d57156c39af618fdcb00346b6991da0f53be4564f9",
+  "distance_kernel_sha256": "506cba8fa87924f0eb3a17602d44e3bc724aeade4d4c11499847ccaaa3c33704",
+  "paired": "Methods share clouds; different seeds and sizes are independent."
+}

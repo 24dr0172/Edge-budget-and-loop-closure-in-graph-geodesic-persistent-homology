@@ -3,7 +3,7 @@ from pathlib import Path
 import argparse,concurrent.futures,json,time,math
 import numpy as np
 import pandas as pd
-import paper1_methods as m
+import graph_methods as m
 from experiment_core import ROOT,RESULTS,CONFIG,table,dump,grid_values,all_orders,evaluate,rank_containment,interval_row,transitions
 def clean_job(task):
     seed,profile=task;start=time.monotonic();folder=RESULTS/'clean_closure/checkpoints';folder.mkdir(parents=True,exist_ok=True)

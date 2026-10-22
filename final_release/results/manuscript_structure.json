@@ -1,0 +1,83 @@
+{
+  "status": "passed",
+  "scope": "Source and PDF identities, labels, citations, environment counts and result numbering.",
+  "source_sha256": "584df5add60d5603afd209935554fa82262c484e3b6895c5c3f407b3f40b5c1a",
+  "pdf_sha256": "c44e1bc705eef5cc32b895e9b5c2542e5910b5f3e8397eb8769bd78dd7c77489",
+  "pdf_pages": 31,
+  "source_checks": {
+    "unique_labels": 64,
+    "resolved_citation_keys": 46,
+    "unresolved_references": 0,
+    "unresolved_citations": 0
+  },
+  "environment_counts": {
+    "definition": 4,
+    "theorem": 3,
+    "proposition": 2,
+    "corollary": 2,
+    "structurallemma": 0,
+    "appendixlemma": 0,
+    "lemma": 8,
+    "remark": 2,
+    "example": 2,
+    "proof": 15
+  },
+  "display_math_blocks_by_type": {
+    "bracketed": 40,
+    "equation": 10,
+    "align": 1
+  },
+  "result_numbers": {
+    "theorem": {
+      "thm:loop-transition": 1,
+      "thm:arc-supported": 2,
+      "thm:circle-parameters": 3
+    },
+    "proposition": {
+      "prop:radius-enlargement": 1,
+      "eq:radius-enlargement": 1,
+      "prop:locality": 2
+    },
+    "corollary": {
+      "cor:cost-ceiling": 1,
+      "eq:cost-ceiling": 1,
+      "cor:closure-optimal": 2,
+      "eq:closure-optimal": 2
+    },
+    "lemma": {
+      "lem:edge-path": 1,
+      "lem:robinson": 2,
+      "lem:winding": 3,
+      "lem:circle-bar": 4,
+      "lem:geometric-survival": 5,
+      "lem:rank-containment": 6,
+      "lem:circle-orders": 7,
+      "lem:local-rank-keys": 8,
+      "eq:local-rank-keys": 8
+    },
+    "example": {
+      "ex:noncyclic": 1,
+      "ex:natural-ellipse": 2
+    },
+    "remark": {
+      "rem:hexagon": 1,
+      "rem:unsupported-shortcut": 2
+    }
+  },
+  "figure_labels": [
+    "fig:closure-schematic",
+    "fig:arc-support",
+    "fig:retention-extra"
+  ],
+  "table_labels": [
+    "tab:ingredients",
+    "tab:notation",
+    "tab:rank-scaling"
+  ],
+  "appendix_labels": [
+    "app:curve-bounds",
+    "app:curve-numerics",
+    "app:ties",
+    "app:seven-point"
+  ]
+}

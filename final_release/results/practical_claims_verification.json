@@ -1,0 +1,257 @@
+{
+  "status": "passed",
+  "checks": 6750,
+  "fixed_k": [
+    {
+      "profile": "uniform",
+      "method": "OR_kNN",
+      "n": 128,
+      "k": 10,
+      "samples": 1500,
+      "closed": 1476,
+      "closure_percent": 98.4
+    },
+    {
+      "profile": "uniform",
+      "method": "OR_kNN",
+      "n": 512,
+      "k": 10,
+      "samples": 1500,
+      "closed": 1408,
+      "closure_percent": 93.86666666666666
+    },
+    {
+      "profile": "uniform",
+      "method": "OR_kNN",
+      "n": 4096,
+      "k": 10,
+      "samples": 1500,
+      "closed": 902,
+      "closure_percent": 60.13333333333333
+    },
+    {
+      "profile": "uniform",
+      "method": "OR_kNN",
+      "n": 32768,
+      "k": 10,
+      "samples": 500,
+      "closed": 10,
+      "closure_percent": 2.0
+    },
+    {
+      "profile": "uniform",
+      "method": "OR_kNN",
+      "n": 128,
+      "k": 15,
+      "samples": 1500,
+      "closed": 1500,
+      "closure_percent": 100.0
+    },
+    {
+      "profile": "uniform",
+      "method": "OR_kNN",
+      "n": 512,
+      "k": 15,
+      "samples": 1500,
+      "closed": 1498,
+      "closure_percent": 99.86666666666666
+    },
+    {
+      "profile": "uniform",
+      "method": "OR_kNN",
+      "n": 4096,
+      "k": 15,
+      "samples": 1500,
+      "closed": 1489,
+      "closure_percent": 99.26666666666667
+    },
+    {
+      "profile": "uniform",
+      "method": "OR_kNN",
+      "n": 32768,
+      "k": 15,
+      "samples": 500,
+      "closed": 472,
+      "closure_percent": 94.4
+    },
+    {
+      "profile": "uniform",
+      "method": "mutual_kNN",
+      "n": 128,
+      "k": 10,
+      "samples": 1500,
+      "closed": 1177,
+      "closure_percent": 78.46666666666667
+    },
+    {
+      "profile": "uniform",
+      "method": "mutual_kNN",
+      "n": 512,
+      "k": 10,
+      "samples": 1500,
+      "closed": 593,
+      "closure_percent": 39.53333333333333
+    },
+    {
+      "profile": "uniform",
+      "method": "mutual_kNN",
+      "n": 4096,
+      "k": 10,
+      "samples": 1500,
+      "closed": 1,
+      "closure_percent": 0.06666666666666667
+    },
+    {
+      "profile": "uniform",
+      "method": "mutual_kNN",
+      "n": 32768,
+      "k": 10,
+      "samples": 500,
+      "closed": 0,
+      "closure_percent": 0.0
+    },
+    {
+      "profile": "uniform",
+      "method": "mutual_kNN",
+      "n": 128,
+      "k": 15,
+      "samples": 1500,
+      "closed": 1485,
+      "closure_percent": 99.0
+    },
+    {
+      "profile": "uniform",
+      "method": "mutual_kNN",
+      "n": 512,
+      "k": 15,
+      "samples": 1500,
+      "closed": 1455,
+      "closure_percent": 97.0
+    },
+    {
+      "profile": "uniform",
+      "method": "mutual_kNN",
+      "n": 4096,
+      "k": 15,
+      "samples": 1500,
+      "closed": 1207,
+      "closure_percent": 80.46666666666667
+    },
+    {
+      "profile": "uniform",
+      "method": "mutual_kNN",
+      "n": 32768,
+      "k": 15,
+      "samples": 500,
+      "closed": 74,
+      "closure_percent": 14.8
+    }
+  ],
+  "bridge_free_n512": [
+    {
+      "profile": "localized_trough",
+      "method": "OR_kNN",
+      "n": 512,
+      "samples": 1500,
+      "closed": 1111,
+      "closure_percent": 74.06666666666666
+    },
+    {
+      "profile": "localized_trough",
+      "method": "mutual_kNN",
+      "n": 512,
+      "samples": 1500,
+      "closed": 618,
+      "closure_percent": 41.2
+    },
+    {
+      "profile": "strong_cosine",
+      "method": "OR_kNN",
+      "n": 512,
+      "samples": 1500,
+      "closed": 1111,
+      "closure_percent": 74.06666666666666
+    },
+    {
+      "profile": "strong_cosine",
+      "method": "mutual_kNN",
+      "n": 512,
+      "samples": 1500,
+      "closed": 1071,
+      "closure_percent": 71.4
+    },
+    {
+      "profile": "uniform",
+      "method": "OR_kNN",
+      "n": 512,
+      "samples": 1500,
+      "closed": 1124,
+      "closure_percent": 74.93333333333334
+    },
+    {
+      "profile": "uniform",
+      "method": "mutual_kNN",
+      "n": 512,
+      "samples": 1500,
+      "closed": 1076,
+      "closure_percent": 71.73333333333333
+    }
+  ],
+  "independent_key_model": [
+    {
+      "n": 128,
+      "method": "OR_kNN",
+      "probability": 0.3316929258399165
+    },
+    {
+      "n": 128,
+      "method": "mutual_kNN",
+      "probability": 0.27308140252122315
+    },
+    {
+      "n": 512,
+      "method": "OR_kNN",
+      "probability": 0.3287682354679681
+    },
+    {
+      "n": 512,
+      "method": "mutual_kNN",
+      "probability": 0.2749227961320403
+    },
+    {
+      "n": 4096,
+      "method": "OR_kNN",
+      "probability": 0.32565327157636637
+    },
+    {
+      "n": 4096,
+      "method": "mutual_kNN",
+      "probability": 0.27646200255814524
+    },
+    {
+      "n": 32768,
+      "method": "OR_kNN",
+      "probability": 0.3239358434652244
+    },
+    {
+      "n": 32768,
+      "method": "mutual_kNN",
+      "probability": 0.27730246234843414
+    }
+  ],
+  "diagram_error": {
+    "samples": 60,
+    "n": 512,
+    "stored_postclosure_grid_cells": 3157,
+    "maximum": 0.04398839341062213,
+    "empty_cost_minimum": 0.2438360438211694,
+    "empty_cost_maximum": 0.3241900677888958,
+    "saved_prefix_ceiling_checks": 3556
+  },
+  "dense_circle_limit": {
+    "ceiling": 0.11533777124487454,
+    "empty_cost": 0.3333333333333333,
+    "cost_ratio": 2.890062203695879
+  },
+  "scope": "Saved-data checks of fixed-k, bridge-free, heuristic-model and cost claims. The model assumes independent keys; the cost ratio is a dense-sample limit. No measurements or persistence diagrams are generated."
+}

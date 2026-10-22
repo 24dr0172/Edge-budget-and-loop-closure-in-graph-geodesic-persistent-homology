@@ -4,7 +4,7 @@ import json, sys
 sys.dont_write_bytecode=True
 import numpy as np
 import pandas as pd
-import paper1_methods as m
+import graph_methods as m
 from run_studies import one_bar_distance, nn_crust
 
 def verify_studies(F):
@@ -73,7 +73,7 @@ def verify_studies(F):
     precision=json.loads((R/'order_checks/precision_check.json').read_text())
     require('exact CkNN order and rigorous cost bounds',exact_cknn_check(F)==precision)
     pairing=json.loads((R/'rank_pairing_replay.json').read_text())
-    rank=pd.read_csv(R/'extra_k/candidate_audit/samples.csv')
+    rank=pd.read_csv(R/'extra_k/rank_sweep/samples.csv')
     require('paired replay size',pairing['status']=='passed' and pairing['samples_replayed']==630)
     for block in pairing['results']:
         raw=rank[(rank.n==block['n'])&(rank.method=='OR_kNN')]

@@ -1,4 +1,4 @@
-"""Rebuild Paper 1 tables from released rows; no graph or persistence computation."""
+"""Rebuild the summary tables from saved rows; no graph or persistence computation."""
 from pathlib import Path
 import argparse,json
 import numpy as np
@@ -7,9 +7,9 @@ METHODS=('R2_global','OR_kNN','mutual_kNN')
 PROFILES=('uniform','strong_cosine','localized_trough')
 
 def reproduce_rank_table(root):
-    """Export all six Table 3 groups and their pointwise Wilson intervals."""
-    folder = root/'results/extra_k/candidate_audit'
-    source = pd.read_csv(root/'results/phase1/bridgeless/sweep_summary.csv')
+    """Export the six-group n=512 bridge-free comparison."""
+    folder = root/'results/extra_k/rank_sweep'
+    source = pd.read_csv(root/'results/comparisons/bridgeless/sweep_summary.csv')
     rows = []
     for profile in PROFILES:
         for method in ('OR_kNN', 'mutual_kNN'):
@@ -19,8 +19,26 @@ def reproduce_rank_table(root):
                 for field in ('rate', 'wilson_lo', 'wilson_hi'):
                     out[event+'_'+field+'_percent'] = 100*float(row[event+'_'+field])
             rows.append(out)
-    pd.DataFrame(rows).to_csv(folder/'main_text_summary.csv', index=False)
-    print('Table 3 export rebuilt: six rows, including bridge-free rates and Wilson intervals.')
+    pd.DataFrame(rows).to_csv(folder/'n512_comparison_summary.csv', index=False)
+    print('Additional n=512 comparison rebuilt: six bridge-free/+3 rows and Wilson intervals.')
+
+def reproduce_fixed_k_table(root):
+    """Summarize fixed-k closure on the uniform rank sweep from saved ranks."""
+    folder = root/'results/extra_k/rank_sweep'
+    source = pd.read_csv(folder/'samples.csv')
+    rows = []
+    for method in ('OR_kNN', 'mutual_kNN'):
+        for k in (10, 15):
+            for n in (128, 512, 4096, 32768):
+                group = source[(source.profile=='uniform') & (source.method==method) & (source.n==n)]
+                if group.empty or group.seed.duplicated().any():
+                    raise ValueError(f'Missing or duplicated uniform rank records: {method}, n={n}')
+                closed = int((group.k_close<=k).sum())
+                rows.append(dict(profile='uniform', method=method, k=k, n=n,
+                                 samples=len(group), closed=closed,
+                                 closure_percent=100*closed/len(group)))
+    pd.DataFrame(rows).to_csv(folder/'fixed_k_summary.csv', index=False)
+    print('Fixed-k summary rebuilt: 16 counts and rates from the uniform rank sweep.')
 
 def base_tables(root):
     data=root/'results';clean=data/'clean_closure';extra=data/'extra_k';extra.mkdir(exist_ok=True)
@@ -96,25 +114,39 @@ def reproduce(root):
     summarize_studies(make_figures=False)
     from audit_rank_scaling import audit_rank_scaling
     audit_rank_scaling(root,write=True)
-    from phase1_bridgeless import summarize as bridge_summaries
-    from phase1_noise import summarize as euclidean_summaries
-    from phase1_summaries import main as comparison_summaries
-    from phase1_report import main as comparison_guide
+    from bridge_free import summarize as bridge_summaries
+    from euclidean_baseline import summarize as euclidean_summaries
+    from comparison_summaries import main as comparison_summaries
+    from comparison_report import main as comparison_guide
     bridge_summaries('clean')
     bridge_summaries('sweep')
     euclidean_summaries()
     comparison_summaries()
     reproduce_rank_table(root)
-    comparison_guide()
+    reproduce_fixed_k_table(root)
+    from rank_table import write_table
+    write_table(root)
+    comparison_guide(data_only=True)
     print('Tables rebuilt: 11 event rows, 9 closure-error rows, 120 paired k gaps, 4 noise-closure rows.')
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('--release',type=Path,default=Path(__file__).resolve().parents[1])
     ap.add_argument('--base-only',action='store_true',help='Rebuild the clean and radial summary tables only')
-    ap.add_argument('--rank-table-only',action='store_true',help='Export all six Table 3 groups without rebuilding other outputs')
+    ap.add_argument('--rank-table-only',action='store_true',help='Export the six-row n=512 bridge-free/+3 comparison')
+    ap.add_argument('--paper-table-only',action='store_true',help='Rebuild the 24-row Table 3 connectivity export from saved rank records')
+    ap.add_argument('--fixed-k-only',action='store_true',help='Rebuild the fixed-k comparison from the uniform rank sweep only')
     args=ap.parse_args()
-    if args.base_only:
+    if sum((args.base_only,args.fixed_k_only,args.rank_table_only,args.paper_table_only)) > 1:
+        ap.error('Choose only one table mode.')
+    if args.paper_table_only:
+        from rank_table import write_table, latex_rows
+        rows=write_table(args.release.resolve())
+        print('Table 3: 24 cells; saved-data export results/rank_table.csv')
+        print(latex_rows(rows))
+    elif args.base_only:
         base_tables(args.release.resolve())
+    elif args.fixed_k_only:
+        reproduce_fixed_k_table(args.release.resolve())
     elif args.rank_table_only:
         reproduce_rank_table(args.release.resolve())
     else:

@@ -6,7 +6,8 @@ import numpy as np
 from scipy.sparse.csgraph import shortest_path
 PAPER=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(PAPER/'code'))
-from verify_arc_support import supported
+from verify_arc_support import supported, betti_at
+from finite_diagram import reduction_h1
 
 def rank_mod(matrix,p):
     a=np.array(matrix,int).copy()%p;rank=0
@@ -127,7 +128,7 @@ def filtration_certificate():
             if directed is not None:
                 valid.append(i);certificates.append(directed)
             # Independently enumerate all orientations at the two proof graphs.
-            if level in [(6,0,0,0),(0,0,0,3)]:
+            if level in [(0,5,0,0),(0,0,0,3)]:
                 brute=sum(orientation_valid(order,
                           {(b,a) if bit else (a,b) for (a,b),bit in zip(edges,bits)})
                           for bits in itertools.product([0,1],repeat=len(edges)))
@@ -141,7 +142,7 @@ def filtration_certificate():
                             orientation_certificates=certificates,
                             common_orders_through_threshold=[orders[i] for i in sorted(common)]))
     assert not common and all(r['admissible_orders'] for r in reports)
-    early=next(r for r in reports if r['exact_coefficients']==[6,0,0,0])
+    early=next(r for r in reports if r['exact_coefficients']==[0,5,0,0])
     assert early['admissible_orders']==[(0,1,2,3,4,5),(0,5,4,3,2,1)]
     return dict(status='passed',vertex_names=['a','u','v','b','q','z'],
                 cyclic_orders_checked=120,threshold_graphs=len(reports),
@@ -182,18 +183,50 @@ def build_report():
     ranks={str(p):rank_mod(boundary,p) for p in [2,3,5]}
     assert len(H)==10 and len(triangles)==4 and all(r==4 for r in ranks.values())
     assert D[0,3]<threshold<2<min(D[1,3],D[0,4])
+    exact, exact_D, _, bounds = exact_metric()
+    assert np.allclose(D, exact_D, rtol=0, atol=1e-12)
+    proof_thresholds = []
+    for numerator, denominator in [(3, 2), (19, 10)]:
+        def present(value):
+            interval = bounds(value)
+            low = int(interval['lower_numerator'])*denominator
+            high = int(interval['upper_numerator'])*denominator
+            target = numerator*int(interval['denominator'])
+            assert high < target or low > target
+            return high < target
+        selected = [(a,b) for a,b in itertools.combinations(range(6),2) if present(exact[a][b])]
+        admissible = [order for order in [(0,)+q for q in itertools.permutations(range(1,6))]
+                      if cyclic_orientation(order, selected) is not None]
+        t = numerator/denominator
+        field_betti = {str(p):int(betti_at(D,t,p)) for p in (2,3,5)}
+        assert all(value == 1 for value in field_betti.values())
+        proof_thresholds.append(dict(threshold_numerator=numerator, threshold_denominator=denominator,
+            threshold_float=t, edges=selected, admissible_orders=admissible,
+            betti_1_by_field=field_betti, comparison_arithmetic='Outward 80-digit radical bounds against an exact rational threshold.'))
+    assert len(proof_thresholds[0]['edges']) == 7
+    assert proof_thresholds[0]['admissible_orders'] == [(0,1,2,3,4,5),(0,5,4,3,2,1)]
+    common = sorted(set(proof_thresholds[0]['admissible_orders']) & set(proof_thresholds[1]['admissible_orders']))
+    assert not common
+    bars, tiny = reduction_h1(D)
+    assert bars.shape == (1,2) and abs(bars[0,0]-np.sqrt(2)) < 1e-12
+    assert all(bars[0,0] < q['threshold_float'] < bars[0,1] for q in proof_thresholds)
     report=dict(status='passed',vertices=6,graph_edges=len(edges),arc_supported=True,
                 threshold=threshold,threshold_edges=len(H),triangles=triangles,
                 orientations_tested=2**len(H),cyclic_orientations=cyclic_count,
                 boundary_ranks=ranks,betti_1=1,
                 distances=dict(ab=float(D[0,3]),ub=float(D[1,3]),aq=float(D[0,4])),
                 scope='No common cyclic vertex order throughout the threshold filtration, although each threshold is individually cyclic. All-field independence follows from a triangle-specific edge in each boundary.',
+                units='Radius one; divide coordinates and thresholds by 2*pi for circumference one.',
+                normalized_largest_gap=0.25,
+                proof_thresholds=proof_thresholds, common_orders_at_live_thresholds=common,
+                positive_interval_radius_one=bars[0].tolist(),
+                largest_omitted_positive_lifetime=float(tiny),
                 filtration=filtration_certificate())
     return report
 
 def main():
     report=build_report()
     (PAPER/'results/separation_verification.json').write_text(json.dumps(report,indent=2)+'\n')
-    print('Six-point separation:',report['orientations_tested'],'orientations, none cyclic; beta1=1.')
+    print('Six-point separation: no common cyclic order at 3/2 and 19/10; both thresholds have beta1=1. Individual thresholds remain cyclic in other orders.')
 
 if __name__=='__main__':main()

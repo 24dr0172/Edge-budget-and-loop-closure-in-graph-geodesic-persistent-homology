@@ -90,7 +90,8 @@
     "model_definitions": {
       "radial": "Signed uniform displacement along the clean normal.",
       "isotropic": "Uniform displacement in a disk."
-    }
+    },
+    "no_positive_grid_diagram": "no selected budget; infinite selected loss for both selectors"
   },
   "ellipse": {
     "seeds": [
@@ -135,7 +136,14 @@
     "positive_lifetime_cutoff": null,
     "raw_stability_tolerance": 5e-08,
     "ellipse_monotonicity_tolerance": 1e-06,
-    "support_tolerance": 1e-10
+    "support_tolerance": 1e-10,
+    "clean_normalized_error_tolerance": 5e-08,
+    "selected_normalized_error_tolerance": 1e-07,
+    "selected_raw_endpoint_tolerance": 1e-07,
+    "ellipse_raw_endpoint_tolerance": 1e-06,
+    "ellipse_monotonicity_tolerance_units": "normalized error",
+    "rips_filtration": "D <= t; bars [birth, death)",
+    "curve_order_diagnostic": "D < t, the left limit; bars (birth, death]"
   },
   "clean": {
     "seeds": [
@@ -203,6 +211,6 @@
         30
       ]
     ],
-    "bridge_maximum_n": 32768
+    "bridge_maximum_n": 1000000
   }
 }

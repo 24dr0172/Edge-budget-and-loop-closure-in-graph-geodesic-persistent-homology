@@ -1,4 +1,4 @@
-// Phase 1: sparse circle kNN layers and incremental bridge contraction.
+// sparse circle kNN layers and incremental bridge contraction.
 // Rebuild this portable C++17 helper; no binary is included in the release.
 #include <algorithm>
 #include <chrono>

@@ -1,0 +1,187 @@
+{
+  "r_loc": {
+    "ellipse": {
+      "grid_values": {
+        "4000": {
+          "nu": 0.1918812908646413,
+          "beta": 0.20643140722771866
+        },
+        "8000": {
+          "nu": 0.19188129667285747,
+          "beta": 0.20643140722771866
+        }
+      },
+      "r_loc": 0.1918812908646413
+    },
+    "peanut": {
+      "grid_values": {
+        "4000": {
+          "nu": 0.16618368115857346,
+          "beta": 0.16618368115857343
+        },
+        "8000": {
+          "nu": 0.16618368115857346,
+          "beta": 0.16618368115857343
+        }
+      },
+      "r_loc": 0.16618368115857343
+    },
+    "circle": {
+      "grid_values": {
+        "4000": {
+          "nu": 0.31830988618514083,
+          "beta": 0.3183098861851424
+        },
+        "8000": {
+          "nu": 0.3183098861851416,
+          "beta": 0.3183098861851424
+        }
+      },
+      "r_loc": 0.31830988618514083
+    }
+  },
+  "circle/radius": {
+    "samples": 20,
+    "locality_hypothesis_holds": 20,
+    "shh_ok": 20,
+    "closure_at_connectivity": 0,
+    "closed_prefix_supported": 20,
+    "runs_reaching_complete_graph": 20,
+    "fail_chord_min": null,
+    "fail_chord_median": null,
+    "fail_chord_max": null,
+    "exactly_one_bar_at_close": 20,
+    "exactly_one_bar_at_end": 20,
+    "ring_bar_at_end": 20,
+    "max_other_bar_lifetime_at_end": 0.0,
+    "max_other_bar_lifetime_at_close": 0.0
+  },
+  "circle/OR": {
+    "samples": 20,
+    "locality_hypothesis_holds": 20,
+    "shh_ok": 20,
+    "closure_at_connectivity": 3,
+    "closed_prefix_supported": 20,
+    "runs_reaching_complete_graph": 20,
+    "fail_chord_min": null,
+    "fail_chord_median": null,
+    "fail_chord_max": null,
+    "exactly_one_bar_at_close": 20,
+    "exactly_one_bar_at_end": 20,
+    "ring_bar_at_end": 20,
+    "max_other_bar_lifetime_at_end": 0.0,
+    "max_other_bar_lifetime_at_close": 0.0
+  },
+  "circle/mutual": {
+    "samples": 20,
+    "locality_hypothesis_holds": 20,
+    "shh_ok": 20,
+    "closure_at_connectivity": 8,
+    "closed_prefix_supported": 20,
+    "runs_reaching_complete_graph": 20,
+    "fail_chord_min": null,
+    "fail_chord_median": null,
+    "fail_chord_max": null,
+    "exactly_one_bar_at_close": 20,
+    "exactly_one_bar_at_end": 20,
+    "ring_bar_at_end": 20,
+    "max_other_bar_lifetime_at_end": 0.0,
+    "max_other_bar_lifetime_at_close": 0.0
+  },
+  "ellipse/radius": {
+    "samples": 20,
+    "locality_hypothesis_holds": 20,
+    "shh_ok": 20,
+    "closure_at_connectivity": 0,
+    "closed_prefix_supported": 20,
+    "runs_reaching_complete_graph": 0,
+    "fail_chord_min": 0.2009336022499291,
+    "fail_chord_median": 0.2011918719283814,
+    "fail_chord_max": 0.20180429366008384,
+    "exactly_one_bar_at_close": 20,
+    "exactly_one_bar_at_end": 20,
+    "ring_bar_at_end": 20,
+    "max_other_bar_lifetime_at_end": 0.0,
+    "max_other_bar_lifetime_at_close": 0.0
+  },
+  "ellipse/OR": {
+    "samples": 20,
+    "locality_hypothesis_holds": 20,
+    "shh_ok": 20,
+    "closure_at_connectivity": 4,
+    "closed_prefix_supported": 20,
+    "runs_reaching_complete_graph": 0,
+    "fail_chord_min": 0.19424956128094062,
+    "fail_chord_median": 0.20294901199757132,
+    "fail_chord_max": 0.20641561574686734,
+    "exactly_one_bar_at_close": 20,
+    "exactly_one_bar_at_end": 20,
+    "ring_bar_at_end": 20,
+    "max_other_bar_lifetime_at_end": 0.0,
+    "max_other_bar_lifetime_at_close": 0.0
+  },
+  "ellipse/mutual": {
+    "samples": 20,
+    "locality_hypothesis_holds": 20,
+    "shh_ok": 20,
+    "closure_at_connectivity": 3,
+    "closed_prefix_supported": 20,
+    "runs_reaching_complete_graph": 0,
+    "fail_chord_min": 0.20609481602985913,
+    "fail_chord_median": 0.20639751649082982,
+    "fail_chord_max": 0.20643276802258836,
+    "exactly_one_bar_at_close": 20,
+    "exactly_one_bar_at_end": 20,
+    "ring_bar_at_end": 20,
+    "max_other_bar_lifetime_at_end": 0.0,
+    "max_other_bar_lifetime_at_close": 0.0
+  },
+  "peanut/radius": {
+    "samples": 20,
+    "locality_hypothesis_holds": 20,
+    "shh_ok": 20,
+    "closure_at_connectivity": 0,
+    "closed_prefix_supported": 20,
+    "runs_reaching_complete_graph": 0,
+    "fail_chord_min": 0.16618408189956305,
+    "fail_chord_median": 0.16620917668912105,
+    "fail_chord_max": 0.166453798940852,
+    "exactly_one_bar_at_close": 20,
+    "exactly_one_bar_at_end": 20,
+    "ring_bar_at_end": 20,
+    "max_other_bar_lifetime_at_end": 0.0,
+    "max_other_bar_lifetime_at_close": 0.0
+  },
+  "peanut/OR": {
+    "samples": 20,
+    "locality_hypothesis_holds": 20,
+    "shh_ok": 20,
+    "closure_at_connectivity": 7,
+    "closed_prefix_supported": 20,
+    "runs_reaching_complete_graph": 0,
+    "fail_chord_min": 0.16619742749729896,
+    "fail_chord_median": 0.166464195577271,
+    "fail_chord_max": 0.16983444618326735,
+    "exactly_one_bar_at_close": 20,
+    "exactly_one_bar_at_end": 20,
+    "ring_bar_at_end": 20,
+    "max_other_bar_lifetime_at_end": 0.0,
+    "max_other_bar_lifetime_at_close": 0.0
+  },
+  "peanut/mutual": {
+    "samples": 20,
+    "locality_hypothesis_holds": 20,
+    "shh_ok": 20,
+    "closure_at_connectivity": 5,
+    "closed_prefix_supported": 20,
+    "runs_reaching_complete_graph": 0,
+    "fail_chord_min": 0.16618564292478563,
+    "fail_chord_median": 0.16630874406676283,
+    "fail_chord_max": 0.16880131271228307,
+    "exactly_one_bar_at_close": 20,
+    "exactly_one_bar_at_end": 20,
+    "ring_bar_at_end": 20,
+    "max_other_bar_lifetime_at_end": 0.0,
+    "max_other_bar_lifetime_at_close": 0.0
+  }
+}

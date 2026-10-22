@@ -1,4 +1,4 @@
-"""Independent F2 reduction and finite bottleneck matching for the retained seven-point witness; thresholds are float64, not exact-real chords."""
+"""Independent F2 reduction and finite bottleneck matching for the seven-point witness; thresholds are float64, not exact-real chords."""
 import itertools
 import numpy as np
 # Tolerance for this independent witness helper only; study diagrams retain all positive Ripser bars.

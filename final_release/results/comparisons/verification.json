@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "checks_passed": 2800,
+  "bridge_method_records": 30900,
+  "distinct_euclidean_diagrams": 220,
+  "grid_oracle_samples": 720,
+  "scope": "Exact orientation certificate; saved bridge events and independent adjacency/DFS replays; all Euclidean input hashes, bars and bottleneck scores; grid oracles, paired comparisons and quantiles."
+}

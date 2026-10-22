@@ -5,7 +5,7 @@ sys.dont_write_bytecode=True
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'code'))
 import numpy as np
 import pandas as pd
-import paper1_methods as m
+import graph_methods as m
 PAPER=Path(__file__).resolve().parents[1]
 SOURCE=PAPER/'results'
 OUT=PAPER/'results'
@@ -26,8 +26,8 @@ def main():
     assert len(exact)==180
     exact_summary=exact.groupby(['profile','method'])[['e_inf','e_2','p1']].median().reset_index()
     exact_summary.to_csv(OUT/'exact_closure_errors.csv',index=False)
-    # Replay the local count formula on exactly the original 60 sample streams.
-    from check_knn_miss_candidate import neighboring_keys
+    # Replay the local count formula on exactly the 60 saved sample streams.
+    from rank_sweep import neighboring_keys
     replay=[]
     for profile in m.PROFILES:
         for seed in range(20310101,20310121):
@@ -38,8 +38,8 @@ def main():
                 row=samples[(samples.seed==seed)&(samples.profile==profile)&(samples.method==method)].iloc[0]
                 assert list(top)==[row.k_conn,row.k_close]
                 replay.append(dict(seed=seed,profile=profile,method=method,k_conn=int(top[0]),k_close=int(top[1]),closed=bool(top[0]==top[1])))
-    pd.DataFrame(replay).to_csv(OUT/'original_seed_rank_replay.csv',index=False)
-    large=pd.read_csv(SOURCE/'extra_k/candidate_audit/samples.csv');large=large[large.n==512]
+    pd.DataFrame(replay).to_csv(OUT/'seed_rank_replay.csv',index=False)
+    large=pd.read_csv(SOURCE/'extra_k/rank_sweep/samples.csv');large=large[large.n==512]
     calibration=[]
     for method in ['OR_kNN','mutual_kNN']:
         g=large[large.method==method].copy();g['closed']=g.extra_k==0

@@ -1,0 +1,45 @@
+{
+  "n": 512,
+  "samples_per_width": 20,
+  "alphas": [
+    0.0,
+    0.4,
+    0.6,
+    0.8,
+    0.9
+  ],
+  "curve": "r=1+a*cos(2*theta), normalized to length one",
+  "waist_width": "2*(1-a)/perimeter",
+  "base_seed": 20361021,
+  "profile": "uniform in arc length",
+  "arc_length_grid": 400001,
+  "methods": [
+    "R2_global",
+    "OR_kNN",
+    "mutual_kNN"
+  ],
+  "probe": 0.25,
+  "noise": false,
+  "coupling": "Within a seed, every width and every method uses the same uniform arc coordinates; seeds are independent.",
+  "events": [
+    "exact first connectivity",
+    "exact ring closure",
+    "first prefix after closure containing an edge with intrinsic separation at least 1/4"
+  ],
+  "diagrams": "Unrestricted Ripser, F2, all positive returned bars, no lifetime cutoff.",
+  "source_sha256": "f5387cc475034d03120863af804d6fd75a98ec2b97118fa00e01d0bbc5b7ddc8",
+  "helper_sha256": {
+    "graph_methods.py": "b81eb4325b08a7e939ff892f50b1910aeb444452227045ee54d55914593a04f4",
+    "run_studies.py": "e9b5642661676fc9a5ce7509079bcc4ae412d5ef750a35e2c63afc5f19eaf7f4",
+    "finite_diagram.py": "51ab1b55ba7490c2da378498ba7addef6ab738642bfa7fa555afcee83f5ee5d7"
+  },
+  "example": {
+    "alpha": 0.8,
+    "seed": 20361021,
+    "method": "R2_global"
+  },
+  "source_path_migration": {
+    "original_source_sha256": "4634b592b5fd81946d45801028c9e2e8d858b20d62fca032eaac00d02e1000ab",
+    "change": "Only the plot output path moved from manuscript_figures to results/additional_figures; measurements and numerical algorithm are unchanged."
+  }
+}

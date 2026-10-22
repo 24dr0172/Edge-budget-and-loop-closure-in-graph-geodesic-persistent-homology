@@ -5,5 +5,7 @@ pandas==2.2.3
 matplotlib==3.11.2
 ripser==0.6.15
 persim==0.3.8
-# Used by manuscript identity verification.
+# Cost-figure greyscale export.
+Pillow==12.3.0
+# PDF figure and optional manuscript identity checks.
 pypdf==6.10.0

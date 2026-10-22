@@ -1,12 +1,11 @@
 # Manuscript figures
 
-Every figure is supplied as a PDF and a 300-dpi PNG. Regenerate all six pairs with `python3 code/build_figures.py` from the release folder, after rebuilding the summaries.
+This folder contains exactly the three PNGs read by the portable manuscript:
 
-- `Fig1`: clean-study budget curves (Figure 2 in the paper).
-- `Fig2`: radial first-connectivity diagnostic; supplied as a supporting figure.
-- `noise-eph`: noisy diagram-error curves (Figure 3 in the paper).
-- `noise-all-errors`: supporting curves for all three errors.
-- `appendix_extra_k`: distributions of additional neighbours needed for closure.
-- `unsupported-shortcut`: the example panel used to explain unsupported shortcuts.
+- **Figure 1:** `closure_schematic.png`, the supplied 600-dpi closure schematic.
+- **Figure 2:** `arc_support_fan.png`, the supplied 600-dpi supporting-fan drawing; vertex labels match Definition 4.
+- **Figure 3:** `retention_extra_layers.png`, generated at 300 dpi from [saved rank records](../results/extra_k/rank_sweep/samples.csv) by `code/retention_extra_layers.py`. The 144 group/layer records and Wilson intervals are in [retention_extra_layers](../results/retention_extra_layers/retention.csv).
 
-The paper's opening schematic is drawn in its LaTeX source. Its other panels are not separate figure files in this folder.
+The manuscript copies these into `figures/`. Captions, labels and cross-references remain in `combined.tex`. It needs no native drawings, PDF graphics, external tables or appendix files. The figures match the release byte for byte.
+
+Native drawing sources belong to the separate Overleaf project and are excluded here. [Archival PDF exports](../results/figure_exports/README.md) are included as image masters. [Additional study plots](../results/additional_figures/README.md) are kept separately and are not figures of the focused paper.

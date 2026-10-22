@@ -4,7 +4,7 @@ from collections import defaultdict
 import argparse, csv, json, math
 
 def audit_rank_scaling(root, write=False):
-    folder=root/'results/extra_k/candidate_audit'
+    folder=root/'results/extra_k/rank_sweep'
     groups=defaultdict(list)
     for row in csv.DictReader((folder/'samples.csv').open()):
         groups[(row['profile'],int(row['n']),row['method'])].append(row)

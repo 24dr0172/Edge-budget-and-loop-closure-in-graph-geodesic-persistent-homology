@@ -1,0 +1,1227 @@
+{
+ "coordinates": [
+  "0",
+  "0.08",
+  "0.15",
+  "0.161",
+  "0.29",
+  "0.60",
+  "0.66"
+ ],
+ "convention": "x_i=(cos 2pi s_i, sin 2pi s_i)/(2pi); circumference 1; c=chi(d_star), chi(r)=sin(pi r)/pi; vertices 0..6 in curve order",
+ "hand_certificate": {
+  "13": {
+   "neighbours_of_5": [
+    4,
+    6
+   ],
+   "neighbours_of_6": [
+    0,
+    5
+   ],
+   "clique_0_to_4": true,
+   "birth_is_chord_0_6": true,
+   "no_pair_value_strictly_inside_bar": true,
+   "death_is_D_4_6": true,
+   "triangles_456_and_046_present_at_death": true,
+   "vertex_6_dominated_by_4_at_death": true
+  },
+  "14": {
+   "neighbours_of_5": [
+    4,
+    6
+   ],
+   "neighbours_of_6": [
+    0,
+    5
+   ],
+   "clique_0_to_4": true,
+   "birth_is_chord_0_6": true,
+   "no_pair_value_strictly_inside_bar": true,
+   "death_is_D_4_6": true,
+   "triangles_456_and_046_present_at_death": true,
+   "vertex_6_dominated_by_4_at_death": true
+  }
+ },
+ "certificate_facts": {
+  "13": {
+   "birth": 0.2789370795868577,
+   "death": 0.32291324838091107,
+   "largest_value_below_birth": 0.26326792346216,
+   "largest_value_below_death": 0.278937079586858,
+   "pairs_absent_at_birth": [
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     4,
+     6
+    ]
+   ],
+   "pairs_absent_just_below_death": [
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     4,
+     6
+    ]
+   ],
+   "pair_entering_at_death": [
+    [
+     4,
+     6
+    ]
+   ],
+   "triangles_containing_0_6_at_death": [
+    [
+     0,
+     4,
+     6
+    ]
+   ],
+   "distances": {
+    "0-1": {
+     "value": 0.07916044967850468,
+     "path": [
+      0,
+      1
+     ]
+    },
+    "0-2": {
+     "value": 0.14450966430061737,
+     "path": [
+      0,
+      2
+     ]
+    },
+    "0-3": {
+     "value": 0.1542225056742385,
+     "path": [
+      0,
+      3
+     ]
+    },
+    "0-4": {
+     "value": 0.2515141520568577,
+     "path": [
+      0,
+      4
+     ]
+    },
+    "0-5": {
+     "value": 0.3385824045056088,
+     "path": [
+      0,
+      6,
+      5
+     ]
+    },
+    "0-6": {
+     "value": 0.2789370795868577,
+     "path": [
+      0,
+      6
+     ]
+    },
+    "1-2": {
+     "value": 0.06943715034069664,
+     "path": [
+      1,
+      2
+     ]
+    },
+    "1-3": {
+     "value": 0.08012864060553866,
+     "path": [
+      1,
+      3
+     ]
+    },
+    "1-4": {
+     "value": 0.1950943744895214,
+     "path": [
+      1,
+      4
+     ]
+    },
+    "1-5": {
+     "value": 0.41774285418411344,
+     "path": [
+      1,
+      0,
+      6,
+      5
+     ]
+    },
+    "1-6": {
+     "value": 0.35809752926536237,
+     "path": [
+      1,
+      0,
+      6
+     ]
+    },
+    "2-3": {
+     "value": 0.010997810723485235,
+     "path": [
+      2,
+      3
+     ]
+    },
+    "2-4": {
+     "value": 0.13552975783749333,
+     "path": [
+      2,
+      4
+     ]
+    },
+    "2-5": {
+     "value": 0.3987976812996533,
+     "path": [
+      2,
+      4,
+      5
+     ]
+    },
+    "2-6": {
+     "value": 0.42344674388747505,
+     "path": [
+      2,
+      0,
+      6
+     ]
+    },
+    "3-4": {
+     "value": 0.12549772291211597,
+     "path": [
+      3,
+      4
+     ]
+    },
+    "3-5": {
+     "value": 0.38876564637427596,
+     "path": [
+      3,
+      4,
+      5
+     ]
+    },
+    "3-6": {
+     "value": 0.4331595852610962,
+     "path": [
+      3,
+      0,
+      6
+     ]
+    },
+    "4-5": {
+     "value": 0.26326792346216,
+     "path": [
+      4,
+      5
+     ]
+    },
+    "4-6": {
+     "value": 0.32291324838091107,
+     "path": [
+      4,
+      5,
+      6
+     ]
+    },
+    "5-6": {
+     "value": 0.059645324918751075,
+     "path": [
+      5,
+      6
+     ]
+    }
+   }
+  },
+  "14": {
+   "birth": 0.2789370795868577,
+   "death": 0.29213037044611545,
+   "largest_value_below_birth": 0.26326792346216,
+   "largest_value_below_death": 0.278937079586858,
+   "pairs_absent_at_birth": [
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     4,
+     6
+    ]
+   ],
+   "pairs_absent_just_below_death": [
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     4,
+     6
+    ]
+   ],
+   "pair_entering_at_death": [
+    [
+     4,
+     6
+    ]
+   ],
+   "triangles_containing_0_6_at_death": [
+    [
+     0,
+     4,
+     6
+    ]
+   ],
+   "distances": {
+    "0-1": {
+     "value": 0.07916044967850468,
+     "path": [
+      0,
+      1
+     ]
+    },
+    "0-2": {
+     "value": 0.14450966430061737,
+     "path": [
+      0,
+      2
+     ]
+    },
+    "0-3": {
+     "value": 0.1542225056742385,
+     "path": [
+      0,
+      3
+     ]
+    },
+    "0-4": {
+     "value": 0.2515141520568577,
+     "path": [
+      0,
+      4
+     ]
+    },
+    "0-5": {
+     "value": 0.3385824045056088,
+     "path": [
+      0,
+      6,
+      5
+     ]
+    },
+    "0-6": {
+     "value": 0.2789370795868577,
+     "path": [
+      0,
+      6
+     ]
+    },
+    "1-2": {
+     "value": 0.06943715034069664,
+     "path": [
+      1,
+      2
+     ]
+    },
+    "1-3": {
+     "value": 0.08012864060553866,
+     "path": [
+      1,
+      3
+     ]
+    },
+    "1-4": {
+     "value": 0.1950943744895214,
+     "path": [
+      1,
+      4
+     ]
+    },
+    "1-5": {
+     "value": 0.41774285418411344,
+     "path": [
+      1,
+      0,
+      6,
+      5
+     ]
+    },
+    "1-6": {
+     "value": 0.35809752926536237,
+     "path": [
+      1,
+      0,
+      6
+     ]
+    },
+    "2-3": {
+     "value": 0.010997810723485235,
+     "path": [
+      2,
+      3
+     ]
+    },
+    "2-4": {
+     "value": 0.13552975783749333,
+     "path": [
+      2,
+      4
+     ]
+    },
+    "2-5": {
+     "value": 0.3987976812996533,
+     "path": [
+      2,
+      4,
+      5
+     ]
+    },
+    "2-6": {
+     "value": 0.42344674388747505,
+     "path": [
+      2,
+      0,
+      6
+     ]
+    },
+    "3-4": {
+     "value": 0.12549772291211597,
+     "path": [
+      3,
+      4
+     ]
+    },
+    "3-5": {
+     "value": 0.38876564637427596,
+     "path": [
+      3,
+      4,
+      5
+     ]
+    },
+    "3-6": {
+     "value": 0.4176280933582314,
+     "path": [
+      3,
+      4,
+      6
+     ]
+    },
+    "4-5": {
+     "value": 0.26326792346216,
+     "path": [
+      4,
+      5
+     ]
+    },
+    "4-6": {
+     "value": 0.29213037044611545,
+     "path": [
+      4,
+      6
+     ]
+    },
+    "5-6": {
+     "value": 0.059645324918751075,
+     "path": [
+      5,
+      6
+     ]
+    }
+   }
+  }
+ },
+ "g": 0.34,
+ "gaps": [
+  0.08,
+  0.07,
+  0.011,
+  0.129,
+  0.31,
+  0.06,
+  0.34
+ ],
+ "reference_bar": [
+  0.34,
+  0.37
+ ],
+ "intrinsic_diameter": 0.499,
+ "P_star": 0.030060120240480933,
+ "radius_order": [
+  [
+   2,
+   3
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   1,
+   2
+  ],
+  [
+   0,
+   1
+  ],
+  [
+   1,
+   3
+  ],
+  [
+   3,
+   4
+  ],
+  [
+   2,
+   4
+  ],
+  [
+   0,
+   2
+  ],
+  [
+   0,
+   3
+  ],
+  [
+   1,
+   4
+  ],
+  [
+   0,
+   4
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   0,
+   6
+  ],
+  [
+   4,
+   6
+  ],
+  [
+   0,
+   5
+  ],
+  [
+   1,
+   6
+  ],
+  [
+   3,
+   5
+  ],
+  [
+   2,
+   5
+  ],
+  [
+   1,
+   5
+  ],
+  [
+   2,
+   6
+  ],
+  [
+   3,
+   6
+  ]
+ ],
+ "M_close_radius": 13,
+ "chi": {
+  "chi_034": 0.2789370795868577,
+  "chi_031": 0.26326792346216,
+  "chi_006": 0.059645324918751075,
+  "chi_037": 0.29213037044611545,
+  "chi_031_plus_chi_006": 0.32291324838091107
+ },
+ "bars": {
+  "M13": [
+   0.2789370795868577,
+   0.32291324838091107
+  ],
+  "M14": [
+   0.2789370795868577,
+   0.29213037044611545
+  ]
+ },
+ "ripser_bars": {
+  "M13": [
+   [
+    0.27893707156181335,
+    0.322913259267807
+   ]
+  ],
+  "M14": [
+   [
+    0.27893707156181335,
+    0.29213038086891174
+   ]
+  ]
+ },
+ "matchings": {
+  "M13": {
+   "direct": 0.06106292041314232,
+   "direct_normalized": 0.12237058199026517,
+   "both_to_diagonal": 0.02198808439702668,
+   "both_to_diagonal_normalized": 0.044064297388831025,
+   "bottleneck_normalized": 0.044064297388831025,
+   "persim_bottleneck_normalized": 0.044064297388831025
+  },
+  "M14": {
+   "direct": 0.07786962955388455,
+   "direct_normalized": 0.15605136183143195,
+   "both_to_diagonal": 0.014999999999999986,
+   "both_to_diagonal_normalized": 0.030060120240480933,
+   "bottleneck_normalized": 0.030060120240480933,
+   "persim_bottleneck_normalized": 0.030060120240480933
+  }
+ },
+ "finite_ceiling_normalized": 0.15605136183143195,
+ "small_gap_threshold": 0.13661977236758138,
+ "knn": {
+  "OR_kNN": {
+   "M_close": 10,
+   "insertion_of_4_6": 13,
+   "bar_before": [
+    [
+     0.2789370795868577,
+     0.32291324838091107
+    ]
+   ],
+   "bar_after": [
+    [
+     0.2789370795868577,
+     0.29213037044611545
+    ]
+   ]
+  },
+  "mutual_kNN": {
+   "M_close": 13,
+   "insertion_of_4_6": 17,
+   "bar_before": [
+    [
+     0.2789370795868577,
+     0.32291324838091107
+    ]
+   ],
+   "bar_after": [
+    [
+     0.2789370795868577,
+     0.29213037044611545
+    ]
+   ]
+  }
+ },
+ "checks": {
+  "embedding_chord_equals_chi_of_intrinsic": {
+   "passed": true,
+   "detail": 9.71445146547012e-17
+  },
+  "intrinsic_pair_distances_distinct_exact": {
+   "passed": true,
+   "detail": null
+  },
+  "g_is_0.34": {
+   "passed": true,
+   "detail": {
+    "gaps": [
+     0.08,
+     0.07,
+     0.011,
+     0.129,
+     0.31,
+     0.06,
+     0.34
+    ]
+   }
+  },
+  "intrinsic_bar_[0.34,0.37)": {
+   "passed": true,
+   "detail": [
+    [
+     0.34,
+     0.37
+    ]
+   ]
+  },
+  "ripser_intrinsic_bar": {
+   "passed": true,
+   "detail": [
+    [
+     0.3400000035762787,
+     0.3700000047683716
+    ]
+   ]
+  },
+  "intrinsic_diameter_0.499": {
+   "passed": true,
+   "detail": null
+  },
+  "radius_closure_M13": {
+   "passed": true,
+   "detail": {
+    "order": [
+     [
+      2,
+      3
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      0,
+      6
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   }
+  },
+  "M12_connected_no_loop_only_ring_edge_0-6_missing": {
+   "passed": true,
+   "detail": {
+    "connected": true,
+    "bars_F2": [],
+    "missing_ring_edges": [
+     [
+      0,
+      6
+     ]
+    ]
+   }
+  },
+  "M13_bar_[chi(.34),chi(.31)+chi(.06))": {
+   "passed": true,
+   "detail": [
+    [
+     0.2789370795868577,
+     0.32291324838091107
+    ]
+   ]
+  },
+  "M14_bar_[chi(.34),chi(.37))": {
+   "passed": true,
+   "detail": [
+    [
+     0.2789370795868577,
+     0.29213037044611545
+    ]
+   ]
+  },
+  "ripser_agrees_M13_M14": {
+   "passed": true,
+   "detail": {
+    "13": [
+     [
+      0.27893707156181335,
+      0.322913259267807
+     ]
+    ],
+    "14": [
+     [
+      0.27893707156181335,
+      0.29213038086891174
+     ]
+    ]
+   }
+  },
+  "D13(4,6)_path_4-5-6": {
+   "passed": true,
+   "detail": null
+  },
+  "D14(4,6)_direct": {
+   "passed": true,
+   "detail": null
+  },
+  "hand_certificate_M13": {
+   "passed": true,
+   "detail": {
+    "neighbours_of_5": [
+     4,
+     6
+    ],
+    "neighbours_of_6": [
+     0,
+     5
+    ],
+    "clique_0_to_4": true,
+    "birth_is_chord_0_6": true,
+    "no_pair_value_strictly_inside_bar": true,
+    "death_is_D_4_6": true,
+    "triangles_456_and_046_present_at_death": true,
+    "vertex_6_dominated_by_4_at_death": true
+   }
+  },
+  "hand_certificate_M14": {
+   "passed": true,
+   "detail": {
+    "neighbours_of_5": [
+     4,
+     6
+    ],
+    "neighbours_of_6": [
+     0,
+     5
+    ],
+    "clique_0_to_4": true,
+    "birth_is_chord_0_6": true,
+    "no_pair_value_strictly_inside_bar": true,
+    "death_is_D_4_6": true,
+    "triangles_456_and_046_present_at_death": true,
+    "vertex_6_dominated_by_4_at_death": true
+   }
+  },
+  "error_M13_0.0440643": {
+   "passed": true,
+   "detail": 0.044064297388831025
+  },
+  "error_M14_0.0300601_eq_P_star": {
+   "passed": true,
+   "detail": 0.030060120240480933
+  },
+  "direct_cost_0.122371_to_0.156051": {
+   "passed": true,
+   "detail": [
+    0.12237058199026517,
+    0.15605136183143195
+   ]
+  },
+  "M13_diagonal_matching_optimal_and_M14_reference_half_lifetime_dominates": {
+   "passed": true,
+   "detail": null
+  },
+  "matches_release_json": {
+   "passed": true,
+   "detail": null
+  },
+  "arc_support_M13": {
+   "passed": true,
+   "detail": {
+    "2-3": {
+     "arc": [
+      2,
+      3
+     ],
+     "p": 2
+    },
+    "5-6": {
+     "arc": [
+      5,
+      6
+     ],
+     "p": 5
+    },
+    "1-2": {
+     "arc": [
+      1,
+      2
+     ],
+     "p": 1
+    },
+    "0-1": {
+     "arc": [
+      0,
+      1
+     ],
+     "p": 0
+    },
+    "1-3": {
+     "arc": [
+      1,
+      2,
+      3
+     ],
+     "p": 1
+    },
+    "3-4": {
+     "arc": [
+      3,
+      4
+     ],
+     "p": 3
+    },
+    "2-4": {
+     "arc": [
+      2,
+      3,
+      4
+     ],
+     "p": 2
+    },
+    "0-2": {
+     "arc": [
+      0,
+      1,
+      2
+     ],
+     "p": 0
+    },
+    "0-3": {
+     "arc": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "p": 0
+    },
+    "1-4": {
+     "arc": [
+      1,
+      2,
+      3,
+      4
+     ],
+     "p": 1
+    },
+    "0-4": {
+     "arc": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "p": 0
+    },
+    "4-5": {
+     "arc": [
+      4,
+      5
+     ],
+     "p": 4
+    },
+    "0-6": {
+     "arc": [
+      0,
+      6
+     ],
+     "p": 0
+    }
+   }
+  },
+  "arc_support_M14": {
+   "passed": true,
+   "detail": {
+    "2-3": {
+     "arc": [
+      2,
+      3
+     ],
+     "p": 2
+    },
+    "5-6": {
+     "arc": [
+      5,
+      6
+     ],
+     "p": 5
+    },
+    "1-2": {
+     "arc": [
+      1,
+      2
+     ],
+     "p": 1
+    },
+    "0-1": {
+     "arc": [
+      0,
+      1
+     ],
+     "p": 0
+    },
+    "1-3": {
+     "arc": [
+      1,
+      2,
+      3
+     ],
+     "p": 1
+    },
+    "3-4": {
+     "arc": [
+      3,
+      4
+     ],
+     "p": 3
+    },
+    "2-4": {
+     "arc": [
+      2,
+      3,
+      4
+     ],
+     "p": 2
+    },
+    "0-2": {
+     "arc": [
+      0,
+      1,
+      2
+     ],
+     "p": 0
+    },
+    "0-3": {
+     "arc": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "p": 0
+    },
+    "1-4": {
+     "arc": [
+      1,
+      2,
+      3,
+      4
+     ],
+     "p": 1
+    },
+    "0-4": {
+     "arc": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "p": 0
+    },
+    "4-5": {
+     "arc": [
+      4,
+      5
+     ],
+     "p": 4
+    },
+    "0-6": {
+     "arc": [
+      0,
+      6
+     ],
+     "p": 0
+    },
+    "4-6": {
+     "arc": [
+      4,
+      5,
+      6
+     ],
+     "p": 4
+    }
+   }
+  },
+  "arc_support_all_prefixes_M13_to_21": {
+   "passed": true,
+   "detail": null
+  },
+  "small_gap_hypothesis_fails": {
+   "passed": true,
+   "detail": {
+    "g": 0.34,
+    "threshold": 0.13661977236758138
+   }
+  },
+  "death_bracket_chi(b*)<=d_G<=b*": {
+   "passed": true,
+   "detail": null
+  },
+  "errors_below_finite_ceiling": {
+   "passed": true,
+   "detail": 0.15605136183143195
+  },
+  "kNN_release_transitions": {
+   "passed": true,
+   "detail": {
+    "OR_kNN": {
+     "M_close": 10,
+     "insertion_of_4_6": 13,
+     "bar_before": [
+      [
+       0.2789370795868577,
+       0.32291324838091107
+      ]
+     ],
+     "bar_after": [
+      [
+       0.2789370795868577,
+       0.29213037044611545
+      ]
+     ]
+    },
+    "mutual_kNN": {
+     "M_close": 13,
+     "insertion_of_4_6": 17,
+     "bar_before": [
+      [
+       0.2789370795868577,
+       0.32291324838091107
+      ]
+     ],
+     "bar_after": [
+      [
+       0.2789370795868577,
+       0.29213037044611545
+      ]
+     ]
+    }
+   }
+  }
+ }
+}

@@ -5,7 +5,7 @@
     "samples",
     "closed"
   ],
-  "original_seed_rank_replay.csv": [
+  "seed_rank_replay.csv": [
     "seed",
     "profile",
     "method",
@@ -457,7 +457,7 @@
     "nn_crust_extra_edges",
     "nn_crust_missing_edges"
   ],
-  "phase1/grid_oracle_samples.csv": [
+  "comparisons/grid_oracle_samples.csv": [
     "seed",
     "model",
     "delta",
@@ -469,7 +469,7 @@
     "M_close",
     "oracle_before_latent_closure"
   ],
-  "phase1/selected_vs_oracle.csv": [
+  "comparisons/selected_vs_oracle.csv": [
     "seed",
     "model",
     "delta",
@@ -489,7 +489,7 @@
     "oracle_before_latent_closure",
     "selected_minus_oracle"
   ],
-  "phase1/all_amplitudes.csv": [
+  "comparisons/all_amplitudes.csv": [
     "model",
     "delta",
     "method",
@@ -503,7 +503,7 @@
     "longest_lifetime_q3_e_PH",
     "longest_lifetime_median_a"
   ],
-  "phase1/grid_oracle_summary.csv": [
+  "comparisons/grid_oracle_summary.csv": [
     "model",
     "delta",
     "method",
@@ -515,7 +515,7 @@
     "median_a",
     "before_latent_closure"
   ],
-  "phase1/selector_oracle_summary.csv": [
+  "comparisons/selector_oracle_summary.csv": [
     "model",
     "delta",
     "method",
@@ -564,7 +564,7 @@
     "first_nonempty_grid_M",
     "first_nonempty_matches_first_closed_grid"
   ],
-  "extra_k/candidate_audit/main_text_summary.csv": [
+  "extra_k/rank_sweep/n512_comparison_summary.csv": [
     "profile",
     "method",
     "n",
@@ -579,7 +579,7 @@
     "plus3_wilson_lo_percent",
     "plus3_wilson_hi_percent"
   ],
-  "extra_k/candidate_audit/summary.csv": [
+  "extra_k/rank_sweep/summary.csv": [
     "profile",
     "n",
     "method",
@@ -607,7 +607,7 @@
     "cdf_5_lo",
     "cdf_5_hi"
   ],
-  "extra_k/candidate_audit/samples.csv": [
+  "extra_k/rank_sweep/samples.csv": [
     "profile",
     "n",
     "seed",
@@ -617,14 +617,14 @@
     "extra_k",
     "largest_gap"
   ],
-  "extra_k/candidate_audit/poisson_tails.csv": [
+  "extra_k/rank_sweep/poisson_tails.csv": [
     "k",
     "or_tail",
     "mutual_tail",
     "or_ratio",
     "mutual_ratio"
   ],
-  "extra_k/candidate_audit/iid_predictions.csv": [
+  "extra_k/rank_sweep/iid_predictions.csv": [
     "n",
     "method",
     "cdf_0",
@@ -634,7 +634,7 @@
     "cdf_4",
     "cdf_5"
   ],
-  "phase1/bridgeless/clean_timings.csv": [
+  "comparisons/bridgeless/clean_timings.csv": [
     "seed",
     "profile",
     "n",
@@ -643,17 +643,7 @@
     "construction_seconds",
     "bridge_seconds"
   ],
-  "phase1/bridgeless/pilot_timings.csv": [
-    "seed",
-    "profile",
-    "n",
-    "seconds",
-    "peak_child_rss_kib",
-    "constructed_edges",
-    "construction_seconds",
-    "bridge_seconds"
-  ],
-  "phase1/bridgeless/sweep_timings.csv": [
+  "comparisons/bridgeless/sweep_timings.csv": [
     "seed",
     "profile",
     "n",
@@ -663,7 +653,7 @@
     "construction_seconds",
     "bridge_seconds"
   ],
-  "phase1/bridgeless/sweep_samples.csv": [
+  "comparisons/bridgeless/sweep_samples.csv": [
     "seed",
     "profile",
     "n",
@@ -677,21 +667,7 @@
     "closed_at_bridgeless",
     "closed_at_plus3"
   ],
-  "phase1/bridgeless/pilot_samples.csv": [
-    "seed",
-    "profile",
-    "n",
-    "method",
-    "k_conn",
-    "k_br",
-    "k_close",
-    "bridges_at_connection",
-    "edges_at_k_br",
-    "closed_at_connection",
-    "closed_at_bridgeless",
-    "closed_at_plus3"
-  ],
-  "phase1/bridgeless/clean_summary.csv": [
+  "comparisons/bridgeless/clean_summary.csv": [
     "n",
     "profile",
     "method",
@@ -711,7 +687,7 @@
     "median_extra_k_br",
     "median_remaining_k"
   ],
-  "phase1/bridgeless/sweep_summary.csv": [
+  "comparisons/bridgeless/sweep_summary.csv": [
     "n",
     "profile",
     "method",
@@ -731,7 +707,7 @@
     "median_extra_k_br",
     "median_remaining_k"
   ],
-  "phase1/bridgeless/clean_samples.csv": [
+  "comparisons/bridgeless/clean_samples.csv": [
     "seed",
     "profile",
     "n",
@@ -745,7 +721,7 @@
     "closed_at_bridgeless",
     "closed_at_plus3"
   ],
-  "phase1/euclidean/paired_selectors.csv": [
+  "comparisons/euclidean/paired_selectors.csv": [
     "seed",
     "model",
     "delta",
@@ -760,7 +736,7 @@
     "e_PH_euclidean",
     "selected_minus_euclidean"
   ],
-  "phase1/euclidean/summary.csv": [
+  "comparisons/euclidean/summary.csv": [
     "model",
     "delta",
     "samples",
@@ -768,7 +744,7 @@
     "q1_e_PH",
     "q3_e_PH"
   ],
-  "phase1/euclidean/samples.csv": [
+  "comparisons/euclidean/samples.csv": [
     "seed",
     "model",
     "delta",
@@ -778,7 +754,7 @@
     "diagram_file",
     "reused_clean"
   ],
-  "phase1/euclidean/paired_summary.csv": [
+  "comparisons/euclidean/paired_summary.csv": [
     "model",
     "delta",
     "method",
@@ -789,6 +765,291 @@
     "median_paired_difference",
     "selected_better",
     "euclidean_better",
-    "equal"
+    "equal",
+    "median_selected_noise_increment",
+    "q1_selected_noise_increment",
+    "q3_selected_noise_increment",
+    "median_euclidean_noise_increment",
+    "q1_euclidean_noise_increment",
+    "q3_euclidean_noise_increment",
+    "median_paired_increment_difference",
+    "increment_selected_better",
+    "increment_euclidean_better",
+    "increment_equal"
+  ],
+  "comparisons/size_sweep_summary.csv": [
+    "profile",
+    "n",
+    "method",
+    "samples",
+    "median_k_conn",
+    "median_k_br",
+    "median_k_close",
+    "connection_closed",
+    "connection_rate",
+    "connection_wilson_lo",
+    "connection_wilson_hi",
+    "bridgeless_closed",
+    "bridgeless_rate",
+    "bridgeless_wilson_lo",
+    "bridgeless_wilson_hi",
+    "plus3_closed",
+    "plus3_rate",
+    "plus3_wilson_lo",
+    "plus3_wilson_hi"
+  ],
+  "extra_k/rank_sweep/fixed_k_summary.csv": [
+    "profile",
+    "method",
+    "k",
+    "n",
+    "samples",
+    "closed",
+    "closure_percent"
+  ],
+  "curve_order/curve_order_checks.csv": [
+    "curve",
+    "seed",
+    "profile",
+    "method",
+    "kind",
+    "M",
+    "M_close",
+    "n",
+    "arc_supported",
+    "bars",
+    "birth",
+    "death",
+    "pairs",
+    "certified_pairs",
+    "certified_failure",
+    "first_certified_threshold",
+    "first_certified_window_end",
+    "last_certified_threshold",
+    "certified_before_death",
+    "first_certified_before_death",
+    "certified_while_alive",
+    "first_certified_while_alive",
+    "last_certified_while_alive",
+    "certified_alive_windows",
+    "certified_alive_measure",
+    "shorter_arc_failing_pairs",
+    "shorter_arc_failure",
+    "shorter_arc_first_threshold",
+    "shorter_arc_before_death"
+  ],
+  "rank_table.csv": [
+    "profile",
+    "method",
+    "n",
+    "samples",
+    "closed_at_connectivity",
+    "closure_percent",
+    "wilson_lo_percent",
+    "wilson_hi_percent"
+  ],
+  "noncircular_locality/locality_check_results.csv": [
+    "curve",
+    "seed",
+    "g",
+    "B",
+    "radius_M_close",
+    "radius_M_conn",
+    "radius_conn_close",
+    "radius_loc_ok",
+    "radius_shh_ok",
+    "radius_closed_sup",
+    "radius_bars_close",
+    "radius_ring_close",
+    "radius_other_max_close",
+    "radius_bars_end",
+    "radius_ring_end",
+    "radius_other_max_end",
+    "radius_M_end",
+    "radius_fail_chord",
+    "OR_M_close",
+    "OR_M_conn",
+    "OR_conn_close",
+    "OR_k_conn",
+    "OR_k_close",
+    "OR_loc_ok",
+    "OR_shh_ok",
+    "OR_closed_sup",
+    "OR_bars_close",
+    "OR_ring_close",
+    "OR_other_max_close",
+    "OR_bars_end",
+    "OR_ring_end",
+    "OR_other_max_end",
+    "OR_M_end",
+    "OR_fail_chord",
+    "mutual_M_close",
+    "mutual_M_conn",
+    "mutual_conn_close",
+    "mutual_k_conn",
+    "mutual_k_close",
+    "mutual_loc_ok",
+    "mutual_shh_ok",
+    "mutual_closed_sup",
+    "mutual_bars_close",
+    "mutual_ring_close",
+    "mutual_other_max_close",
+    "mutual_bars_end",
+    "mutual_ring_end",
+    "mutual_other_max_end",
+    "mutual_M_end",
+    "mutual_fail_chord"
+  ],
+  "retention_table/retention_counts.csv": [
+    "profile",
+    "method",
+    "n",
+    "samples",
+    "closed_at_k_conn",
+    "closed_at_k_br",
+    "closed_at_k_conn_plus3",
+    "closed_at_k10",
+    "closed_at_k15",
+    "connected_at_k10",
+    "connected_at_k15",
+    "kbr_eq_kconn",
+    "plus3_le_kbr",
+    "max_gap",
+    "k_conn_pct",
+    "k_conn_wilson_lo_pct",
+    "k_conn_wilson_hi_pct",
+    "k_br_pct",
+    "k_br_wilson_lo_pct",
+    "k_br_wilson_hi_pct",
+    "k_conn_plus3_pct",
+    "k_conn_plus3_wilson_lo_pct",
+    "k_conn_plus3_wilson_hi_pct",
+    "k10_pct",
+    "k10_wilson_lo_pct",
+    "k10_wilson_hi_pct",
+    "k15_pct",
+    "k15_wilson_lo_pct",
+    "k15_wilson_hi_pct"
+  ],
+  "retention_table/retention_fixed_k.csv": [
+    "profile",
+    "method",
+    "n",
+    "k",
+    "samples",
+    "connected",
+    "closed",
+    "closed_pct",
+    "wilson_lo_pct",
+    "wilson_hi_pct"
+  ],
+  "retention_extra_layers/retention.csv": [
+    "n",
+    "profile",
+    "method",
+    "j",
+    "closed",
+    "samples",
+    "rate",
+    "wilson_lo",
+    "wilson_hi"
+  ],
+  "peanut_trough/closure.csv": [
+    "n",
+    "seed",
+    "phase",
+    "method",
+    "g",
+    "B",
+    "M_conn",
+    "M_close",
+    "k_close",
+    "locality_hypothesis",
+    "short_hops_first",
+    "arc_supported",
+    "unsupported_edges",
+    "bars",
+    "bars_born_at_B",
+    "intrinsic_bars",
+    "max_lifetime"
+  ],
+  "practical_choices/choices.csv": [
+    "profile",
+    "n",
+    "method",
+    "choice",
+    "samples",
+    "disconnected",
+    "connected_unclosed",
+    "closed",
+    "closed_percent"
+  ],
+  "peanut_neck/trials.csv": [
+    "alpha",
+    "waist_width",
+    "n",
+    "seed",
+    "method",
+    "g",
+    "B",
+    "perimeter",
+    "P_star",
+    "M_conn",
+    "M_close",
+    "M_first_long_edge",
+    "M_shortcut",
+    "shortcut_i",
+    "shortcut_j",
+    "shortcut_arc",
+    "shortcut_chord",
+    "short_hops_first",
+    "intrinsic_birth",
+    "intrinsic_death",
+    "intrinsic_alive",
+    "euclidean_bars",
+    "euclidean_last_death",
+    "euclidean_ring_death",
+    "euclidean_alive",
+    "euclidean_error",
+    "euclidean_reference_discarded",
+    "euclidean_cone_vertex",
+    "euclidean_cone_radius",
+    "connection_bars",
+    "connection_alive",
+    "connection_error",
+    "connection_last_death",
+    "closure_bars",
+    "closure_alive",
+    "closure_error",
+    "closure_last_death",
+    "closure_supported",
+    "closure_unsupported_edges",
+    "closure_ring_death",
+    "closure_birth",
+    "closure_min_metric_ratio",
+    "shortcut_bars",
+    "shortcut_alive",
+    "shortcut_error",
+    "shortcut_last_death",
+    "shortcut_supported",
+    "shortcut_unsupported_edges",
+    "shortcut_ring_death"
+  ],
+  "retention_table/retention_compact.csv": [
+    "profile",
+    "method",
+    "128",
+    "512",
+    "4096",
+    "32768"
+  ],
+  "retention_table/retention_three_layers.csv": [
+    "profile",
+    "method",
+    "n",
+    "layer",
+    "percent",
+    "wilson_lo_percent",
+    "wilson_hi_percent"
   ]
 }

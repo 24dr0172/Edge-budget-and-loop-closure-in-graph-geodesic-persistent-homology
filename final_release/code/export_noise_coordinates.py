@@ -11,7 +11,7 @@ import sys
 sys.dont_write_bytecode = True
 
 import numpy as np
-import paper1_methods as m
+import graph_methods as m
 
 
 def coordinate_arrays(config):

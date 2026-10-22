@@ -2,7 +2,7 @@
 import argparse,concurrent.futures,time,json
 import numpy as np
 import pandas as pd
-import paper1_methods as m
+import graph_methods as m
 from run_studies import measurements
 from experiment_core import RESULTS,CONFIG,table,dump
 

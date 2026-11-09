@@ -116,7 +116,7 @@ def build_report():
     separation = separation_report()
     assert not separation['common_orders_at_live_thresholds']
     witness = check_witness()
-    return dict(status='passed',scope='Small examples of the paper only.',
+    return dict(status='passed',scope='Small finite examples and an additional cyclic-order check.',
                 fields_checked=[2, 3, 5],float64_comparison_tolerance=1e-12,
                 independent_reduction_positive_tolerance=POSITIVE_TOL,
                 separation=dict(proof_thresholds=separation['proof_thresholds'],

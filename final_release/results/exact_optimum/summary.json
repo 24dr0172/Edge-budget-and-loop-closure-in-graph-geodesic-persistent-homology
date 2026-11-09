@@ -1,0 +1,101 @@
+{
+  "status": "passed",
+  "series": 180,
+  "samples": 60,
+  "closure_at_most_P_star": 180,
+  "strict_condition": 180,
+  "g_below_g0": 180,
+  "post_closure_below_P_star": 180,
+  "post_closure_minimum_at_closure": 180,
+  "complete_at_most_P_star": 180,
+  "saved_post_closure_prefixes": 3376,
+  "preclosure_connected_cells": 587,
+  "preclosure_error_deviation_max": 0.0,
+  "largest_gap": 0.0895572098550524,
+  "smallest_strict_margin": 0.1284383431936183,
+  "closure_over_P_star_max": 0.03141986166389835,
+  "b_star_difference_max": 1.4033179063233092e-08,
+  "groups": [
+    {
+      "method": "R2_global",
+      "profile": "uniform",
+      "series": 20,
+      "closure_at_most_P_star": 20,
+      "strict_condition": 20,
+      "closure_error_max": 0.0003383178211329,
+      "closure_over_P_star_max": 0.0010749108312603655
+    },
+    {
+      "method": "R2_global",
+      "profile": "strong_cosine",
+      "series": 20,
+      "closure_at_most_P_star": 20,
+      "strict_condition": 20,
+      "closure_error_max": 0.0029201830469397,
+      "closure_over_P_star_max": 0.01043640482235288
+    },
+    {
+      "method": "R2_global",
+      "profile": "localized_trough",
+      "series": 20,
+      "closure_at_most_P_star": 20,
+      "strict_condition": 20,
+      "closure_error_max": 0.0076612947655334,
+      "closure_over_P_star_max": 0.03141986166389835
+    },
+    {
+      "method": "OR_kNN",
+      "profile": "uniform",
+      "series": 20,
+      "closure_at_most_P_star": 20,
+      "strict_condition": 20,
+      "closure_error_max": 0.0001713642945308,
+      "closure_over_P_star_max": 0.0005444624101255644
+    },
+    {
+      "method": "OR_kNN",
+      "profile": "strong_cosine",
+      "series": 20,
+      "closure_at_most_P_star": 20,
+      "strict_condition": 20,
+      "closure_error_max": 0.0008094915337758,
+      "closure_over_P_star_max": 0.002727297852237647
+    },
+    {
+      "method": "OR_kNN",
+      "profile": "localized_trough",
+      "series": 20,
+      "closure_at_most_P_star": 20,
+      "strict_condition": 20,
+      "closure_error_max": 0.0023537795419385,
+      "closure_over_P_star_max": 0.009653123898551988
+    },
+    {
+      "method": "mutual_kNN",
+      "profile": "uniform",
+      "series": 20,
+      "closure_at_most_P_star": 20,
+      "strict_condition": 20,
+      "closure_error_max": 0.0002303136118495,
+      "closure_over_P_star_max": 0.0007317574792090914
+    },
+    {
+      "method": "mutual_kNN",
+      "profile": "strong_cosine",
+      "series": 20,
+      "closure_at_most_P_star": 20,
+      "strict_condition": 20,
+      "closure_error_max": 0.0008069285313495,
+      "closure_over_P_star_max": 0.0027186627143506287
+    },
+    {
+      "method": "mutual_kNN",
+      "profile": "localized_trough",
+      "series": 20,
+      "closure_at_most_P_star": 20,
+      "strict_condition": 20,
+      "closure_error_max": 0.0024738444655613,
+      "closure_over_P_star_max": 0.009653123898551988
+    }
+  ]
+}

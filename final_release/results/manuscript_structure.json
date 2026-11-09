@@ -1,83 +1,96 @@
 {
   "status": "passed",
   "scope": "Source and PDF identities, labels, citations, environment counts and result numbering.",
-  "source_sha256": "584df5add60d5603afd209935554fa82262c484e3b6895c5c3f407b3f40b5c1a",
-  "pdf_sha256": "c44e1bc705eef5cc32b895e9b5c2542e5910b5f3e8397eb8769bd78dd7c77489",
-  "pdf_pages": 31,
+  "source_sha256": "d477672780edfdd1964505051c7ce82993499bb4d92a31df4b97a9220facf26c",
+  "pdf_sha256": "8cc916b0c5a71449176df2831e54f86518f0cdce0d2431098d9c42f3aca2f64e",
+  "pdf_pages": 37,
   "source_checks": {
-    "unique_labels": 64,
-    "resolved_citation_keys": 46,
+    "unique_labels": 69,
+    "resolved_citation_keys": 45,
     "unresolved_references": 0,
     "unresolved_citations": 0
   },
   "environment_counts": {
     "definition": 4,
-    "theorem": 3,
-    "proposition": 2,
-    "corollary": 2,
+    "theorem": 4,
+    "proposition": 1,
+    "corollary": 5,
     "structurallemma": 0,
     "appendixlemma": 0,
-    "lemma": 8,
-    "remark": 2,
-    "example": 2,
-    "proof": 15
+    "lemma": 9,
+    "remark": 4,
+    "example": 1,
+    "proof": 19
   },
   "display_math_blocks_by_type": {
-    "bracketed": 40,
-    "equation": 10,
-    "align": 1
+    "bracketed": 65,
+    "equation": 13
   },
   "result_numbers": {
     "theorem": {
       "thm:loop-transition": 1,
       "thm:arc-supported": 2,
-      "thm:circle-parameters": 3
+      "thm:circle-parameters": 3,
+      "thm:smooth-radius": 4,
+      "eq:smooth-miss": 4
     },
     "proposition": {
-      "prop:radius-enlargement": 1,
-      "eq:radius-enlargement": 1,
-      "prop:locality": 2
+      "prop:locality": 1
     },
     "corollary": {
-      "cor:cost-ceiling": 1,
-      "eq:cost-ceiling": 1,
-      "cor:closure-optimal": 2,
-      "eq:closure-optimal": 2
+      "cor:geometric-survival": 1,
+      "cor:first-nonempty": 2,
+      "cor:closure-optimal": 3,
+      "eq:closure-optimal": 3,
+      "cor:rate": 4,
+      "eq:rate": 4,
+      "cor:certificate": 5
     },
     "lemma": {
       "lem:edge-path": 1,
       "lem:robinson": 2,
-      "lem:winding": 3,
-      "lem:circle-bar": 4,
-      "lem:geometric-survival": 5,
-      "lem:rank-containment": 6,
-      "lem:circle-orders": 7,
-      "lem:local-rank-keys": 8,
-      "eq:local-rank-keys": 8
+      "lem:circle-bar": 3,
+      "lem:edgewise-death": 4,
+      "eq:edge-ratio": 4,
+      "eq:edgewise-sandwich": 4,
+      "eq:local-death": 4,
+      "lem:rank-containment": 5,
+      "lem:circle-orders": 6,
+      "lem:local-rank-keys": 7,
+      "eq:local-rank-keys": 7,
+      "lem:chord-arc": 8,
+      "lem:cost-ceiling": 9,
+      "eq:cost-ceiling": 9
     },
     "example": {
-      "ex:noncyclic": 1,
-      "ex:natural-ellipse": 2
+      "ex:natural-ellipse": 1
     },
     "remark": {
-      "rem:hexagon": 1,
-      "rem:unsupported-shortcut": 2
+      "rem:polygon": 1,
+      "rem:unsupported-shortcut": 2,
+      "rem:perturbation": 3,
+      "rem:retention-heuristic": 4
     }
   },
   "figure_labels": [
     "fig:closure-schematic",
-    "fig:arc-support",
-    "fig:retention-extra"
+    "fig:arc-support-fan",
+    "fig:rate",
+    "fig:peanut-comparison"
   ],
   "table_labels": [
     "tab:ingredients",
     "tab:notation",
-    "tab:rank-scaling"
+    "tab:rank-scaling",
+    "tab:peanut-summary",
+    "tab:smooth-enlargement"
   ],
   "appendix_labels": [
     "app:curve-bounds",
-    "app:curve-numerics",
     "app:ties",
-    "app:seven-point"
+    "app:retention-heuristic",
+    "app:seven-point",
+    "app:radius-enlargement",
+    "app:protocols"
   ]
 }

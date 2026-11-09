@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Independent check of the numbers in Appendix C, Section 7.2, Figure 2 and Figure 3.
+"""Independent check of the numbers in Appendix D, the independent-key model, Figure 2 and Example 1.
 
 The script uses only numpy, scipy and its own code (Ripser is an optional
 cross-check). Conventions follow the manuscript: chord-weighted graphs, radius order sorts
@@ -144,7 +144,7 @@ def edge_supported(n, edges, c, D, e):
     return any(ok for _, _, ok, _ in arc_support(n, edges, c, D, *e))
 
 # ================================================================ Part 1
-print("=" * 78); print("PART 1. Seven-point circle example (Appendix C)"); print("=" * 78)
+print("=" * 78); print("PART 1. Seven-point circle example (Appendix D)"); print("=" * 78)
 s = [0, 0.08, 0.15, 0.161, 0.29, 0.60, 0.66]
 sF = [Fraction(x).limit_denominator(1000) for x in ["0", "0.08", "0.15", "0.161", "0.29", "0.60", "0.66"]] if False else \
      [Fraction(0), Fraction(8, 100), Fraction(15, 100), Fraction(161, 1000), Fraction(29, 100), Fraction(60, 100), Fraction(66, 100)]
@@ -281,8 +281,7 @@ for M in (13, 14):
     E, D = results_C[M][0], results_C[M][1]
     sup = all(edge_supported(n, E, c, D, e) for e in E)
     check(sup, f"G_{M} is arc-supported (every edge passes Definition def:arc-support)")
-check(not all(edge_supported(n, results_C[12][0], c, results_C[12][1], e) for e in results_C[12][0]) or True,
-      "(arc support is only defined for graphs containing the ring; M=12 not tested)")
+print("  arc support is only defined for graphs containing the ring; M=12 not tested")
 # matchings
 print("bottleneck matchings (raw / normalised by Delta*=0.499):")
 P_star = (bs - gs) / (2 * Dl)
@@ -292,18 +291,18 @@ for M, bar in ((13, bars13[0]), (14, bars14[0])):
           f" diagonal = max({(bar[1]-bar[0])/2:.8f}, {(bs-gs)/2:.8f}) = {dg_:.8f} -> {dg_/Dl:.7f}; e_PH = {eb/Dl:.7f}")
     results_C[M] = results_C[M] + ((dr / Dl, dg_ / Dl, eb / Dl),)
 d13, g13, e13 = results_C[13][4]; d14, g14, e14 = results_C[14][4]
-check(abs(e13 - 0.0440643) < 5e-8, f"e_PH(M=13) = {e13:.10f} ~ 0.0440643 (manuscript value)")
-check(abs(e14 - 0.0300601) < 5e-8 and abs(e14 - P_star) < 1e-15, f"e_PH(M=14) = {e14:.10f} = P* = {P_star:.10f} ~ 0.0300601 (manuscript value)")
-check(abs(d13 - 0.122371) < 5e-7, f"direct cost M=13 = {d13:.10f} ~ 0.122371 (manuscript value)")
-check(abs(d14 - 0.156051) < 5e-7, f"direct cost M=14 = {d14:.10f} ~ 0.156051 (manuscript value)")
+check(abs(e13 - 0.0440643) < 5e-8, f"e_PH(M=13) = {e13:.10f} ~ 0.0440643 (model value)")
+check(abs(e14 - 0.0300601) < 5e-8 and abs(e14 - P_star) < 1e-15, f"e_PH(M=14) = {e14:.10f} = P* = {P_star:.10f} ~ 0.0300601 (model value)")
+check(abs(d13 - 0.122371) < 5e-7, f"direct cost M=13 = {d13:.10f} ~ 0.122371 (model value)")
+check(abs(d14 - 0.156051) < 5e-7, f"direct cost M=14 = {d14:.10f} ~ 0.156051 (model value)")
 print(f"  raw quantities: g-chi(g) = {gs-B:.8f}; b*-delta = {bs-delta:.8f}; b*-chi(b*) = {bs-chi(0.37):.8f};"
       f" (delta-chi(g))/2 = {(delta-B)/2:.8f}; (chi(b*)-chi(g))/2 = {(chi(0.37)-B)/2:.8f}; (b*-g)/2 = {(bs-gs)/2:.8f}")
 for M, dd in ((13, delta), (14, chi(0.37))):
-    print(f"  table row M={M}: d={dd:.6f}  |0.37-d|={abs(bs-dd):.6f}  d-chi(0.34)={dd-B:.6f}  0.03/0.998={0.03/0.998:.7f}  2/pi-1/2={2/math.pi-0.5:.4f}")
+    print(f"  table row M={M}: d={dd:.6f}  |0.37-d|={abs(bs-dd):.6f}  d-chi(0.34)={dd-B:.6f}  0.03/0.998={0.03/0.998:.7f}")
 check((delta - B) / 2 <= 0.021989 < gs - B and max(0.015, (delta - B) / 2) == (delta - B) / 2,
-      f"App C hypothesis paragraph: diagonal raw cost max(0.015,(d-chi(0.34))/2) <= (delta-chi(0.34))/2 = {(delta-B)/2:.7f} <= 0.021989 < 0.061063")
+      f"Appendix D matching comparison: diagonal raw cost max(0.015,(d-chi(0.34))/2) <= (delta-chi(0.34))/2 = {(delta-B)/2:.7f} <= 0.021989 < 0.061063")
 ceiling = max(gs - B, bs - chi(0.37)) / Dl
-print(f"  cost ceiling (Corollary cor:cost-ceiling) = {ceiling:.10f}")
+print(f"  cost ceiling (Lemma 9) = {ceiling:.10f}")
 check(abs(ceiling - d14) < 1e-15, "direct cost at M=14 equals the cost-ceiling bound")
 check(e13 > P_star, "e_PH at closure exceeds P* (worse than the empty diagram at M=12)")
 # cross-check with release helper if present
@@ -321,15 +320,26 @@ try:
               f"release finite_diagram.py agrees at M={M} (bars and bottleneck)")
 except Exception as ex:
     print("  release helper not run:", ex)
-g0 = 2 / math.pi - 0.5
-check(gs > g0, f"small-gap hypothesis g < 2/pi-1/2 = {g0:.6f} fails (g = 0.34)")
+# The paper defines g0 as the unique root of 2 chi(1/3 + g) = 1/3 + 2g.
+lo, hi = 0.0, 1.0 / 6.0
+for _ in range(60):
+    mid = (lo + hi) / 2
+    if 2 * chi(1 / 3 + mid) - (1 / 3 + 2 * mid) > 0:
+        lo = mid
+    else:
+        hi = mid
+g0 = (lo + hi) / 2
+check(0.151 < g0 < 0.152 and gs > g0,
+      f"sufficient gap condition g < g0 ~ {g0:.6f} fails (g = {gs:.2f})")
+psi_b = 2 * chi(bs) - bs
+check(gs > psi_b, f"exact gap condition g < psi(b*) = {psi_b:.6f} fails (g = {gs:.2f})")
 check(gs > 1 / 3, "g > 1/3: positivity of the intrinsic bar is sample-specific (Lemma circle-bar's sufficient condition fails)")
 check(gs - B > (bs - gs) / 2, f"key inequality of the corollary's proof fails: g-chi(g)={gs-B:.6f} > (b*-g)/2={(bs-gs)/2:.6f}")
 lam = 2 / math.pi
 check(not (B < lam / 3), f"geometric survival bound B < 2/(3pi) = {lam/3:.6f} fails (B = {B:.6f}); survival via chi(g)<=t<chi(b*) instead")
 
 # ================================================================ Part 2
-print("\n" + "=" * 78); print("PART 2. Independent-key model (Section 7.2)"); print("=" * 78)
+print("\n" + "=" * 78); print("PART 2. Independent-key model"); print("=" * 78)
 def T_OR(m):
     if m == 0: return Fraction(1)
     return Fraction(2, 2 ** m) - 2 * sum(Fraction(math.comb(m + q - 1, q), 3 ** (m + q)) for q in range(m))
@@ -386,9 +396,9 @@ def Tmu(m):
 po, tro = tie_prob(Tor, 512, 200); pmu, trm = tie_prob(Tmu, 512, 200)
 print(f"  n=512: Pr(max OR mark tied)     = {str(po)[:22]}  (truncation bound {float(tro):.1e})")
 print(f"  n=512: Pr(max mutual mark tied) = {str(pmu)[:22]}  (truncation bound {float(trm):.1e})")
-check(round(float(po), 6) == 0.328768, f"OR tie probability rounds to 0.328768 (manuscript value); digits {str(po)[:12]}")
-check(round(float(pmu), 6) == 0.274923, f"mutual tie probability rounds to 0.274923 (manuscript value); digits {str(pmu)[:12]} -- NOTE: truncation would give 0.274922")
-check(round(float(po), 3) == 0.329 and round(float(pmu), 3) == 0.275, "rounded 0.329 and 0.275 as in Section 7.2")
+check(round(float(po), 6) == 0.328768, f"OR tie probability rounds to 0.328768 (model value); digits {str(po)[:12]}")
+check(round(float(pmu), 6) == 0.274923, f"mutual tie probability rounds to 0.274923 (model value); digits {str(pmu)[:12]} -- NOTE: truncation would give 0.274922")
+check(round(float(po), 3) == 0.329 and round(float(pmu), 3) == 0.275, "rounded 0.329 and 0.275 for the independent-key model")
 for nn in (128, 4096, 32768):
     a_, _ = tie_prob(Tor, nn, 200); b_, _ = tie_prob(Tmu, nn, 200)
     print(f"  n={nn}: OR {float(a_):.6f}, mutual {float(b_):.6f}")
@@ -470,7 +480,7 @@ check(all(min(path[i], cab + (path[4] - path[i])) <= cab + 1e-15 for i in range(
 check(path[2] > cw(0, 2) and path[3] > cw(0, 3), "panel (a): spokes pw2, pw3 are not graph edges (their D_G are ring paths, not chords)")
 
 # ================================================================ Part 4
-print("\n" + "=" * 78); print("PART 4. Six-point ellipse (Figure 3, Example 2)"); print("=" * 78)
+print("\n" + "=" * 78); print("PART 4. Six-point ellipse (Example 1)"); print("=" * 78)
 th = [30, 85, 150, 255, 290, 335]
 X = np.array([[2 * math.cos(math.radians(t)), math.sin(math.radians(t))] for t in th])
 for i, p in enumerate(X): print(f"  x{i} = ({p[0]:.6f}, {p[1]:.6f})")

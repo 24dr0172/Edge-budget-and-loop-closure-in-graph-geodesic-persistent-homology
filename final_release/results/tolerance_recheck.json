@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "peanut_rows_checked": 180,
+  "euclidean_minus_empty_cost_max": 0.0,
+  "clean_prefixes_checked": 3556,
+  "clean_series": 180,
+  "tolerance_comparisons": {
+    "5e-08": {
+      "matching_failures": 0,
+      "ceiling_failures": 0,
+      "monotonicity_failures": 0
+    },
+    "1e-06": {
+      "matching_failures": 0,
+      "ceiling_failures": 0,
+      "monotonicity_failures": 0
+    }
+  },
+  "maximum_matching_residual": 0.0,
+  "minimum_monotonic_step": 0.0,
+  "scope": "Frozen diagrams and errors only; no regeneration; the generation tolerances in code/config.json apply."
+}

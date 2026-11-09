@@ -7,6 +7,67 @@ from rank_table import verify_table
 from verify_small_examples import build_report
 
 
+def verify_peanut_bound(root, require):
+    """Check both fixed-graph bounds against independently generated metric ratios and winding thresholds."""
+    import numpy as np
+    root=Path(root); folder=root/'results/peanut_neck'
+    raw=list(csv.DictReader((folder/'trials.csv').open()))
+    report=json.loads((folder/'closure_error_bound.json').read_text())
+    records={(v['alpha'],v['seed'],v['method']):v for v in report['records']}
+    winding={(float(r['alpha']),int(r['seed']),r['method']):r
+             for r in csv.DictReader((root/'results/winding_check/records.csv').open())}
+    require('paper_peanut_bound_inventory',len(records)==len(raw)==300 and
+            report['selected_edge_ratio_checks']==300 and report['status']=='passed')
+    for row in raw:
+        a,seed,method=float(row['alpha']),int(row['seed']),row['method']
+        v=records[a,seed,method]
+        with np.load(folder/'checkpoints'/f'a{a:g}_seed{seed}.npz') as saved:
+            s=saved['s']; gap=np.diff(np.r_[s,s[0]+1]).max()
+            separation=np.abs(s[:,None]-s[None,:])
+            diameter=float(np.minimum(separation,1-separation).max())
+            bstar=float(saved['reference_bars'][0,1])
+            lam=float(row['closure_min_metric_ratio'])
+            bound=max(gap-float(row['B']),(1-lam)*bstar)/diameter
+            eligible=row['closure_supported']=='True' and float(row['B'])<lam*bstar
+            require(f'paper_peanut_bound_{a}_{seed}_{method}',
+                abs(v['lambda_G']-lam)<5e-12 and abs(v['U_G']-bound)<1e-11 and
+                v['bound_applicable']==eligible and
+                v['strict_bound_improvement']==(eligible and bound<float(row['euclidean_error'])))
+            w=winding[a,seed,method]
+            W_G=float(w['W_G']); support=row['closure_supported']=='True'
+            wbound=min(max(gap-float(row['B']),bstar-max(float(row['B']),W_G)),(bstar-float(row['B']))/2)/diameter
+            require(f'paper_peanut_winding_bound_{a}_{seed}_{method}',
+                abs(v['W_G']-W_G)<1e-15 and abs(v['winding_bound']-wbound)<1e-11 and
+                v['winding_survival']==(W_G>float(row['B'])) and v['winding_bound_applicable']==support and
+                v['winding_bound_improvement']==(support and wbound<float(row['euclidean_error'])) and
+                (not support or float(row['closure_error'])<=wbound+5e-8/diameter) and
+                (not eligible or W_G>=lam*bstar-5e-8))
+            if eligible:
+                bars=saved[f'{method}_closure_bars']
+                require(f'paper_peanut_death_bound_{a}_{seed}_{method}',len(bars)==1 and
+                    lam*bstar-5e-8<=bars[0,1]<=bstar+5e-8 and
+                    float(row['closure_error'])<=bound+5e-8/diameter)
+    groups=list(csv.DictReader((folder/'closure_error_bound.csv').open()))
+    require('paper_peanut_summary_rows',len(groups)==len(report['groups'])==15)
+    for q in report['groups']:
+        selected=[r for r in raw if float(r['alpha'])==q['alpha'] and r['method']==q['method']]
+        paired=[v for v in report['records'] if v['alpha']==q['alpha'] and v['method']==q['method']]
+        export=next(r for r in groups if float(r['alpha'])==q['alpha'] and r['method']==q['method'])
+        require(f"paper_peanut_summary_{q['alpha']}_{q['method']}",
+            q['samples']==len(selected)==20 and
+            q['supported']==sum(r['closure_supported']=='True' for r in selected) and
+            q['closure_single']==sum(int(r['closure_bars'])==1 for r in selected) and
+            q['strict_bound_improvement']==sum(v['strict_bound_improvement'] for v in paired) and
+            q['edgewise_survival']==sum(v['survival'] for v in paired) and
+            q['winding_survival']==sum(v['winding_survival'] for v in paired) and
+            q['winding_bound_improvement']==sum(v['winding_bound_improvement'] for v in paired) and
+            all(abs(q[field+'_'+end]-{'min':min,'max':max}[end](float(r[field]) for r in selected))<1e-14
+                for field in ('euclidean_error','closure_error') for end in ('min','max')) and
+            all(str(value) == export[key] or (value is None and export[key]=='') for key,value in q.items()))
+    return dict(status='passed',closure_graphs=300,method_by_width_rows=15,
+                source='Frozen diagrams and all-pairs metric ratios; new builder checks selected edges.')
+
+
 def verify_clean_crosscheck(root, require):
     """Check the 60 saved full-diagram samples; generate no diagrams."""
     folder=Path(root)/'results/clean_closure'
@@ -48,6 +109,12 @@ def verify_clean_crosscheck(root, require):
 
 
 def verify_paper_evidence(root, require, include_additional=False):
+    from verify_ellipse_window import verify as verify_window
+    window=verify_window(root)
+    saved_window=json.loads((Path(root)/'results/certified_ellipse_window/certificate.json').read_text())
+    require('certified_ellipse_window',window==saved_window and window['status']=='passed')
+    from tolerance_recheck import verify as tolerance_recheck
+    require('tolerance_recheck',tolerance_recheck(root)['status']=='passed')
     table = verify_table(root, require)
     path = Path(root)/'results/small_examples_verification.json'
     require('paper_examples_report_present', path.is_file())
@@ -90,19 +157,22 @@ def verify_paper_evidence(root, require, include_additional=False):
                 int(row['closed'])==closed and int(row['samples'])==len(group) and
                 abs(float(row['rate'])-closed/len(group))<1e-14 and
                 abs(float(row['wilson_lo'])-lo)<1e-14 and abs(float(row['wilson_hi'])-hi)<1e-14)
+    from verify_peanut_neck import verify_peanut_neck
+    peanut=verify_peanut_neck(root,require,replay=include_additional)
+    peanut_bound=verify_peanut_bound(root,require)
+    from verify_first_nonempty import verify as verify_stopping
+    stopping=verify_stopping(root,require,replay=include_additional)
     additional={}
     if include_additional:
         from verify_reported_claims import verify_reported_claims
         from verify_extra_layers_and_peanut import verify_extra_layers_and_peanut
         from build_practical_choices import verify_practical_choices
-        from verify_peanut_neck import verify_peanut_neck
         additional=dict(reported_claims=verify_reported_claims(root,require),
                         extra_layers_and_peanut=verify_extra_layers_and_peanut(root,require),
-                        practical_choices=verify_practical_choices(root,require),
-                        peanut_neck=verify_peanut_neck(root,require))
+                        practical_choices=verify_practical_choices(root,require))
     return dict(status='passed',table=table,full_diagram_crosscheck=clean,
                 practical_claims=practical,noncircular_locality_check=noncircular,
                 retention_cost_witness=retention_cost_witness,radius_integral_checks=12,
-                extra_layer_rows=144,additional=additional,
-                examples='Live-threshold separation, natural ellipse, hexagon, shortcut and ties; Appendix C.',
-                scope='Focused-paper evidence and shared certificate exports; additional cohorts only in complete mode.')
+                extra_layer_rows=144,peanut_neck=peanut,peanut_bound=peanut_bound,first_nonempty=stopping,additional=additional,
+                examples='Live-threshold separation, natural ellipse, hexagon, shortcut and ties; finite-example appendices.',
+                scope='Focused-paper evidence including the saved varying-waist study and edgewise bounds; other additional cohorts only in complete mode.')

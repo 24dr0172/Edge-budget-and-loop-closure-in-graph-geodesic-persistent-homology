@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "scope": "One exact-angle realization of the first existing n=512 ellipse cloud; no new cohort or diagrams.",
+  "seed": 20350101,
+  "n": 512,
+  "fixture_sha256": "8f95c739e65bf9fdc83b500a92da63dac02455cfa702330b4a86730abbf76208",
+  "squared_chord_intervals": 130816,
+  "strict_adjacent_order_comparisons": 130815,
+  "minimum_squared_order_separation_lower": "6086895087172050769969159106162622213273269086454924302046125438726769/5000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "angle_gap_upper": "111/1000 radians",
+  "intrinsic_gap_upper": "1/40",
+  "raw_ellipse_reach": "1/2",
+  "raw_locality_radius": "1/2",
+  "edgewise_ratio_lower": "3/pi",
+  "normalized_error_upper": "(46/57)*(1-3/pi) < 0.037",
+  "perimeter_lower": "4*sqrt(5)",
+  "windows": {
+    "radius": {
+      "M_close": 4236,
+      "M_geom": 13562,
+      "M_end": 13562,
+      "k_close": null,
+      "k_geom": null,
+      "k_end": null
+    },
+    "OR": {
+      "M_close": 2117,
+      "M_geom": 10960,
+      "M_end": 10960,
+      "k_close": 8,
+      "k_geom": 40,
+      "k_end": 40
+    },
+    "mutual": {
+      "M_close": 2599,
+      "M_geom": 10756,
+      "M_end": 10756,
+      "k_close": 12,
+      "k_geom": 45,
+      "k_end": 45
+    }
+  },
+  "numerical_locality_estimate_used": false
+}

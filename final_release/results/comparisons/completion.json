@@ -1,6 +1,6 @@
 {
   "status": "complete",
-  "scope": "Bridge-free study (two n=512 proportions are cited in the paper), Example 1 certificate and the additional comparisons; this summary step reads saved measurements and does not regenerate them.",
+  "scope": "Bridge-free study, additional cyclic-order certificate and additional comparisons; this summary step reads saved measurements and does not regenerate them.",
   "largest_bridgeless_n": 1000000,
   "bridgeless_profile_seed_samples": 15390,
   "bridgeless_method_records": 30780,
@@ -13,8 +13,8 @@
   "summary_environment": {
     "python": "3.12.3",
     "numpy": "2.5.3",
-    "pandas": "2.2.3"
+    "pandas": "3.0.5"
   },
-  "manuscript_source_sha256": "584df5add60d5603afd209935554fa82262c484e3b6895c5c3f407b3f40b5c1a",
-  "manuscript_pdf_sha256": "c44e1bc705eef5cc32b895e9b5c2542e5910b5f3e8397eb8769bd78dd7c77489"
+  "manuscript_source_sha256": "d477672780edfdd1964505051c7ce82993499bb4d92a31df4b97a9220facf26c",
+  "manuscript_pdf_sha256": "8cc916b0c5a71449176df2831e54f86518f0cdce0d2431098d9c42f3aca2f64e"
 }

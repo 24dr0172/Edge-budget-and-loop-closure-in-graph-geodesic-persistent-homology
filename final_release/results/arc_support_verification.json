@@ -1,5 +1,4 @@
 {
-  "date": "2026-10-12",
   "status": "passed",
   "seed_base": 2026101201,
   "samples_per_curve": 20,
@@ -58,5 +57,5 @@
     "saved_single_bar_diagrams": 180,
     "scope": "Distances recomputed at closure; persistence diagrams reused, no ellipse grid or new ellipse persistence."
   },
-  "checker_sha256": "c3d36d9c7ecdc1e0f54d2dacc2018564c49b27aa2d628d69aa9f52bf254f10e9"
+  "checker_sha256": "539e1e94784c0553c0d22fa908d209d04164c6bc7d57e7a67c1f0e1aefd55c1e"
 }

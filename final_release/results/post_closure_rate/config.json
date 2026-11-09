@@ -1,0 +1,20 @@
+{
+  "sizes": [
+    64,
+    128,
+    256,
+    512
+  ],
+  "seeds_per_size": 20,
+  "n512_seeds": "20310101-20310120 (uniform clouds of the clean-circle study)",
+  "other_seeds": "20400000 + 100n + i, i=1..20",
+  "graphs": [
+    "radius_closure",
+    "or_closure",
+    "mutual_closure",
+    "radius_double"
+  ],
+  "bound": "(pi^2/6) l_G^2 b*/Delta",
+  "records_sha256": "bec9588ab99eb83acad218b2710f6cde34a3b97dc98977f2e3190fb3efffe0b4",
+  "equally_spaced": "n in 64..1024, jitter 1e-7/n, radius order at closure"
+}

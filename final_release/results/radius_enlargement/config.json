@@ -1,0 +1,28 @@
+{
+  "sizes": [
+    128,
+    512,
+    4096,
+    32768
+  ],
+  "epsilons": [
+    0.25,
+    0.5,
+    1.0
+  ],
+  "samples_per_size": 100000,
+  "master_seed": 20261024,
+  "seed_sequence": "[master_seed, n]",
+  "generator": "PCG64",
+  "batch_size": 128,
+  "sampling": "n independent Exp(1) variables divided by their sum",
+  "miss_event": "sin(pi*g_largest) > (1+epsilon)*sin(pi*g_second)",
+  "interval": "Pointwise two-sided 95% Wilson; epsilon values are paired within each cloud.",
+  "all_gaps_below_one_third": true,
+  "discarded_clouds": 0,
+  "new_clouds": 400000,
+  "persistence_diagrams_generated": 0,
+  "spacing_benchmark": "Gamma(epsilon+2)*Gamma(n+1)/Gamma(n+1+epsilon); an arc-gap event, not the chord event",
+  "script_sha256": "b4941e4b67564b4c0f8eb9b95162ca30f8f84ef324256a5fd4833ffcb3c6898c",
+  "verification_script_sha256": "631481ca3829cb33022ccdf6bbf5460bb14b5f017513f48a28b105ff9c82ae82"
+}

@@ -2,7 +2,7 @@
 
 150 independent clouds at n=128,256,512; the three methods share each cloud.
 The trough density and random phase are those of the main rank sweep. The
-curve and 400001-node arc-length interpolation are those of Appendix A.2.
+curve and 400001-node arc-length interpolation use the geometric construction in Appendix A.
 This experiment checks closure only; it does not follow later prefixes.
 Run: python3 code/check_peanut_trough.py [--workers 4]
 """

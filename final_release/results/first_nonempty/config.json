@@ -1,0 +1,32 @@
+{
+  "source": "results/peanut_neck/trials.csv",
+  "source_sha256": "01a7f4e1c7e3cb01ce30c8d2e761442f9b8fef4f8ed743b438a578c07a7f9976",
+  "n": 512,
+  "widths": [
+    0.0,
+    0.4,
+    0.6,
+    0.8,
+    0.9
+  ],
+  "seeds": 20,
+  "methods": [
+    "R2_global",
+    "OR_kNN",
+    "mutual_kNN"
+  ],
+  "new_clouds": false,
+  "search": "Every connected exact prefix, in increasing order, until the first positive diagram. No monotonicity assumption.",
+  "numerical_convention": "Ripser float32 filtration, F2, all positive returned bars, no lifetime cutoff.",
+  "empty_query": "Persistence truncated just above the largest generating-edge cost; Lemma 1 rules out later births.",
+  "metric_updates": "Exact one-new-edge shortest-path identity in float64; Dijkstra rebuild and float32 agreement every 64 insertions and at the selected prefix.",
+  "unrestricted_checks": "Full diagrams at each selected prefix and its preceding connected prefix; full bridge-free and doubled-radius baselines.",
+  "comparison": "Bridge-free: first connected bridgeless whole layer (radius layers are single insertions). Radius baseline: twice the smallest connecting radius.",
+  "script_sha256": "2982ac58e5f2235326396dcb20365fc4fe5380dae1c8d82827ae2c980bf32540",
+  "helper_sha256": {
+    "graph_methods.py": "b81eb4325b08a7e939ff892f50b1910aeb444452227045ee54d55914593a04f4",
+    "finite_diagram.py": "51ab1b55ba7490c2da378498ba7addef6ab738642bfa7fa555afcee83f5ee5d7",
+    "bridge_free.py": "2ab86662e972073ead67ec0cb5856447850c91377636f8d308f89b394e268b13",
+    "peanut_neck_study.py": "f5387cc475034d03120863af804d6fd75a98ec2b97118fa00e01d0bbc5b7ddc8"
+  }
+}

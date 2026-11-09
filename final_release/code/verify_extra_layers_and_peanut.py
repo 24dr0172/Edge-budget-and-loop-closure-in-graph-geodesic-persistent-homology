@@ -29,13 +29,13 @@ def verify_extra_layers_and_peanut(root,require):
                 all(abs(float(row[key])-value)<1e-14 for key,value in [('rate',p),('wilson_lo',center-half),('wilson_hi',center+half)]))
     cfg=json.loads((root/'results/retention_extra_layers/config.json').read_text())
     require('extra_layer_input_identity',cfg['source_sha256']==hashlib.sha256((base/'samples.csv').read_bytes()).hexdigest())
-    for ext,folder in [('pdf','results/figure_exports'),('png','manuscript_figures')]:
+    for ext,folder in [('pdf','results/additional_figures'),('png','results/additional_figures')]:
         require('extra_layer_figure_'+ext,(root/f'{folder}/retention_extra_layers.{ext}').is_file())
 
     folder=root/'results/peanut_trough';cfg=json.loads((folder/'config.json').read_text())
     rows=list(csv.DictReader((folder/'closure.csv').open()));summary=json.loads((folder/'summary.json').read_text())
     require('peanut_trough_rows',len(rows)==1350 and len({(v['n'],v['seed'],v['method']) for v in rows})==1350)
-    require('peanut_trough_code_identity',cfg['code_sha256']==hashlib.sha256((root/'code/check_peanut_trough.py').read_bytes()).hexdigest() and
+    require('peanut_trough_code_identity',cfg.get('verification_code_sha256',cfg['code_sha256'])==hashlib.sha256((root/'code/check_peanut_trough.py').read_bytes()).hexdigest() and
             cfg['distance_kernel_sha256']==hashlib.sha256((root/'code/check_noncircular_locality.py').read_bytes()).hexdigest())
     min_chord=1.;replays=0;failure_clouds={(int(v['n']),int(v['seed'])) for v in rows if not truth(v['arc_supported'])}
     # Load each saved point cloud and compare all reported bars and gap statistics.

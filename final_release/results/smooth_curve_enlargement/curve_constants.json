@@ -1,0 +1,24 @@
+{
+  "ellipse": {
+    "r_loc": 0.1918812908646413,
+    "r_loc_source": "results/noncircular_locality/locality_check_summary.json",
+    "chord_arc_ratio_grid": {
+      "4000": 0.4128628144512029,
+      "8000": 0.4128628144512029
+    },
+    "chord_arc_ratio": 0.4128628144512029,
+    "good_event_threshold": 0.13762093815040097,
+    "perimeter_before_normalization": 9.688448220547526
+  },
+  "peanut": {
+    "r_loc": 0.16618368115857343,
+    "r_loc_source": "results/noncircular_locality/locality_check_summary.json",
+    "chord_arc_ratio_grid": {
+      "4000": 0.33236736231714686,
+      "8000": 0.33236736231714686
+    },
+    "chord_arc_ratio": 0.33236736231714686,
+    "good_event_threshold": 0.11078912077238229,
+    "perimeter_before_normalization": 7.220925614561113
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "samples": 190,
+  "threshold_field_checks": 11088,
+  "large_gap_samples": 95,
+  "empty_reference_samples": 76,
+  "coefficient_primes": [
+    2,
+    3,
+    5
+  ]
+}

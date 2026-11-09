@@ -1,11 +1,22 @@
-# Tools
+# Release tools
 
-Run these from the release folder. The manuscript is an optional, separate input.
+Run these commands from the release root. The manuscript is supplied separately.
 
-- `write_guides.py` writes the guides in `code/`, `results/`, `manuscript_figures/` and `tools/`. Edit its text, then run it; do not edit those guides directly.
-- `record_current.py --data-only` records the hash of every release file and the output counts, without reading a manuscript. With `--manuscript-dir /path/to/paper` it also records the manuscript source, PDF, inputs and graphics. Those paths are relative to the manuscript folder.
-- `verify_manuscript_tables.py --manuscript-dir /path/to/paper` compares the manuscript with the release: table and figure contents, numbering, the inequalities of Examples 1 and 2, the computational conventions and the reported values. It also checks the title, authors, URL and table and figure map in the root README, and the numbered results, absence of external text inputs, exactly three matching PNGs and current paper-to-evidence map. The complete verifier runs it when a manuscript is supplied.
-- `external_manuscript.py` reads the manuscript with its `\input` files expanded and comments removed, for those comparisons.
-- `build_manuscript.py --source /path/to/combined.tex --output /path/to/empty-folder` copies an external manuscript and its PNGs into an empty folder for local compilation (`--compile` runs `pdflatex`). It is not part of the numerical pipeline.
+- `python3 tools/write_guides.py` regenerates the guides in `code/`, `results/`, `manuscript_figures/` and their figure subfolders. Edit this script to change those guides; the root README is edited directly.
+- `python3 tools/record_current.py --manuscript-dir /path/to/paper` records source and PDF hashes, the three external figure hashes, current result numbering, data counts and the release manifest. `--data-only` preserves the manuscript record without checking it.
+- `python3 tools/verify_manuscript_tables.py --manuscript-dir /path/to/paper` checks manuscript structure, displayed numerical table values, selected claims, and external figures against saved release data.
+- `python3 tools/build_manuscript.py --source /path/to/combined.tex --output /path/to/empty-folder` copies the source and its active external figure files to an empty folder. `--compile` optionally runs an installed LaTeX engine three times.
+- `external_manuscript.py` expands active source inputs for comparison.
+- `python3 code/radius_enlargement_extra.py --verify` replays the two independent million-cloud circle checks; the script describes its conditional exponential order-statistic method.
 
-After changing files, rewrite the guides, record once, then run the complete verification, in the order given in the [code guide](../code/README.md#record-and-verify-after-a-change).
+After changing the release, update guides and hashes, then verify:
+
+```sh
+python3 tools/write_guides.py
+python3 code/comparison_report.py --manuscript-dir /path/to/paper
+python3 tools/record_current.py --manuscript-dir /path/to/paper
+python3 code/verify_release.py --paper-only --manuscript-dir /path/to/paper --report /tmp/edge-budget-paper-check.json
+python3 code/verify_release.py --manuscript-dir /path/to/paper --report /tmp/edge-budget-complete-check.json
+```
+
+A data-only record does not confirm that a changed paper matches the release. Reports for `--paper-only` must be outside the release; `file_manifest.json` excludes itself, the complete verification report and diagnostic logs. Record again after any later release edit.

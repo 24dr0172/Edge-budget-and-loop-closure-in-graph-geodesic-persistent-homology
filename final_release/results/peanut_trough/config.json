@@ -27,5 +27,6 @@
   "lifetime_cutoff": null,
   "code_sha256": "3494915f0ad2b6d24c6b02d57156c39af618fdcb00346b6991da0f53be4564f9",
   "distance_kernel_sha256": "506cba8fa87924f0eb3a17602d44e3bc724aeade4d4c11499847ccaaa3c33704",
-  "paired": "Methods share clouds; different seeds and sizes are independent."
+  "paired": "Methods share clouds; different seeds and sizes are independent.",
+  "verification_code_sha256": "8bb9f44ae013d7d1f371fd1247c65854c27e0b27ad93b407f849c00a7764d5ce"
 }

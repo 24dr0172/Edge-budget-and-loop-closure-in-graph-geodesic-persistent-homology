@@ -41,10 +41,9 @@ def main():
             ax.fill_between([v['j'] for v in group],[100*v['wilson_lo'] for v in group],[100*v['wilson_hi'] for v in group],color=color,alpha=.12,lw=0)
         ax.set_title(title);ax.set_xlabel(r'Extra layers $j$ beyond $k_{\rm conn}$');ax.set_xticks(range(6));ax.set_xlim(-.1,5.1);ax.set_ylim(0,102);ax.grid(axis='y',alpha=.22)
     axes[0].set_ylabel('Ring retention (%)');axes[1].legend(loc='lower right',frameon=False,fontsize=9)
-    (ROOT/'results/figure_exports').mkdir(parents=True,exist_ok=True)
-    (ROOT/'manuscript_figures').mkdir(exist_ok=True)
-    fig.savefig(ROOT/'results/figure_exports/retention_extra_layers.pdf',metadata={'CreationDate':None,'ModDate':None})
-    fig.savefig(ROOT/'manuscript_figures/retention_extra_layers.png');plt.close(fig)
+    (ROOT/'results/additional_figures').mkdir(parents=True,exist_ok=True)
+    fig.savefig(ROOT/'results/additional_figures/retention_extra_layers.pdf',metadata={'CreationDate':None,'ModDate':None})
+    fig.savefig(ROOT/'results/additional_figures/retention_extra_layers.png');plt.close(fig)
     config=dict(event='k_close <= k_conn+j',j=list(range(6)),sizes=list(SIZES),figure_n=512,
         source='results/extra_k/rank_sweep/samples.csv',source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
         interval='Pointwise two-sided 95% Wilson; profiles and methods paired within seed.',rows=len(rows),new_samples=0,new_diagrams=0)

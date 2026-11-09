@@ -1,4 +1,4 @@
-"""Recompute the seven-point example of Appendix C independently (no release helpers imported).
+"""Recompute the seven-point example of Appendix D independently (no release helpers imported).
 
 Convention (as in the manuscript's chord formula and in code/finite_diagram.py and
 code/generate_witness.py): points x_i = (cos 2 pi s_i, sin 2 pi s_i)/(2 pi) on the

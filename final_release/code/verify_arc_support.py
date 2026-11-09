@@ -57,8 +57,8 @@ def supported(distances, chords, edges):
 def ring_death(distances, birth):
     """First threshold >= birth where the ring lies in the triangle span.
 
-    Unlike the supplied ZIP's PH routine, this accumulates triangle boundaries
-    directly and tests the distinguished ring, without pairing persistence bars.
+    This accumulates triangle boundaries directly and tests the distinguished
+    ring, without pairing persistence bars.
     """
     n = len(distances)
     edges = list(itertools.combinations(range(n), 2))
@@ -299,7 +299,7 @@ if __name__ == '__main__':
     parser.add_argument('--report', type=Path)
     args = parser.parse_args()
     assert args.samples_per_curve >= 4
-    report = dict(date='2026-10-12', status='passed',
+    report = dict(status='passed',
                   seed_base=2026101201, samples_per_curve=args.samples_per_curve,
                   support_tolerance=SUPPORT_TOL, comparison_tolerance=CHECK_TOL,
                   small_graphs=check_small_graphs(args.samples_per_curve),

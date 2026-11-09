@@ -81,7 +81,7 @@ def verify_noise_coordinates(root, config, require):
 
 
 def verify_curve_order_records(root, require):
-    """Re-read the curve-order check (Example 1 remark) and replay its key graphs."""
+    """Re-read the curve-order check (curve-order comparison) and replay its key graphs."""
     from verify_curve_order import COLUMNS, TOL, analyse
     data = root / 'results'
     summary = json.loads((data / 'curve_order/summary.json').read_text())
@@ -247,9 +247,9 @@ def verify(root,manuscript_dir=None,data_only=False,paper_only=False):
                     comparison_record['manuscript_pdf_sha256']==layout['pdf_sha256'])
         require('manuscript_structure_source_identity',hashlib.sha256((paper/'combined.tex').read_bytes()).hexdigest()==layout['source_sha256'])
         require('manuscript_structure_pdf_identity',hashlib.sha256((paper/'combined.pdf').read_bytes()).hexdigest()==layout['pdf_sha256'])
-        result_labels=['thm:loop-transition','thm:arc-supported','thm:circle-parameters']
+        result_labels=['thm:loop-transition','thm:arc-supported','thm:circle-parameters','thm:smooth-radius']
         positions=[manuscript.index('\\label{'+label+'}') for label in result_labels]
-        require('manuscript_result_order',positions==sorted(positions) and manuscript.count(r'\begin{theorem}')==3 and
+        require('manuscript_result_order',positions==sorted(positions) and manuscript.count(r'\begin{theorem}')==len(result_labels) and
                 all(layout['result_numbers']['theorem'][label]==i for i,label in enumerate(result_labels,1)))
         from verify_manuscript_tables import verify_manuscript_tables
         verify_manuscript_tables(root,require,paper)
@@ -257,15 +257,51 @@ def verify(root,manuscript_dir=None,data_only=False,paper_only=False):
     from verify_paper_evidence import verify_paper_evidence
     paper_evidence=verify_paper_evidence(root,require,include_additional=not paper_only)
     require('paper_evidence',paper_evidence['status']=='passed',paper_evidence)
+    from verify_intrinsic_circle import verify as verify_intrinsic_circle
+    intrinsic_circle=verify_intrinsic_circle()
+    require('intrinsic_circle_exact_check',intrinsic_circle==json.loads((data/'intrinsic_circle_verification.json').read_text()),intrinsic_circle)
+    from radius_enlargement_check import verify as verify_radius_enlargement
+    radius_enlargement=verify_radius_enlargement(root,require)
+    require('radius_enlargement_check',radius_enlargement['status']=='passed',radius_enlargement)
+    from radius_enlargement_extra import verify as verify_extra_circle
+    extra_circle=verify_extra_circle(root,require)
+    require('radius_enlargement_extra_check',extra_circle['status']=='passed',extra_circle)
+    from post_closure_rate import verify as verify_post_closure_rate
+    post_closure_rate=verify_post_closure_rate(root,require)
+    require('post_closure_rate_check',post_closure_rate['status']=='passed',post_closure_rate)
+    from smooth_curve_enlargement import verify as verify_smooth_curves
+    smooth_curves=verify_smooth_curves(root,require)
+    require('smooth_curve_enlargement_check',smooth_curves['status']=='passed',smooth_curves)
+    from winding_check import verify as verify_winding
+    winding=verify_winding(root,require,replay=not paper_only)
+    require('winding_threshold_check',winding['status']=='passed',winding)
+    from exact_optimum_check import verify as verify_exact_optimum
+    exact_optimum=verify_exact_optimum(root,require,replay=not paper_only)
+    require('exact_optimum_check',exact_optimum['status']=='passed',exact_optimum)
+    from rational_certificates import verify as verify_rational_certificates
+    certificates=verify_rational_certificates(root,require)
+    require('rational_certificates_check',certificates['status']=='passed',certificates)
     if paper_only:
         verify_payload(root,require,['rank_table.csv','noncircular_locality/locality_check_results.csv',
-                                    'retention_extra_layers/retention.csv'])
+                                    'retention_extra_layers/retention.csv','peanut_neck/trials.csv',
+                                    'peanut_neck/closure_error_bound.csv','radius_enlargement/summary.csv','radius_enlargement_extra/summary.csv',
+                                    'post_closure_rate/records.csv','post_closure_rate/equally_spaced.csv',
+                                    'smooth_curve_enlargement/summary.csv','smooth_curve_enlargement/batches.csv',
+                                    'smooth_curve_enlargement/spot_checks.csv','winding_check/records.csv',
+                                    'winding_check/summary.csv','exact_optimum/records.csv'])
         return dict(status='passed',requested_scope='paper_saved_data',
             manuscript_comparison=dict(status='passed' if paper is not None else 'not_run',
                                        location='external' if paper is not None else None),
-            performed_checks=['Table 3 raw rank counts and export','Small examples',
-                              'Fixed-k, bridge-free, heuristic-model and diagram-cost claims',
-                              'Extra-layer counts, radius beta integral and independent finite certificates',
+            performed_checks=['Exact intrinsic-circle boundary reduction over F2, F3 and F5','Table 3 raw rank counts and export','Small examples',
+                              'Fixed-k, bridge-free and diagram-cost claims, plus an independent-key check',
+                               'Extra-layer counts, radius beta integral and independent finite certificates',
+                               'Radius enlargement: 400000 saved gap pairs, two independent million-cloud checks, confidence intervals and six independent diagrams',
+                               'Error rate after closure: 320 saved graphs, the bound of the rate corollary and 16 replayed graphs',
+                               'Saved varying-waist diagrams, edgewise and winding bounds and all method-by-width summaries',
+                               'Smooth-curve enlargement: batch counts for 4000000 seeded clouds on each curve, replayed batches and full-diagram spot checks',
+                               'Winding thresholds, short-hops-first and the largest valid prefix on 300 peanut closure graphs',
+                               'Exact optimum on the 60 clean-circle samples and 180 closure graphs',
+                               'Exact rational certificates for the polygon example and the threshold root',
                               'Every distributed payload hash and complete inventory','Code syntax']+
                              (['Manuscript identity, structure and tables'] if paper is not None else []),
             additional_scientific_checks='not_run',measurement_generation='not_run',
@@ -466,9 +502,9 @@ def verify(root,manuscript_dir=None,data_only=False,paper_only=False):
     require('study_comparison_report_replay',json.loads((data/'comparisons/verification.json').read_text())==comparisons)
     verify_curve_order_records(root,require)
     verify_payload(root,require)
-    summary_names={'release_structure','clean_native_panel','saved_sample_scope','eleven_event_rows','180_first_closed_series','closure_table_reports_all_errors','own_closure_not_global_split','grid_scope','120_paired_extra_k_rows','miss_means_unclosed_integer_layer','miss_counts_38_and_40','six_extra_k_groups','certificate_counts','CkNN_certificate_only','useful_diagram_scope','saved_diagram_transitions','matched_noise_scope','no_long_first_connected_bars','ellipse_scope','ellipse_constants','ellipse_loop_interval','ellipse_saved_diagram_inventory','manifest_file_inventory','manifest_exclusion_policy','code_syntax','permuted_scale_control','control_grid_matches','noise_closure_comparison','noise_closure_event_positions','noise_closure_diagram_inventory','noise_closure_summary'}
+    summary_names={'intrinsic_circle_exact_check','release_structure','clean_native_panel','saved_sample_scope','eleven_event_rows','180_first_closed_series','closure_table_reports_all_errors','own_closure_not_global_split','grid_scope','120_paired_extra_k_rows','miss_means_unclosed_integer_layer','miss_counts_38_and_40','six_extra_k_groups','certificate_counts','CkNN_certificate_only','useful_diagram_scope','saved_diagram_transitions','matched_noise_scope','no_long_first_connected_bars','ellipse_scope','ellipse_constants','ellipse_loop_interval','ellipse_saved_diagram_inventory','manifest_file_inventory','manifest_exclusion_policy','code_syntax','permuted_scale_control','control_grid_matches','noise_closure_comparison','noise_closure_event_positions','noise_closure_diagram_inventory','noise_closure_summary'}
     summary={name:item for name,item in checks.items() if name in summary_names or 'detail' in item}
-    return {'status':'passed','requested_scope':'complete_saved_data','measurement_generation':'not_run','additional_scientific_checks':'passed','manuscript_comparison':{'status':'passed' if paper is not None else 'not_run','location':'external' if paper is not None else None},'scope':'Table 3, Figure 3, the small examples and all additional studies; the varying-neck records and 240 one-edge prefix replays; the additional clean, noise and ellipse diagrams; seed and selector replay; finite witnesses; raw rank-sweep counts, Wilson intervals and study comparisons. No new samples or complete persistence-study regeneration.','checks_passed':len(checks)+studies['checks_passed']+rank_audit['checks_passed']+comparisons['checks_passed'],'checks':summary}
+    return {'status':'passed','requested_scope':'complete_saved_data','measurement_generation':'not_run','additional_scientific_checks':'passed','manuscript_comparison':{'status':'passed' if paper is not None else 'not_run','location':'external' if paper is not None else None},'scope':'Saved evidence for the paper, including retention counts, the peanut comparison, radius enlargement and finite examples; all additional studies, including the certified ellipse window, including 240 one-edge peanut-prefix replays, selected clean/noise/ellipse diagrams, seed and selector checks, rank counts, Wilson intervals and study comparisons. The full experiment cohorts are not regenerated.','checks_passed':len(checks)+studies['checks_passed']+rank_audit['checks_passed']+comparisons['checks_passed'],'checks':summary}
 
 if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('--release',type=Path,default=Path(__file__).resolve().parents[1]);ap.add_argument('--report',type=Path)

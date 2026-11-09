@@ -1,4 +1,4 @@
-"""Plot Figure 5: diagram error against M - M_close for all 180 clean-circle series.
+"""Additional plot (not a paper figure): diagram error against M - M_close for all 180 clean-circle series.
 
 Inputs (read only):
   results/useful_diagram/saved_prefixes.csv  (3,556 post-closure evaluations incl. 180 closures and 180 complete graphs)

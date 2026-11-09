@@ -1,0 +1,863 @@
+[
+  {
+    "start": 0,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 23.43931999400705
+  },
+  {
+    "start": 8192,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.07561147338572
+  },
+  {
+    "start": 16384,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.905542991391627
+  },
+  {
+    "start": 24576,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 23.25139638448249
+  },
+  {
+    "start": 32768,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 25.328472067563567
+  },
+  {
+    "start": 40960,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.370013221092663
+  },
+  {
+    "start": 49152,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.821813248709937
+  },
+  {
+    "start": 57344,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 23.71490264570562
+  },
+  {
+    "start": 65536,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.137842913254154
+  },
+  {
+    "start": 73728,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 23.745740770295725
+  },
+  {
+    "start": 81920,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 26.498631039233203
+  },
+  {
+    "start": 90112,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 15.707172488209551
+  },
+  {
+    "start": 98304,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 25.84271811143155
+  },
+  {
+    "start": 106496,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.725447544660646
+  },
+  {
+    "start": 114688,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 23.617896996608692
+  },
+  {
+    "start": 122880,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.010903376782764
+  },
+  {
+    "start": 131072,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.60837895312632
+  },
+  {
+    "start": 139264,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.576380796379553
+  },
+  {
+    "start": 147456,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 21.961883981574495
+  },
+  {
+    "start": 155648,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.830677112221018
+  },
+  {
+    "start": 163840,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 25.312620407855455
+  },
+  {
+    "start": 172032,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.974950211304936
+  },
+  {
+    "start": 180224,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 23.80519196029175
+  },
+  {
+    "start": 188416,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.968442468172242
+  },
+  {
+    "start": 196608,
+    "samples": 8192,
+    "spacing_candidates": 2,
+    "chord_misses": 2,
+    "min_good_event_margin": 20.23536951339446
+  },
+  {
+    "start": 204800,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 22.77806233365576
+  },
+  {
+    "start": 212992,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.28325195739076
+  },
+  {
+    "start": 221184,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 25.19616910137499
+  },
+  {
+    "start": 229376,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 26.36765956951639
+  },
+  {
+    "start": 237568,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.862118190901185
+  },
+  {
+    "start": 245760,
+    "samples": 8192,
+    "spacing_candidates": 2,
+    "chord_misses": 2,
+    "min_good_event_margin": 25.209253595446413
+  },
+  {
+    "start": 253952,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 23.18399898458479
+  },
+  {
+    "start": 262144,
+    "samples": 8192,
+    "spacing_candidates": 2,
+    "chord_misses": 2,
+    "min_good_event_margin": 16.004548692354604
+  },
+  {
+    "start": 270336,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 23.756846954046758
+  },
+  {
+    "start": 278528,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 24.496760721803753
+  },
+  {
+    "start": 286720,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 18.028613498456167
+  },
+  {
+    "start": 294912,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 24.310474369328276
+  },
+  {
+    "start": 303104,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 26.623652132849088
+  },
+  {
+    "start": 311296,
+    "samples": 8192,
+    "spacing_candidates": 2,
+    "chord_misses": 2,
+    "min_good_event_margin": 22.240697596055014
+  },
+  {
+    "start": 319488,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.391194770634804
+  },
+  {
+    "start": 327680,
+    "samples": 8192,
+    "spacing_candidates": 2,
+    "chord_misses": 2,
+    "min_good_event_margin": 20.026876780707113
+  },
+  {
+    "start": 335872,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 20.190931808321338
+  },
+  {
+    "start": 344064,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 25.439504666157816
+  },
+  {
+    "start": 352256,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 23.55912512029645
+  },
+  {
+    "start": 360448,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 24.148217329115
+  },
+  {
+    "start": 368640,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 26.780548721199153
+  },
+  {
+    "start": 376832,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 17.408270110169383
+  },
+  {
+    "start": 385024,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.199141673329905
+  },
+  {
+    "start": 393216,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 24.909067483564414
+  },
+  {
+    "start": 401408,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 21.155519536406985
+  },
+  {
+    "start": 409600,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.671626899493965
+  },
+  {
+    "start": 417792,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 20.63370837965121
+  },
+  {
+    "start": 425984,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 17.806350307163868
+  },
+  {
+    "start": 434176,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 25.551025385279473
+  },
+  {
+    "start": 442368,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.00564058501802
+  },
+  {
+    "start": 450560,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 21.142263432987008
+  },
+  {
+    "start": 458752,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.235318802487
+  },
+  {
+    "start": 466944,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 16.924575806724334
+  },
+  {
+    "start": 475136,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.946666293033807
+  },
+  {
+    "start": 483328,
+    "samples": 8192,
+    "spacing_candidates": 2,
+    "chord_misses": 2,
+    "min_good_event_margin": 26.330472524252883
+  },
+  {
+    "start": 491520,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.032920169680327
+  },
+  {
+    "start": 499712,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.819985932421375
+  },
+  {
+    "start": 507904,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 23.73870972623679
+  },
+  {
+    "start": 516096,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.03100284351281
+  },
+  {
+    "start": 524288,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 23.791317616752885
+  },
+  {
+    "start": 532480,
+    "samples": 8192,
+    "spacing_candidates": 2,
+    "chord_misses": 2,
+    "min_good_event_margin": 17.880708534720334
+  },
+  {
+    "start": 540672,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.38968098387913
+  },
+  {
+    "start": 548864,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 23.58046733347811
+  },
+  {
+    "start": 557056,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 21.315849484991332
+  },
+  {
+    "start": 565248,
+    "samples": 8192,
+    "spacing_candidates": 3,
+    "chord_misses": 3,
+    "min_good_event_margin": 26.29086049292482
+  },
+  {
+    "start": 573440,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 19.557534564563007
+  },
+  {
+    "start": 581632,
+    "samples": 8192,
+    "spacing_candidates": 2,
+    "chord_misses": 2,
+    "min_good_event_margin": 26.51700617046147
+  },
+  {
+    "start": 589824,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.637353739568454
+  },
+  {
+    "start": 598016,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 26.44701435518602
+  },
+  {
+    "start": 606208,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.66746276937804
+  },
+  {
+    "start": 614400,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 20.462114848708865
+  },
+  {
+    "start": 622592,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.663181240083688
+  },
+  {
+    "start": 630784,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.78250018382367
+  },
+  {
+    "start": 638976,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 25.034554278582874
+  },
+  {
+    "start": 647168,
+    "samples": 8192,
+    "spacing_candidates": 2,
+    "chord_misses": 2,
+    "min_good_event_margin": 22.57737246578364
+  },
+  {
+    "start": 655360,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.093319331018463
+  },
+  {
+    "start": 663552,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.066893353144003
+  },
+  {
+    "start": 671744,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.256753242393103
+  },
+  {
+    "start": 679936,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 25.04842353538855
+  },
+  {
+    "start": 688128,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 26.05686526604252
+  },
+  {
+    "start": 696320,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.339015879693207
+  },
+  {
+    "start": 704512,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 22.236580003929056
+  },
+  {
+    "start": 712704,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 26.36083139349458
+  },
+  {
+    "start": 720896,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 25.683128708255296
+  },
+  {
+    "start": 729088,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 25.87060808407781
+  },
+  {
+    "start": 737280,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 25.66384145920128
+  },
+  {
+    "start": 745472,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 22.46660919375779
+  },
+  {
+    "start": 753664,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 20.480307838967967
+  },
+  {
+    "start": 761856,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 22.74477288237442
+  },
+  {
+    "start": 770048,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 21.53025278272525
+  },
+  {
+    "start": 778240,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 23.887439067845605
+  },
+  {
+    "start": 786432,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 25.911778342996243
+  },
+  {
+    "start": 794624,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 24.717464904017895
+  },
+  {
+    "start": 802816,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 23.460092470842838
+  },
+  {
+    "start": 811008,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 21.47298534208111
+  },
+  {
+    "start": 819200,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.260967034366395
+  },
+  {
+    "start": 827392,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.65259531480242
+  },
+  {
+    "start": 835584,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 22.120790393893046
+  },
+  {
+    "start": 843776,
+    "samples": 8192,
+    "spacing_candidates": 2,
+    "chord_misses": 2,
+    "min_good_event_margin": 21.177899501375222
+  },
+  {
+    "start": 851968,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 23.778190467325786
+  },
+  {
+    "start": 860160,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 22.475447558611748
+  },
+  {
+    "start": 868352,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 19.467031277370182
+  },
+  {
+    "start": 876544,
+    "samples": 8192,
+    "spacing_candidates": 4,
+    "chord_misses": 4,
+    "min_good_event_margin": 22.268785961116336
+  },
+  {
+    "start": 884736,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.444960467644137
+  },
+  {
+    "start": 892928,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 21.306264551406287
+  },
+  {
+    "start": 901120,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 24.071601962408337
+  },
+  {
+    "start": 909312,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 26.06675074529487
+  },
+  {
+    "start": 917504,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 21.06408826427802
+  },
+  {
+    "start": 925696,
+    "samples": 8192,
+    "spacing_candidates": 3,
+    "chord_misses": 3,
+    "min_good_event_margin": 21.712410061701632
+  },
+  {
+    "start": 933888,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 24.72081866595788
+  },
+  {
+    "start": 942080,
+    "samples": 8192,
+    "spacing_candidates": 3,
+    "chord_misses": 3,
+    "min_good_event_margin": 22.18511581577947
+  },
+  {
+    "start": 950272,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 21.073792501562124
+  },
+  {
+    "start": 958464,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 20.778793023167452
+  },
+  {
+    "start": 966656,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 25.571535219230682
+  },
+  {
+    "start": 974848,
+    "samples": 8192,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 25.026321000649112
+  },
+  {
+    "start": 983040,
+    "samples": 8192,
+    "spacing_candidates": 1,
+    "chord_misses": 1,
+    "min_good_event_margin": 21.681264577363905
+  },
+  {
+    "start": 991232,
+    "samples": 8192,
+    "spacing_candidates": 2,
+    "chord_misses": 2,
+    "min_good_event_margin": 18.970758256897476
+  },
+  {
+    "start": 999424,
+    "samples": 576,
+    "spacing_candidates": 0,
+    "chord_misses": 0,
+    "min_good_event_margin": 29.026400838008144
+  }
+]

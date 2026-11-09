@@ -1,0 +1,54 @@
+{
+  "curves": {
+    "ellipse": "(2 cos t, sin t), normalized to length one; trapezoid arc table as in experiment_core.ellipse_points",
+    "peanut": "r = 1 + 0.4 cos 2t, normalized to length one; polyline arc table as in peanut_neck_study.arc_table"
+  },
+  "arc_grid_points": 400001,
+  "sizes": [
+    128,
+    512,
+    4096,
+    32768
+  ],
+  "alphas": [
+    1.25,
+    1.5,
+    2.0
+  ],
+  "samples_per_size": 1000000,
+  "batch_size": 1000,
+  "master_seed": 20261027,
+  "curve_streams": {
+    "ellipse": 1,
+    "peanut": 2
+  },
+  "seed_sequence": "[master_seed, curve_stream, n, batch]",
+  "generator": "PCG64",
+  "sampling": "uniform starting point, then n independent Exp(1) spacings divided by their sum",
+  "pairing": "Each curve has its own independent draws (its own curve_stream); within a curve the three factors reuse each cloud.",
+  "miss_event": "B > alpha * r2, the two largest consecutive chords",
+  "spacing_event": "g_largest > alpha * g_second, the arc-gap event with exact probability Gamma(alpha+1)Gamma(n+1)/Gamma(n+alpha)",
+  "asymptotic": "Gamma(alpha+1) * n^(1-alpha)",
+  "good_event": "largest arc gap < min(r_loc, lambda/3), with grid estimates of r_loc and lambda",
+  "mapped_gaps": 8,
+  "mapping_rule": "The two largest chords are certified to lie among the mapped gaps when the second-largest mapped chord is at least (1+1e-9) times the largest unmapped gap; otherwise all gaps are mapped.",
+  "interval": "Pointwise two-sided 95% Wilson",
+  "spot_checks": {
+    "first_clouds": {
+      "128": 2000,
+      "512": 150
+    },
+    "added_alpha2_misses": {
+      "128": 0,
+      "512": 25
+    },
+    "miss_search_clouds": {
+      "128": 0,
+      "512": 20000
+    },
+    "method": "r_conn from the Euclidean minimum spanning tree; closed radius graph at alpha*r_conn; chord-weighted Dijkstra; unrestricted Ripser over F2; every bar with death > birth kept"
+  },
+  "new_clouds": 4000000,
+  "discarded_clouds": 0,
+  "script_sha256": "832c4779b4d7b66e2798d866cd079a354c57434148df0e5744721f1b49f503ed"
+}

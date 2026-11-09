@@ -1,4 +1,4 @@
-"""Recompute arc support and the exact common-order obstruction of Example 1."""
+"""Recompute arc support and the exact common-order obstruction of the additional cyclic-order example."""
 from pathlib import Path
 import itertools,json,sys
 sys.dont_write_bytecode=True

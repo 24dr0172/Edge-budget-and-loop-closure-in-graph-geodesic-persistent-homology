@@ -1,4 +1,4 @@
-"""Check Table 3, the additional post-closure plot and Appendix C against the saved records.
+"""Check Table 3, the additional post-closure plot and Appendix D against the saved records.
 
 Run from anywhere; paths are relative to the release root (the parent of `code/`).
 No measurements are generated. The checks cover:
@@ -12,7 +12,7 @@ No measurements are generated. The checks cover:
     `useful_diagram/saved_prefixes.csv` and `clean_closure/clouds.csv`;
   * results/seven_point_check/seven_point_numbers.json against the release witness
     `useful_diagram/rational_counterexample.json`;
-  * a rerun of code/verify_independent_checks.py (Appendix C, the geometry of
+  * a rerun of code/verify_independent_checks.py (Appendix D, the geometry of
     Figures 2 and 3 and the n=512 independent-key values), compared with its
     saved output.
 `python3 code/verify_retention_cost_witness.py --write` rewrites that saved output first.
@@ -226,7 +226,7 @@ def verify_retention_cost_witness(root, require):
                 seven_point=verify_seven_point(root, require),
                 independent_checks=verify_independent_checks_replay(root, require),
                 figure_sources=verify_figure_sources(root, require),
-                scope='Table 3, the additional post-closure plot and Appendix C checked from saved records; no persistence diagrams are computed.')
+                scope='Table 3, the additional post-closure plot and Appendix D checked from saved records; no persistence diagrams are computed.')
 
 
 if __name__ == '__main__':
@@ -245,4 +245,4 @@ if __name__ == '__main__':
             raise AssertionError(name)
         checks.append(name)
     report = verify_retention_cost_witness(ROOT, require)
-    print(f'Table 3, the additional post-closure plot and Appendix C verified: {len(checks)} checks.')
+    print(f'Table 3, the additional post-closure plot and Appendix D verified: {len(checks)} checks.')

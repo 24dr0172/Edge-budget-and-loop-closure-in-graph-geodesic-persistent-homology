@@ -1,0 +1,33 @@
+{
+  "n": 512,
+  "widths": [
+    0.0,
+    0.4,
+    0.6,
+    0.8,
+    0.9
+  ],
+  "seeds": 20,
+  "methods": [
+    "R2_global",
+    "OR_kNN",
+    "mutual_kNN"
+  ],
+  "new_clouds": false,
+  "persistence_computed": false,
+  "winding_triple": "three samples whose cyclic arc gaps are all below 1/2",
+  "W_G": "smallest graph-metric threshold containing a winding triangle or an intrinsically antipodal pair",
+  "b_star": "exact intrinsic death: smallest largest gap over winding triples (capped at 1/2)",
+  "bound": "min{max{g-B, b*-max{B,W_G}}, (b*-B)/2} / Delta*, for arc-supported closure graphs, with the saved b*",
+  "later_prefix": "M_shortcut from the peanut study: the first prefix after closure containing an edge whose endpoints are at least a quarter of the curve apart; W_G and lambda_G are recomputed there",
+  "certified_range": "largest exact prefix M >= M_close with W_{G_M} > B, found by bisection",
+  "tau_E_tolerance": 5e-08,
+  "source_sha256": {
+    "results/peanut_neck/trials.csv": "01a7f4e1c7e3cb01ce30c8d2e761442f9b8fef4f8ed743b438a578c07a7f9976",
+    "results/first_nonempty/trials.csv": "45e6545a00c3a7eeac4cf3e6f36a213c9b5e7164d008b1693fac1c0a4f272a2e"
+  },
+  "script_sha256": "e31d2e461f767e56920d7c2c26cde21fb9a451ef09b5e4133f52db9e8f0fad65",
+  "helper_sha256": {
+    "graph_methods.py": "b81eb4325b08a7e939ff892f50b1910aeb444452227045ee54d55914593a04f4"
+  }
+}

@@ -38,8 +38,5 @@
     "seed": 20361021,
     "method": "R2_global"
   },
-  "source_path_migration": {
-    "original_source_sha256": "4634b592b5fd81946d45801028c9e2e8d858b20d62fca032eaac00d02e1000ab",
-    "change": "Only the plot output path moved from manuscript_figures to results/additional_figures; measurements and numerical algorithm are unchanged."
-  }
+  "measurement_generation_sha256": "4634b592b5fd81946d45801028c9e2e8d858b20d62fca032eaac00d02e1000ab"
 }

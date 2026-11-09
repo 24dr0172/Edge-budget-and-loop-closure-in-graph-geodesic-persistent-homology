@@ -5,7 +5,7 @@ The verified code, saved data, settings and figures for the focused noise-free p
 - [`code/`](final_release/code/): experiment generators, verification scripts and settings.
 - [`tools/`](final_release/tools/): manuscript comparison, portable-build and figure-export helpers.
 - [`results/`](final_release/results/): saved measurements, diagrams, tables and verification records.
-- [`manuscript_figures/`](final_release/manuscript_figures/): exactly the three PNG figures used in the paper: `closure_schematic.png`, `arc_support_fan.png` and `retention_extra_layers.png`.
+- [`manuscript_figures/`](final_release/manuscript_figures/): exactly the three PNG figures used in the paper: `arc_support_fan.png`, `post_closure_rate.png` and `peanut_comparison.png`.
 
 Plots from additional studies are separate in [`results/additional_figures/`](final_release/results/additional_figures/). Vector figure masters are in [`results/figure_exports/`](final_release/results/figure_exports/). These are image exports, not the paper or LaTeX source.
 

@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "scope": "Small examples of the paper only.",
+  "scope": "Small finite examples and an additional cyclic-order check.",
   "fields_checked": [
     2,
     3,
@@ -839,7 +839,7 @@
     ],
     "comparison_arithmetic": "Rational Machin arctangent bounds for pi; Taylor remainders; integer outward square-root bounds; min-plus interval distances.",
     "proof_scope": "The paper gives all-field independence and an all-order impossibility argument; F2/F3/F5 calculations and enumeration corroborate them.",
-    "checker_sha256": "a9ac5bc10b6da7f409061f7385bcd1c9b994364ebc45b9013a8545227cb12408"
+    "checker_sha256": "cf929d8da7f4bb8e98e1df46a62f7de2c2a6e86b89d44bdb21d7e8792c86b6c4"
   },
-  "checker_sha256": "921f6cde320ed35bc02e7449ca286a4bd662074edd0b621096c15db4d1c6cc76"
+  "checker_sha256": "69fe974b29980cd766ea4d0b295a3641b9f27d5e73beedf860ef579191b39f53"
 }

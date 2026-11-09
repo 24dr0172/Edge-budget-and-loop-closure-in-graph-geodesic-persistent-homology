@@ -130,7 +130,7 @@ def literature():
             citation_key='adams2019',
             source='https://arxiv.org/html/1812.03374v2',
             locations=['Section 3 definition','Theorem 1','Section 4.2'],
-            comparison='An inclusion filtration in one cyclic order with consistent directed edges; the Example 1 certificate rules out even varying directions in a fixed order.'))
+            comparison='An inclusion filtration in one cyclic order with consistent directed edges; the additional cyclic-order certificate rules out even varying directions in a fixed order.'))
     (OUT/'literature_checks.json').write_text(json.dumps(record,indent=2)+'\n')
 
 

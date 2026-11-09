@@ -7,7 +7,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--source',type=Path,required=True,help='External combined.tex source.')
     p.add_argument('--output',type=Path,help='New empty compilation folder; default is a temporary folder.')
-    p.add_argument('--compile',action='store_true',help='Run an already installed pdflatex twice.')
+    p.add_argument('--compile',action='store_true',help='Compile with an already installed LaTeX engine (three passes).')
+    p.add_argument('--engine',choices=('xelatex','pdflatex'),default='xelatex',help='Engine for --compile; the paper builds with either.')
     a=p.parse_args();out=a.output.resolve() if a.output else Path(tempfile.mkdtemp(prefix='edge-budget-paper-'))
     if out==ROOT or ROOT in out.parents:p.error('Keep manuscript builds outside the release.')
     if a.source.resolve()==ROOT or ROOT in a.source.resolve().parents:p.error('Supply an external source file.')
@@ -15,8 +16,7 @@ def main():
     out.mkdir(parents=True,exist_ok=True)
     source=a.source.expanduser().resolve()
     shutil.copy2(source,out/'combined.tex')
-    # Preserve graphic paths relative to the source. The current portable
-    # manuscript has no external text inputs; input discovery supports older drafts.
+    # Preserve graphic paths relative to the source; any \input files are copied too.
     inputs=manuscript_inputs(source.parent,name=source.name)
     graphics=re.findall(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}',
                         manuscript_text(source.parent,name=source.name))
@@ -30,6 +30,6 @@ def main():
         target=out/path;target.parent.mkdir(parents=True,exist_ok=True)
         shutil.copy2(original,target)
     if a.compile:
-        for _ in range(2):subprocess.run(['pdflatex','-interaction=nonstopmode','-halt-on-error','combined.tex'],cwd=out,check=True)
+        for _ in range(3):subprocess.run([a.engine,'-interaction=nonstopmode','-halt-on-error','combined.tex'],cwd=out,check=True)
     print(out)
 if __name__=='__main__':main()

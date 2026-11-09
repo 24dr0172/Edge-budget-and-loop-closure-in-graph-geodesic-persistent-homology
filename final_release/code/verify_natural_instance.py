@@ -1,4 +1,4 @@
-"""Certify the six-point ellipse companion using rational enclosing bounds.
+"""Certify the ellipse example using rational enclosing bounds.
 
 The manuscript proof uses arc support, triangle counts and forced consecutive
 vertices. Enumeration and floating-point persistence are corroboration only.

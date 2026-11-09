@@ -7,8 +7,8 @@
     "status": "passed",
     "location": "external"
   },
-  "scope": "Table 3, Figure 3, the small examples and all additional studies; the varying-neck records and 240 one-edge prefix replays; the additional clean, noise and ellipse diagrams; seed and selector replay; finite witnesses; raw rank-sweep counts, Wilson intervals and study comparisons. No new samples or complete persistence-study regeneration.",
-  "checks_passed": 96905,
+  "scope": "Saved evidence for the paper, including retention counts, the peanut comparison, radius enlargement and finite examples; all additional studies, including the certified ellipse window, including 240 one-edge peanut-prefix replays, selected clean/noise/ellipse diagrams, seed and selector checks, rank counts, Wilson intervals and study comparisons. The full experiment cohorts are not regenerated.",
+  "checks_passed": 101467,
   "checks": {
     "release_structure": {
       "passed": true
@@ -17,13 +17,13 @@
       "passed": true,
       "detail": {
         "guides": 8,
-        "relative_links": 77
+        "relative_links": 76
       }
     },
     "manuscript_identity": {
       "passed": true,
       "detail": {
-        "pdf_pages": 31
+        "pdf_pages": 37
       }
     },
     "manuscript_structure_record": {
@@ -31,85 +31,111 @@
       "detail": {
         "status": "passed",
         "scope": "Source and PDF identities, labels, citations, environment counts and result numbering.",
-        "source_sha256": "584df5add60d5603afd209935554fa82262c484e3b6895c5c3f407b3f40b5c1a",
-        "pdf_sha256": "c44e1bc705eef5cc32b895e9b5c2542e5910b5f3e8397eb8769bd78dd7c77489",
-        "pdf_pages": 31,
+        "source_sha256": "d477672780edfdd1964505051c7ce82993499bb4d92a31df4b97a9220facf26c",
+        "pdf_sha256": "8cc916b0c5a71449176df2831e54f86518f0cdce0d2431098d9c42f3aca2f64e",
+        "pdf_pages": 37,
         "source_checks": {
-          "unique_labels": 64,
-          "resolved_citation_keys": 46,
+          "unique_labels": 69,
+          "resolved_citation_keys": 45,
           "unresolved_references": 0,
           "unresolved_citations": 0
         },
         "environment_counts": {
           "definition": 4,
-          "theorem": 3,
-          "proposition": 2,
-          "corollary": 2,
+          "theorem": 4,
+          "proposition": 1,
+          "corollary": 5,
           "structurallemma": 0,
           "appendixlemma": 0,
-          "lemma": 8,
-          "remark": 2,
-          "example": 2,
-          "proof": 15
+          "lemma": 9,
+          "remark": 4,
+          "example": 1,
+          "proof": 19
         },
         "display_math_blocks_by_type": {
-          "bracketed": 40,
-          "equation": 10,
-          "align": 1
+          "bracketed": 65,
+          "equation": 13
         },
         "result_numbers": {
           "theorem": {
             "thm:loop-transition": 1,
             "thm:arc-supported": 2,
-            "thm:circle-parameters": 3
+            "thm:circle-parameters": 3,
+            "thm:smooth-radius": 4,
+            "eq:smooth-miss": 4
           },
           "proposition": {
-            "prop:radius-enlargement": 1,
-            "eq:radius-enlargement": 1,
-            "prop:locality": 2
+            "prop:locality": 1
           },
           "corollary": {
-            "cor:cost-ceiling": 1,
-            "eq:cost-ceiling": 1,
-            "cor:closure-optimal": 2,
-            "eq:closure-optimal": 2
+            "cor:geometric-survival": 1,
+            "cor:first-nonempty": 2,
+            "cor:closure-optimal": 3,
+            "eq:closure-optimal": 3,
+            "cor:rate": 4,
+            "eq:rate": 4,
+            "cor:certificate": 5
           },
           "lemma": {
             "lem:edge-path": 1,
             "lem:robinson": 2,
-            "lem:winding": 3,
-            "lem:circle-bar": 4,
-            "lem:geometric-survival": 5,
-            "lem:rank-containment": 6,
-            "lem:circle-orders": 7,
-            "lem:local-rank-keys": 8,
-            "eq:local-rank-keys": 8
+            "lem:circle-bar": 3,
+            "lem:edgewise-death": 4,
+            "eq:edge-ratio": 4,
+            "eq:edgewise-sandwich": 4,
+            "eq:local-death": 4,
+            "lem:rank-containment": 5,
+            "lem:circle-orders": 6,
+            "lem:local-rank-keys": 7,
+            "eq:local-rank-keys": 7,
+            "lem:chord-arc": 8,
+            "lem:cost-ceiling": 9,
+            "eq:cost-ceiling": 9
           },
           "example": {
-            "ex:noncyclic": 1,
-            "ex:natural-ellipse": 2
+            "ex:natural-ellipse": 1
           },
           "remark": {
-            "rem:hexagon": 1,
-            "rem:unsupported-shortcut": 2
+            "rem:polygon": 1,
+            "rem:unsupported-shortcut": 2,
+            "rem:perturbation": 3,
+            "rem:retention-heuristic": 4
           }
         },
         "figure_labels": [
           "fig:closure-schematic",
-          "fig:arc-support",
-          "fig:retention-extra"
+          "fig:arc-support-fan",
+          "fig:rate",
+          "fig:peanut-comparison"
         ],
         "table_labels": [
           "tab:ingredients",
           "tab:notation",
-          "tab:rank-scaling"
+          "tab:rank-scaling",
+          "tab:peanut-summary",
+          "tab:smooth-enlargement"
         ],
         "appendix_labels": [
           "app:curve-bounds",
-          "app:curve-numerics",
           "app:ties",
-          "app:seven-point"
+          "app:retention-heuristic",
+          "app:seven-point",
+          "app:radius-enlargement",
+          "app:protocols"
         ]
+      }
+    },
+    "focused_abstract_length": {
+      "passed": true,
+      "detail": {
+        "words_with_each_math_expression_as_one": 207
+      }
+    },
+    "focused_bibliography_cited": {
+      "passed": true,
+      "detail": {
+        "cited": 45,
+        "listed": 45
       }
     },
     "retention_table_join": {
@@ -121,6 +147,234 @@
     "retention_table_gap_below_one_third": {
       "passed": true,
       "detail": 0.2710618238673808
+    },
+    "focused_radius_table_(128, 1.25)": {
+      "passed": true,
+      "detail": [
+        [
+          33.392,
+          33.4161,
+          33.3006,
+          33.6434,
+          33.6844
+        ],
+        [
+          33.391999999999996,
+          33.4161,
+          33.3006,
+          33.64337012224948,
+          33.68438358657699
+        ]
+      ]
+    },
+    "focused_radius_table_(512, 1.25)": {
+      "passed": true,
+      "detail": [
+        [
+          23.837,
+          23.7538,
+          23.8252,
+          23.8112,
+          23.8185
+        ],
+        [
+          23.837,
+          23.7538,
+          23.8252,
+          23.81119189393744,
+          23.818456054157433
+        ]
+      ]
+    },
+    "focused_radius_table_(4096, 1.25)": {
+      "passed": true,
+      "detail": [
+        [
+          14.16,
+          14.0809,
+          14.1399,
+          14.162,
+          14.1625
+        ],
+        [
+          14.16,
+          14.0809,
+          14.139899999999999,
+          14.161998489253314,
+          14.162538703991828
+        ]
+      ]
+    },
+    "focused_radius_table_(32768, 1.25)": {
+      "passed": true,
+      "detail": [
+        [
+          8.449,
+          8.4879,
+          8.4026,
+          8.4211,
+          8.4211
+        ],
+        [
+          8.449,
+          8.4879,
+          8.4026,
+          8.421055742639533,
+          8.421095896644248
+        ]
+      ]
+    },
+    "focused_radius_table_(128, 1.5)": {
+      "passed": true,
+      "detail": [
+        [
+          11.454,
+          11.4484,
+          11.405,
+          11.7155,
+          11.7498
+        ],
+        [
+          11.454,
+          11.4484,
+          11.405,
+          11.715536232919797,
+          11.749820037332817
+        ]
+      ]
+    },
+    "focused_radius_table_(512, 1.5)": {
+      "passed": true,
+      "detail": [
+        [
+          5.847,
+          5.8289,
+          5.8782,
+          5.8706,
+          5.8749
+        ],
+        [
+          5.847,
+          5.8289,
+          5.8782,
+          5.870611478721637,
+          5.874910018666409
+        ]
+      ]
+    },
+    "focused_radius_table_(4096, 1.5)": {
+      "passed": true,
+      "detail": [
+        [
+          2.093,
+          2.059,
+          2.066,
+          2.0769,
+          2.0771
+        ],
+        [
+          2.093,
+          2.059,
+          2.0660000000000003,
+          2.076904217028114,
+          2.077094356529902
+        ]
+      ]
+    },
+    "focused_radius_table_(32768, 1.5)": {
+      "passed": true,
+      "detail": [
+        [
+          0.749,
+          0.7429,
+          0.7374,
+          0.7344,
+          0.7344
+        ],
+        [
+          0.749,
+          0.7429,
+          0.7374,
+          0.7343553483379841,
+          0.7343637523333011
+        ]
+      ]
+    },
+    "focused_radius_table_(128, 2.0)": {
+      "passed": true,
+      "detail": [
+        [
+          1.523,
+          1.4606,
+          1.4352,
+          1.5504,
+          1.5625
+        ],
+        [
+          1.5230000000000001,
+          1.4606,
+          1.4352,
+          1.550387596899243,
+          1.5625
+        ]
+      ]
+    },
+    "focused_radius_table_(512, 2.0)": {
+      "passed": true,
+      "detail": [
+        [
+          0.411,
+          0.385,
+          0.3948,
+          0.3899,
+          0.3906
+        ],
+        [
+          0.411,
+          0.385,
+          0.39480000000000004,
+          0.3898635477583401,
+          0.390625
+        ]
+      ]
+    },
+    "focused_radius_table_(4096, 2.0)": {
+      "passed": true,
+      "detail": [
+        [
+          0.0493,
+          0.0465,
+          0.0461,
+          0.0488,
+          0.0488
+        ],
+        [
+          0.0493,
+          0.0465,
+          0.046099999999999995,
+          0.048816206980595384,
+          0.048828125
+        ]
+      ]
+    },
+    "focused_radius_table_(32768, 2.0)": {
+      "passed": true,
+      "detail": [
+        [
+          0.0069,
+          0.0048,
+          0.0062,
+          0.0061,
+          0.0061
+        ],
+        [
+          0.0069,
+          0.0048000000000000004,
+          0.006200000000000001,
+          0.0061033293657771085,
+          0.006103515625
+        ]
+      ]
     },
     "retention_table_generator_checks": {
       "passed": true,
@@ -170,419 +424,6 @@
       "passed": true,
       "detail": {
         "ok_lines": 124
-      }
-    },
-    "reported_circle_capped_matching": {
-      "passed": true,
-      "detail": 7.06660892215577e-09
-    },
-    "reported_ellipse_capped_matching": {
-      "passed": true,
-      "detail": 3.6564943211377272e-09
-    },
-    "reported_ellipse_capped_order": {
-      "passed": true,
-      "detail": 0.0
-    },
-    "reported_model_difference": {
-      "passed": true,
-      "detail": [
-        1.3585264145443574,
-        1.4410537201293039,
-        1.0871330775188142,
-        1.6697537651565888
-      ]
-    },
-    "practical_choice_partition_0": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "connection",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 1007,
-        "closed": 493,
-        "closed_percent": 32.86666666666667
-      }
-    },
-    "practical_choice_partition_1": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "bridge_free",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 376,
-        "closed": 1124,
-        "closed_percent": 74.93333333333334
-      }
-    },
-    "practical_choice_partition_2": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "plus3",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 79,
-        "closed": 1421,
-        "closed_percent": 94.73333333333333
-      }
-    },
-    "practical_choice_partition_3": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "plus5",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 21,
-        "closed": 1479,
-        "closed_percent": 98.6
-      }
-    },
-    "practical_choice_partition_4": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "connection",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 1066,
-        "closed": 434,
-        "closed_percent": 28.933333333333334
-      }
-    },
-    "practical_choice_partition_5": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "bridge_free",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 424,
-        "closed": 1076,
-        "closed_percent": 71.73333333333333
-      }
-    },
-    "practical_choice_partition_6": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "plus3",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 134,
-        "closed": 1366,
-        "closed_percent": 91.06666666666666
-      }
-    },
-    "practical_choice_partition_7": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "plus5",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 36,
-        "closed": 1464,
-        "closed_percent": 97.6
-      }
-    },
-    "practical_choice_partition_8": {
-      "passed": true,
-      "detail": {
-        "profile": "strong_cosine",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "connection",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 1002,
-        "closed": 498,
-        "closed_percent": 33.2
-      }
-    },
-    "practical_choice_partition_9": {
-      "passed": true,
-      "detail": {
-        "profile": "strong_cosine",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "bridge_free",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 389,
-        "closed": 1111,
-        "closed_percent": 74.06666666666666
-      }
-    },
-    "practical_choice_partition_10": {
-      "passed": true,
-      "detail": {
-        "profile": "strong_cosine",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "plus3",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 88,
-        "closed": 1412,
-        "closed_percent": 94.13333333333334
-      }
-    },
-    "practical_choice_partition_11": {
-      "passed": true,
-      "detail": {
-        "profile": "strong_cosine",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "plus5",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 22,
-        "closed": 1478,
-        "closed_percent": 98.53333333333333
-      }
-    },
-    "practical_choice_partition_12": {
-      "passed": true,
-      "detail": {
-        "profile": "strong_cosine",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "connection",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 1095,
-        "closed": 405,
-        "closed_percent": 27.0
-      }
-    },
-    "practical_choice_partition_13": {
-      "passed": true,
-      "detail": {
-        "profile": "strong_cosine",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "bridge_free",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 429,
-        "closed": 1071,
-        "closed_percent": 71.4
-      }
-    },
-    "practical_choice_partition_14": {
-      "passed": true,
-      "detail": {
-        "profile": "strong_cosine",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "plus3",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 162,
-        "closed": 1338,
-        "closed_percent": 89.2
-      }
-    },
-    "practical_choice_partition_15": {
-      "passed": true,
-      "detail": {
-        "profile": "strong_cosine",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "plus5",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 58,
-        "closed": 1442,
-        "closed_percent": 96.13333333333334
-      }
-    },
-    "practical_choice_partition_16": {
-      "passed": true,
-      "detail": {
-        "profile": "localized_trough",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "connection",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 1009,
-        "closed": 491,
-        "closed_percent": 32.733333333333334
-      }
-    },
-    "practical_choice_partition_17": {
-      "passed": true,
-      "detail": {
-        "profile": "localized_trough",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "bridge_free",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 389,
-        "closed": 1111,
-        "closed_percent": 74.06666666666666
-      }
-    },
-    "practical_choice_partition_18": {
-      "passed": true,
-      "detail": {
-        "profile": "localized_trough",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "plus3",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 89,
-        "closed": 1411,
-        "closed_percent": 94.06666666666666
-      }
-    },
-    "practical_choice_partition_19": {
-      "passed": true,
-      "detail": {
-        "profile": "localized_trough",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "plus5",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 28,
-        "closed": 1472,
-        "closed_percent": 98.13333333333334
-      }
-    },
-    "practical_choice_partition_20": {
-      "passed": true,
-      "detail": {
-        "profile": "localized_trough",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "connection",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 1393,
-        "closed": 107,
-        "closed_percent": 7.133333333333334
-      }
-    },
-    "practical_choice_partition_21": {
-      "passed": true,
-      "detail": {
-        "profile": "localized_trough",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "bridge_free",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 882,
-        "closed": 618,
-        "closed_percent": 41.2
-      }
-    },
-    "practical_choice_partition_22": {
-      "passed": true,
-      "detail": {
-        "profile": "localized_trough",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "plus3",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 929,
-        "closed": 571,
-        "closed_percent": 38.06666666666667
-      }
-    },
-    "practical_choice_partition_23": {
-      "passed": true,
-      "detail": {
-        "profile": "localized_trough",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "plus5",
-        "samples": 1500,
-        "disconnected": 0,
-        "connected_unclosed": 747,
-        "closed": 753,
-        "closed_percent": 50.2
-      }
-    },
-    "practical_choice_partition_24": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 512,
-        "method": "OR_kNN",
-        "choice": "fixed10",
-        "samples": 1500,
-        "disconnected": 2,
-        "connected_unclosed": 90,
-        "closed": 1408,
-        "closed_percent": 93.86666666666666
-      }
-    },
-    "practical_choice_partition_25": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 512,
-        "method": "mutual_kNN",
-        "choice": "fixed10",
-        "samples": 1500,
-        "disconnected": 346,
-        "connected_unclosed": 561,
-        "closed": 593,
-        "closed_percent": 39.53333333333333
-      }
-    },
-    "practical_choice_partition_26": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 4096,
-        "method": "OR_kNN",
-        "choice": "fixed10",
-        "samples": 1500,
-        "disconnected": 150,
-        "connected_unclosed": 448,
-        "closed": 902,
-        "closed_percent": 60.13333333333333
-      }
-    },
-    "practical_choice_partition_27": {
-      "passed": true,
-      "detail": {
-        "profile": "uniform",
-        "n": 4096,
-        "method": "mutual_kNN",
-        "choice": "fixed10",
-        "samples": 1500,
-        "disconnected": 1494,
-        "connected_unclosed": 5,
-        "closed": 1,
-        "closed_percent": 0.06666666666666667
       }
     },
     "peanut_neck_single_edge_0.4_20361021_R2_global": {
@@ -7545,6 +7386,419 @@
         ]
       }
     },
+    "reported_circle_capped_matching": {
+      "passed": true,
+      "detail": 7.06660892215577e-09
+    },
+    "reported_ellipse_capped_matching": {
+      "passed": true,
+      "detail": 3.6564943211377272e-09
+    },
+    "reported_ellipse_capped_order": {
+      "passed": true,
+      "detail": 0.0
+    },
+    "reported_model_difference": {
+      "passed": true,
+      "detail": [
+        1.3585264145443574,
+        1.4410537201293039,
+        1.0871330775188142,
+        1.6697537651565888
+      ]
+    },
+    "practical_choice_partition_0": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "connection",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 1007,
+        "closed": 493,
+        "closed_percent": 32.86666666666667
+      }
+    },
+    "practical_choice_partition_1": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "bridge_free",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 376,
+        "closed": 1124,
+        "closed_percent": 74.93333333333334
+      }
+    },
+    "practical_choice_partition_2": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "plus3",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 79,
+        "closed": 1421,
+        "closed_percent": 94.73333333333333
+      }
+    },
+    "practical_choice_partition_3": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "plus5",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 21,
+        "closed": 1479,
+        "closed_percent": 98.6
+      }
+    },
+    "practical_choice_partition_4": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "connection",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 1066,
+        "closed": 434,
+        "closed_percent": 28.933333333333334
+      }
+    },
+    "practical_choice_partition_5": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "bridge_free",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 424,
+        "closed": 1076,
+        "closed_percent": 71.73333333333333
+      }
+    },
+    "practical_choice_partition_6": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "plus3",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 134,
+        "closed": 1366,
+        "closed_percent": 91.06666666666666
+      }
+    },
+    "practical_choice_partition_7": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "plus5",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 36,
+        "closed": 1464,
+        "closed_percent": 97.6
+      }
+    },
+    "practical_choice_partition_8": {
+      "passed": true,
+      "detail": {
+        "profile": "strong_cosine",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "connection",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 1002,
+        "closed": 498,
+        "closed_percent": 33.2
+      }
+    },
+    "practical_choice_partition_9": {
+      "passed": true,
+      "detail": {
+        "profile": "strong_cosine",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "bridge_free",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 389,
+        "closed": 1111,
+        "closed_percent": 74.06666666666666
+      }
+    },
+    "practical_choice_partition_10": {
+      "passed": true,
+      "detail": {
+        "profile": "strong_cosine",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "plus3",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 88,
+        "closed": 1412,
+        "closed_percent": 94.13333333333334
+      }
+    },
+    "practical_choice_partition_11": {
+      "passed": true,
+      "detail": {
+        "profile": "strong_cosine",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "plus5",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 22,
+        "closed": 1478,
+        "closed_percent": 98.53333333333333
+      }
+    },
+    "practical_choice_partition_12": {
+      "passed": true,
+      "detail": {
+        "profile": "strong_cosine",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "connection",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 1095,
+        "closed": 405,
+        "closed_percent": 27.0
+      }
+    },
+    "practical_choice_partition_13": {
+      "passed": true,
+      "detail": {
+        "profile": "strong_cosine",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "bridge_free",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 429,
+        "closed": 1071,
+        "closed_percent": 71.4
+      }
+    },
+    "practical_choice_partition_14": {
+      "passed": true,
+      "detail": {
+        "profile": "strong_cosine",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "plus3",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 162,
+        "closed": 1338,
+        "closed_percent": 89.2
+      }
+    },
+    "practical_choice_partition_15": {
+      "passed": true,
+      "detail": {
+        "profile": "strong_cosine",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "plus5",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 58,
+        "closed": 1442,
+        "closed_percent": 96.13333333333334
+      }
+    },
+    "practical_choice_partition_16": {
+      "passed": true,
+      "detail": {
+        "profile": "localized_trough",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "connection",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 1009,
+        "closed": 491,
+        "closed_percent": 32.733333333333334
+      }
+    },
+    "practical_choice_partition_17": {
+      "passed": true,
+      "detail": {
+        "profile": "localized_trough",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "bridge_free",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 389,
+        "closed": 1111,
+        "closed_percent": 74.06666666666666
+      }
+    },
+    "practical_choice_partition_18": {
+      "passed": true,
+      "detail": {
+        "profile": "localized_trough",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "plus3",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 89,
+        "closed": 1411,
+        "closed_percent": 94.06666666666666
+      }
+    },
+    "practical_choice_partition_19": {
+      "passed": true,
+      "detail": {
+        "profile": "localized_trough",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "plus5",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 28,
+        "closed": 1472,
+        "closed_percent": 98.13333333333334
+      }
+    },
+    "practical_choice_partition_20": {
+      "passed": true,
+      "detail": {
+        "profile": "localized_trough",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "connection",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 1393,
+        "closed": 107,
+        "closed_percent": 7.133333333333334
+      }
+    },
+    "practical_choice_partition_21": {
+      "passed": true,
+      "detail": {
+        "profile": "localized_trough",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "bridge_free",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 882,
+        "closed": 618,
+        "closed_percent": 41.2
+      }
+    },
+    "practical_choice_partition_22": {
+      "passed": true,
+      "detail": {
+        "profile": "localized_trough",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "plus3",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 929,
+        "closed": 571,
+        "closed_percent": 38.06666666666667
+      }
+    },
+    "practical_choice_partition_23": {
+      "passed": true,
+      "detail": {
+        "profile": "localized_trough",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "plus5",
+        "samples": 1500,
+        "disconnected": 0,
+        "connected_unclosed": 747,
+        "closed": 753,
+        "closed_percent": 50.2
+      }
+    },
+    "practical_choice_partition_24": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 512,
+        "method": "OR_kNN",
+        "choice": "fixed10",
+        "samples": 1500,
+        "disconnected": 2,
+        "connected_unclosed": 90,
+        "closed": 1408,
+        "closed_percent": 93.86666666666666
+      }
+    },
+    "practical_choice_partition_25": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 512,
+        "method": "mutual_kNN",
+        "choice": "fixed10",
+        "samples": 1500,
+        "disconnected": 346,
+        "connected_unclosed": 561,
+        "closed": 593,
+        "closed_percent": 39.53333333333333
+      }
+    },
+    "practical_choice_partition_26": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 4096,
+        "method": "OR_kNN",
+        "choice": "fixed10",
+        "samples": 1500,
+        "disconnected": 150,
+        "connected_unclosed": 448,
+        "closed": 902,
+        "closed_percent": 60.13333333333333
+      }
+    },
+    "practical_choice_partition_27": {
+      "passed": true,
+      "detail": {
+        "profile": "uniform",
+        "n": 4096,
+        "method": "mutual_kNN",
+        "choice": "fixed10",
+        "samples": 1500,
+        "disconnected": 1494,
+        "connected_unclosed": 5,
+        "closed": 1,
+        "closed_percent": 0.06666666666666667
+      }
+    },
     "paper_evidence": {
       "passed": true,
       "detail": {
@@ -7908,10 +8162,62 @@
             ],
             "exports": "PDF and 300-dpi PNG; native document sources are kept outside the release"
           },
-          "scope": "Table 3, the additional post-closure plot and Appendix C checked from saved records; no persistence diagrams are computed."
+          "scope": "Table 3, the additional post-closure plot and Appendix D checked from saved records; no persistence diagrams are computed."
         },
         "radius_integral_checks": 12,
         "extra_layer_rows": 144,
+        "peanut_neck": {
+          "status": "passed",
+          "geometric_clouds": 100,
+          "independent_seeds": 20,
+          "method_records": 300,
+          "independent_diagram_replays": 9,
+          "single_edge_transition_replays": 240,
+          "probe": 0.25
+        },
+        "peanut_bound": {
+          "status": "passed",
+          "closure_graphs": 300,
+          "method_by_width_rows": 15,
+          "source": "Frozen diagrams and all-pairs metric ratios; new builder checks selected edges."
+        },
+        "first_nonempty": {
+          "status": "passed",
+          "checks": 2317,
+          "method_records": 300,
+          "groups": 15,
+          "prefix_queries": 113857,
+          "small_independent_graphs": 24,
+          "bisection_queries": [
+            {
+              "method": "R2_global",
+              "whole_layers": false,
+              "queries": 19
+            },
+            {
+              "method": "OR_kNN",
+              "whole_layers": false,
+              "queries": 19
+            },
+            {
+              "method": "OR_kNN",
+              "whole_layers": true,
+              "queries": 1
+            },
+            {
+              "method": "mutual_kNN",
+              "whole_layers": false,
+              "queries": 19
+            },
+            {
+              "method": "mutual_kNN",
+              "whole_layers": true,
+              "queries": 10
+            }
+          ],
+          "replayed_first_prefixes": 23,
+          "replay_scope": "One case per group and every premature stop; Dijkstra plus unrestricted Ripser."
+        },
         "additional": {
           "reported_claims": {
             "status": "passed",
@@ -8047,19 +8353,185 @@
             "status": "passed",
             "rows": 28,
             "partitions": "Disconnected, connected but unclosed, and closed; all attempted samples."
-          },
-          "peanut_neck": {
-            "status": "passed",
-            "geometric_clouds": 100,
-            "independent_seeds": 20,
-            "method_records": 300,
-            "independent_diagram_replays": 9,
-            "single_edge_transition_replays": 240,
-            "probe": 0.25
           }
         },
-        "examples": "Live-threshold separation, natural ellipse, hexagon, shortcut and ties; Appendix C.",
-        "scope": "Focused-paper evidence and shared certificate exports; additional cohorts only in complete mode."
+        "examples": "Live-threshold separation, natural ellipse, hexagon, shortcut and ties; finite-example appendices.",
+        "scope": "Focused-paper evidence including the saved varying-waist study and edgewise bounds; other additional cohorts only in complete mode."
+      }
+    },
+    "intrinsic_circle_exact_check": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "samples": 190,
+        "threshold_field_checks": 11088,
+        "large_gap_samples": 95,
+        "empty_reference_samples": 76,
+        "coefficient_primes": [
+          2,
+          3,
+          5
+        ]
+      }
+    },
+    "radius_enlargement_check": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "new_clouds": 400000,
+        "summary_rows": 12,
+        "saved_gap_pairs": 400000,
+        "independent_graph_diagrams": 6,
+        "inference": "Finite-size illustration; confidence intervals are pointwise, not a proof of an asymptotic law."
+      }
+    },
+    "radius_enlargement_extra_check": {
+      "passed": true,
+      "detail": {
+        "samples_per_size": 1000000,
+        "sizes": [
+          4096,
+          32768
+        ],
+        "status": "passed"
+      }
+    },
+    "rate_bound_holds": {
+      "passed": true,
+      "detail": {
+        "graphs_checked": 319,
+        "maximum_ratio": 0.9569327095786966
+      }
+    },
+    "rate_euclidean_and_missed_loop": {
+      "passed": true,
+      "detail": {
+        "euclidean_error_range": [
+          0.11535258855095529,
+          0.12153785577112672
+        ]
+      }
+    },
+    "rate_equally_spaced": {
+      "passed": true,
+      "detail": {
+        "64": 0.9999706115743014,
+        "128": 1.0002518112507606,
+        "256": 1.0002517953214727,
+        "512": 0.99543581030895,
+        "1024": 1.0238768241254832
+      }
+    },
+    "post_closure_rate_check": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "records": 320,
+        "replayed_graphs": 16,
+        "maximum_ratio": 0.9569327095786966
+      }
+    },
+    "smooth_curve_enlargement_check": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "clouds": 4000000,
+        "curves": [
+          "ellipse",
+          "peanut"
+        ],
+        "summary_rows": 24,
+        "replayed_batches": 8,
+        "spot_checks": {
+          "ellipse_128": {
+            "diagrams": 6000,
+            "misses": 896,
+            "r_conn_second_chord": 2000,
+            "good_event_clouds": 2000
+          },
+          "ellipse_512": {
+            "diagrams": 525,
+            "misses": 105,
+            "r_conn_second_chord": 175,
+            "good_event_clouds": 175
+          },
+          "peanut_128": {
+            "diagrams": 6000,
+            "misses": 879,
+            "r_conn_second_chord": 2000,
+            "good_event_clouds": 2000
+          },
+          "peanut_512": {
+            "diagrams": 525,
+            "misses": 103,
+            "r_conn_second_chord": 175,
+            "good_event_clouds": 175
+          }
+        },
+        "inference": "Finite-size check of the smooth-curve miss law; intervals are pointwise."
+      }
+    },
+    "winding_check_implications": {
+      "passed": true,
+      "detail": {
+        "W_G_at_least_lambda_b_star": true,
+        "W_G_at_least_W_E": true,
+        "edgewise_survival_implies_W_G": true,
+        "edgewise_survival_implies_W_G_shortcut": true,
+        "W_G_shortcut_at_least_lambda_b_star": true,
+        "early_stops_fail_short_hops_first": true,
+        "theorem_cases_agree": true,
+        "b_star_matches_saved": 1.442963992737134e-08,
+        "tau_G_at_least_W_G_when_certified": -1.4707812800995868e-08,
+        "tau_E_at_least_W_E_when_certified": -1.3932130338289994e-08,
+        "winding_bound_holds": true,
+        "winding_bound_not_above_U_G": true,
+        "antipodal_pairs": 0
+      }
+    },
+    "winding_threshold_check": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "records": 300,
+        "replayed_records": 15,
+        "W_G_gt_B": 300,
+        "W_G_gt_B_shortcut": 300,
+        "edgewise_survival": 300,
+        "theorem_applies": 237,
+        "early_stops": 9
+      }
+    },
+    "exact_optimum_outcome": {
+      "passed": true,
+      "detail": {
+        "closure_at_most_P_star": 180,
+        "strict_condition": 180,
+        "complete_at_most_P_star": 180
+      }
+    },
+    "exact_optimum_check": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "series": 180,
+        "closure_at_most_P_star": 180,
+        "strict_condition": 180,
+        "complete_at_most_P_star": 180
+      }
+    },
+    "rational_certificates_check": {
+      "passed": true,
+      "detail": {
+        "status": "passed",
+        "six_point_bar": [
+          "sqrt(101/100)",
+          "19/10"
+        ],
+        "g0_bracket": [
+          "0.15127097021660",
+          "0.15127097021670"
+        ]
       }
     },
     "clean_native_panel": {

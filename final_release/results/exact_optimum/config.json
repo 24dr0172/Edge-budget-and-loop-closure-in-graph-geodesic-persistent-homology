@@ -1,0 +1,20 @@
+{
+  "samples": 60,
+  "orders": [
+    "R2_global",
+    "OR_kNN",
+    "mutual_kNN"
+  ],
+  "new_samples": false,
+  "tolerance": 5e-08,
+  "g0": 0.15127097021666,
+  "complete_graph": "chord metric; unrestricted Ripser over F2; every bar with death > birth kept",
+  "b_star": "exact intrinsic death from winding triples (winding_check.intrinsic_death)",
+  "source_sha256": {
+    "results/useful_diagram/saved_prefixes.csv": "a68224b1a4facb55db0636c1d916ccfa92c379af19241ebde10b6adbd9eb6617",
+    "results/clean_closure/cells.csv": "81eea17ce25859bbc755c79c3f0e488471ffdc8e2f080ffb29446d04711d24d9",
+    "results/clean_closure/clouds.csv": "c49cbfd6b6302bb641e14c51833d31c6a4204e79f03be592d28a93a5204c4a44"
+  },
+  "script_sha256": "c56c140c11dca74f2dd1069151903a41b33fef9efe98a962bce09b936ae32c0f",
+  "verification_script_sha256": "0a012c930441c853f6816c861f2b8442f7eb2b8c46101e416a3ce8554be55a0e"
+}

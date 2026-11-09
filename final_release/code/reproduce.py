@@ -41,11 +41,23 @@ def stages(root,workers,manuscript_dir=None):
         ('check_seven_point_example.py',[]),
         ('verify_retention_cost_witness.py',['--write']),
         ('check_noncircular_locality.py',['--workers',str(workers)]),
+        ('verify_ellipse_window.py',[]),
+        ('rational_certificates.py',[]),
         ('retention_extra_layers.py',[]),
+        ('radius_enlargement_check.py',[]),
+        ('radius_enlargement_extra.py',[]),
+        ('smooth_curve_enlargement.py',['--workers',str(workers)]),
+        ('post_closure_rate.py',[]),
         ('check_peanut_trough.py',['--workers',str(workers)]),
         ('verify_extra_layers_and_peanut.py',[]),
         ('build_practical_choices.py',[]),
         ('peanut_neck_study.py',['--workers',str(workers)]),
+        ('first_nonempty_check.py',['--workers',str(workers)]),
+        ('verify_first_nonempty.py',['--replay']),
+        ('winding_check.py',['--workers',str(workers)]),
+        ('build_peanut_comparison.py',['--preserve-figure']),
+        ('exact_optimum_check.py',['--workers',str(workers)]),
+        ('tolerance_recheck.py',[]),
         ('tools/write_guides.py',[]),
         ('verify_comparisons.py',[]),
         ('tools/record_current.py',[]),
@@ -63,7 +75,7 @@ def preflight(root,workers,manuscript_dir=None):
         raise RuntimeError('Use Python 3.12 with code/requirements.txt.')
     commands=stages(root,workers,manuscript_dir)
     required=[root/name if name.startswith('tools/') else root/'code'/name for name,_ in commands]
-    required += [root/name for name in ('code/config.json','code/requirements.txt',
+    required += [root/name for name in ('code/config.json','code/requirements.txt','results/certified_ellipse_window/angles.json',
                   'README.md','LICENSE','CITATION.cff','Dockerfile',
                   'code/bridgeless_circle.cpp','code/result_schemas.json',
                   'code/graph_methods.py','code/experiment_core.py','code/finite_diagram.py',
@@ -73,8 +85,9 @@ def preflight(root,workers,manuscript_dir=None):
                   'code/generate_clean.py','code/summarize_studies.py','code/verify_studies.py',
                   'code/audit_rank_scaling.py','code/audit_numbers.py','code/export_noise_coordinates.py',
                   'tools/external_manuscript.py','tools/verify_manuscript_tables.py')]
-    required += [root/'manuscript_figures'/f'{name}.png' for name in ('closure_schematic','arc_support_fan')]
-    required += [root/'results/figure_exports'/f'{name}.pdf' for name in ('closure_schematic','arc_support_fan')]
+    required += [root/'manuscript_figures'/f'{name}.png' for name in ('arc_support_fan','peanut_comparison')]
+    required += [root/'results/figure_exports'/f'{name}.pdf' for name in ('arc_support_fan','peanut_comparison')]
+    required += [root/'results/additional_figures'/f'{name}.{ext}' for name in ('closure_schematic_comparison','peanut_winding_comparison') for ext in ('png','pdf')]
     required += [root/'results/additional_figures'/f'{name}.{ext}' for name in ('arc_support_figure','ellipse_figure') for ext in ('pdf','png')]
     missing=sorted({str(path.relative_to(root)) for path in required if not path.is_file()})
     if missing:raise FileNotFoundError('Release is incomplete: '+', '.join(missing))
@@ -163,10 +176,13 @@ def main():
         shutil.copytree(ROOT/'tools',target/'tools',ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
         for name in ['README.md','LICENSE','CITATION.cff','Dockerfile']:shutil.copy2(ROOT/name,target/name)
         (target/'results').mkdir();(target/'manuscript_figures').mkdir()
-        # Native drawings are fixed exposition, not generated measurements.
-        for name in ('closure_schematic','arc_support_fan'):
+        # The exact-angle example is a frozen mathematical input, not a new cohort.
+        (target/'results/certified_ellipse_window').mkdir()
+        shutil.copy2(ROOT/'results/certified_ellipse_window/angles.json',target/'results/certified_ellipse_window/angles.json')
+        # Keep the supplied fan and frozen Figure 4; the latter was rendered with a different plotting version.
+        for name in ('arc_support_fan','peanut_comparison'):
             shutil.copy2(ROOT/'manuscript_figures'/f'{name}.png',target/'manuscript_figures'/f'{name}.png')
-        for folder,names in [('figure_exports',('closure_schematic','arc_support_fan')),('additional_figures',('arc_support_figure','ellipse_figure'))]:
+        for folder,names in [('figure_exports',('arc_support_fan','peanut_comparison')),('additional_figures',('arc_support_figure','ellipse_figure','closure_schematic_comparison','peanut_winding_comparison'))]:
             (target/'results'/folder).mkdir()
             for name in names:
                 for path in (ROOT/'results'/folder).glob(name+'.*'):shutil.copy2(path,target/'results'/folder/path.name)

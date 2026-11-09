@@ -150,7 +150,7 @@ def verify_comparisons(F):
             require('size sweep closure rates and intervals',getattr(row,event+'_closed')==success and
                     abs(getattr(row,event+'_rate')-success/len(g))<1e-14 and
                     abs(getattr(row,event+'_wilson_lo')-lo)<1e-14 and abs(getattr(row,event+'_wilson_hi')-hi)<1e-14)
-    # Its four primary sizes agree with the Table 3 counts and the Figure 4 export.
+    # Its four primary sizes agree with the Table 3 counts and the extra-layer export.
     table=pd.read_csv(F/'results/retention_table/retention_counts.csv')
     layers=pd.read_csv(F/'results/retention_extra_layers/retention.csv')
     require('size sweep primary rows',len(table)==24 and len(sweep[sweep.n<=32768])==24)

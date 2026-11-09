@@ -143,7 +143,8 @@
     "ellipse_raw_endpoint_tolerance": 1e-06,
     "ellipse_monotonicity_tolerance_units": "normalized error",
     "rips_filtration": "D <= t; bars [birth, death)",
-    "curve_order_diagnostic": "D < t, the left limit; bars (birth, death]"
+    "curve_order_diagnostic": "D < t, the left limit; bars (birth, death]",
+    "tolerance_recheck_normalized_error_tolerance": 1e-06
   },
   "clean": {
     "seeds": [
@@ -212,5 +213,35 @@
       ]
     ],
     "bridge_maximum_n": 1000000
+  },
+  "post_closure_rate": {
+    "script": "code/post_closure_rate.py",
+    "sizes": [
+      64,
+      128,
+      256,
+      512
+    ],
+    "seeds_per_size": 20,
+    "seeds_n512": "20310101-20310120 (the uniform clouds of the clean-circle study)",
+    "seeds_other": "20400000 + 100n + i, i = 1..20",
+    "graphs": [
+      "radius order at exact closure",
+      "OR order at exact closure",
+      "mutual order at exact closure",
+      "radius graph at twice the smallest connecting radius"
+    ],
+    "bound": "(pi^2/6) * l_G^2 * b_* / Delta, l_G the longest minor arc of an edge",
+    "equally_spaced_check": {
+      "sizes": [
+        64,
+        128,
+        256,
+        512,
+        1024
+      ],
+      "jitter": "1e-7/n"
+    },
+    "bound_tolerance": "relative 1e-6 plus 1e-6/Delta absolute (Ripser endpoints are float32)"
   }
 }

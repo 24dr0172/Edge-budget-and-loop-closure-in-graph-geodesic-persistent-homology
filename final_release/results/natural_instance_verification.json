@@ -574,5 +574,5 @@
   ],
   "comparison_arithmetic": "Rational Machin arctangent bounds for pi; Taylor remainders; integer outward square-root bounds; min-plus interval distances.",
   "proof_scope": "The paper gives all-field independence and an all-order impossibility argument; F2/F3/F5 calculations and enumeration corroborate them.",
-  "checker_sha256": "a9ac5bc10b6da7f409061f7385bcd1c9b994364ebc45b9013a8545227cb12408"
+  "checker_sha256": "cf929d8da7f4bb8e98e1df46a62f7de2c2a6e86b89d44bdb21d7e8792c86b6c4"
 }

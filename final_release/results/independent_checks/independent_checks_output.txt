@@ -1,5 +1,5 @@
 ==============================================================================
-PART 1. Seven-point circle example (Appendix C)
+PART 1. Seven-point circle example (Appendix D)
 ==============================================================================
 arc coordinates: [0, 0.08, 0.15, 0.161, 0.29, 0.6, 0.66]
 consecutive gaps x_i x_{i+1} (exact): ['2/25', '7/100', '11/1000', '129/1000', '31/100', '3/50', '17/50']
@@ -108,30 +108,31 @@ M=13 graph distances of the 8 absent pairs (sorted):
   triangle x1x5x7 at M=13: sides 0.251514, 0.278937, 0.322913
   [ok]   G_13 is arc-supported (every edge passes Definition def:arc-support)
   [ok]   G_14 is arc-supported (every edge passes Definition def:arc-support)
-  [ok]   (arc support is only defined for graphs containing the ring; M=12 not tested)
+  arc support is only defined for graphs containing the ring; M=12 not tested
 bottleneck matchings (raw / normalised by Delta*=0.499):
   M=13: direct = max(|0.34-0.2789371|, |0.37-0.3229132|) = 0.06106292 -> 0.1223706; diagonal = max(0.02198808, 0.01500000) = 0.02198808 -> 0.0440643; e_PH = 0.0440643
   M=14: direct = max(|0.34-0.2789371|, |0.37-0.2921304|) = 0.07786963 -> 0.1560514; diagonal = max(0.00659665, 0.01500000) = 0.01500000 -> 0.0300601; e_PH = 0.0300601
-  [ok]   e_PH(M=13) = 0.0440642974 ~ 0.0440643 (manuscript value)
-  [ok]   e_PH(M=14) = 0.0300601202 = P* = 0.0300601202 ~ 0.0300601 (manuscript value)
-  [ok]   direct cost M=13 = 0.1223705820 ~ 0.122371 (manuscript value)
-  [ok]   direct cost M=14 = 0.1560513618 ~ 0.156051 (manuscript value)
+  [ok]   e_PH(M=13) = 0.0440642974 ~ 0.0440643 (model value)
+  [ok]   e_PH(M=14) = 0.0300601202 = P* = 0.0300601202 ~ 0.0300601 (model value)
+  [ok]   direct cost M=13 = 0.1223705820 ~ 0.122371 (model value)
+  [ok]   direct cost M=14 = 0.1560513618 ~ 0.156051 (model value)
   raw quantities: g-chi(g) = 0.06106292; b*-delta = 0.04708675; b*-chi(b*) = 0.07786963; (delta-chi(g))/2 = 0.02198808; (chi(b*)-chi(g))/2 = 0.00659665; (b*-g)/2 = 0.01500000
-  table row M=13: d=0.322913  |0.37-d|=0.047087  d-chi(0.34)=0.043976  0.03/0.998=0.0300601  2/pi-1/2=0.1366
-  table row M=14: d=0.292130  |0.37-d|=0.077870  d-chi(0.34)=0.013193  0.03/0.998=0.0300601  2/pi-1/2=0.1366
-  [ok]   App C hypothesis paragraph: diagonal raw cost max(0.015,(d-chi(0.34))/2) <= (delta-chi(0.34))/2 = 0.0219881 <= 0.021989 < 0.061063
-  cost ceiling (Corollary cor:cost-ceiling) = 0.1560513618
+  table row M=13: d=0.322913  |0.37-d|=0.047087  d-chi(0.34)=0.043976  0.03/0.998=0.0300601
+  table row M=14: d=0.292130  |0.37-d|=0.077870  d-chi(0.34)=0.013193  0.03/0.998=0.0300601
+  [ok]   Appendix D matching comparison: diagonal raw cost max(0.015,(d-chi(0.34))/2) <= (delta-chi(0.34))/2 = 0.0219881 <= 0.021989 < 0.061063
+  cost ceiling (Lemma 9) = 0.1560513618
   [ok]   direct cost at M=14 equals the cost-ceiling bound
   [ok]   e_PH at closure exceeds P* (worse than the empty diagram at M=12)
   [ok]   release finite_diagram.py agrees at M=13 (bars and bottleneck)
   [ok]   release finite_diagram.py agrees at M=14 (bars and bottleneck)
-  [ok]   small-gap hypothesis g < 2/pi-1/2 = 0.136620 fails (g = 0.34)
+  [ok]   sufficient gap condition g < g0 ~ 0.151271 fails (g = 0.34)
+  [ok]   exact gap condition g < psi(b*) = 0.214261 fails (g = 0.34)
   [ok]   g > 1/3: positivity of the intrinsic bar is sample-specific (Lemma circle-bar's sufficient condition fails)
   [ok]   key inequality of the corollary's proof fails: g-chi(g)=0.061063 > (b*-g)/2=0.015000
   [ok]   geometric survival bound B < 2/(3pi) = 0.212207 fails (B = 0.278937); survival via chi(g)<=t<chi(b*) instead
 
 ==============================================================================
-PART 2. Independent-key model (Section 7.2)
+PART 2. Independent-key model
 ==============================================================================
   joint pmf mass on [0,80)^2 = 1 - 1.654e-24
   [ok]   m=1: T_OR=0.333333333333, T_mutual=0.666666666667 match direct joint-pmf sums
@@ -149,9 +150,9 @@ PART 2. Independent-key model (Section 7.2)
   [ok]   0 < T_OR(m) < T_mutual(m) for m=1..39
   n=512: Pr(max OR mark tied)     = 0.32876823546796798527  (truncation bound 9.8e-70)
   n=512: Pr(max mutual mark tied) = 0.27492279613204017441  (truncation bound 3.2e-58)
-  [ok]   OR tie probability rounds to 0.328768 (manuscript value); digits 0.3287682354
-  [ok]   mutual tie probability rounds to 0.274923 (manuscript value); digits 0.2749227961 -- NOTE: truncation would give 0.274922
-  [ok]   rounded 0.329 and 0.275 as in Section 7.2
+  [ok]   OR tie probability rounds to 0.328768 (model value); digits 0.3287682354
+  [ok]   mutual tie probability rounds to 0.274923 (model value); digits 0.2749227961 -- NOTE: truncation would give 0.274922
+  [ok]   rounded 0.329 and 0.275 for the independent-key model
   n=128: OR 0.331693, mutual 0.273081
   n=4096: OR 0.325653, mutual 0.276462
   n=32768: OR 0.323936, mutual 0.277302
@@ -198,7 +199,7 @@ PART 3. Arc-support figure (Figure 2)
   [ok]   panel (a): spokes pw2, pw3 are not graph edges (their D_G are ring paths, not chords)
 
 ==============================================================================
-PART 4. Six-point ellipse (Figure 3, Example 2)
+PART 4. Six-point ellipse (Example 1)
 ==============================================================================
   x0 = (1.732051, 0.500000)
   x1 = (0.174311, 0.996195)

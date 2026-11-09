@@ -1,11 +1,9 @@
-# Manuscript figures
+# External manuscript figures
 
-This folder contains exactly the three PNGs read by the portable manuscript:
+The manuscript draws Figure 1 directly in its LaTeX source. These three files are its external PNGs and match the manuscript's `figures/` files byte for byte:
 
-- **Figure 1:** `closure_schematic.png`, the supplied 600-dpi closure schematic.
-- **Figure 2:** `arc_support_fan.png`, the supplied 600-dpi supporting-fan drawing; vertex labels match Definition 4.
-- **Figure 3:** `retention_extra_layers.png`, generated at 300 dpi from [saved rank records](../results/extra_k/rank_sweep/samples.csv) by `code/retention_extra_layers.py`. The 144 group/layer records and Wilson intervals are in [retention_extra_layers](../results/retention_extra_layers/retention.csv).
+- Figure 2: `arc_support_fan.png`, the triangle-fan drawing.
+- Figure 3: `post_closure_rate.png`, from [saved rate records](../results/post_closure_rate/records.csv).
+- Figure 4: `peanut_comparison.png`, the peanut comparison, including the edgewise certificate bound where applicable, from [saved diagrams and bounds](../results/peanut_neck/closure_error_bound.json).
 
-The manuscript copies these into `figures/`. Captions, labels and cross-references remain in `combined.tex`. It needs no native drawings, PDF graphics, external tables or appendix files. The figures match the release byte for byte.
-
-Native drawing sources belong to the separate Overleaf project and are excluded here. [Archival PDF exports](../results/figure_exports/README.md) are included as image masters. [Additional study plots](../results/additional_figures/README.md) are kept separately and are not figures of the focused paper.
+[PDF exports](../results/figure_exports/README.md) are optional; the saved Figure 4 PDF is a raster export of the manuscript PNG. Further plots are in [additional_figures](../results/additional_figures/README.md). See the [code guide](../code/README.md) for rebuilding.

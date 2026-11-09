@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "checks": 2317,
+  "method_records": 300,
+  "groups": 15,
+  "prefix_queries": 113857,
+  "small_independent_graphs": 24,
+  "bisection_queries": [
+    {
+      "method": "R2_global",
+      "whole_layers": false,
+      "queries": 19
+    },
+    {
+      "method": "OR_kNN",
+      "whole_layers": false,
+      "queries": 19
+    },
+    {
+      "method": "OR_kNN",
+      "whole_layers": true,
+      "queries": 1
+    },
+    {
+      "method": "mutual_kNN",
+      "whole_layers": false,
+      "queries": 19
+    },
+    {
+      "method": "mutual_kNN",
+      "whole_layers": true,
+      "queries": 10
+    }
+  ],
+  "replayed_first_prefixes": 23,
+  "replay_scope": "One case per group and every premature stop; Dijkstra plus unrestricted Ripser."
+}

@@ -21,22 +21,22 @@ def main(manuscript_dir=None,data_only=False):
     lines = [
         '# Study comparisons',
         '',
-        'This folder holds the bridge-free study, the Euclidean baseline and the grid oracle. The paper cites two bridge-free proportions at n=512 (Section 7.2). The other comparisons are additional studies that the paper does not rely on. The exact certificate for Example 1 is linked below for convenience. Links are relative to this folder.',
+        'This folder contains bridge-free counts, Euclidean baselines and the best errors on a tested graph-size grid (the grid oracle). These are additional studies, provided for comparison with the paper. The additional cyclic-order certificate is also linked below.',
         '',
         '## Evidence',
         '',
-        '- [Exact Example 1 certificate](../separation_verification.json): all 120 cyclic orders at 14 distinct threshold graphs. Each graph admits an order separately; no order works throughout the filtration. The certificate records distances and admissible orders, including the thresholds 3/2 and 19/10 inside the positive interval. Table 3 is exported separately to [rank_table.csv](../rank_table.csv); it is not the bridge-free summary.',
-        '- [Clean bridge events](bridgeless/clean_samples.csv): 60 samples and two kNN rules, checked against full Cartesian ranks and an independent bridge search. The [summary](bridgeless/clean_summary.csv) gives rates and Wilson intervals.',
+        '- [Exact additional cyclic-order certificate](../separation_verification.json): all 120 cyclic orders at 14 distinct threshold graphs. Each graph admits an order separately; no order works throughout the filtration. The certificate records distances and admissible orders, including the thresholds 3/2 and 19/10 inside the positive interval. Table 3 is exported separately to [rank_table.csv](../rank_table.csv); it is not the bridge-free summary.',
+        '- [Clean bridge events](bridgeless/clean_samples.csv): 60 samples and two kNN rules, checked against all pairwise neighbor ranks and an independent bridge search. The [summary](bridgeless/clean_summary.csv) gives rates and Wilson intervals.',
         '- [Bridge sweep](bridgeless/sweep_samples.csv): 15,390 profile/seed/size samples and 30,780 method records through n=1,000,000. See the [summary](bridgeless/sweep_summary.csv), [validation](bridgeless/validation.json) and [timings](bridgeless/sweep_timings.csv).',
         '- [Euclidean baseline](euclidean/samples.csv): 220 distinct observed clouds. Reusing clean clouds across models gives 240 model/amplitude/seed rows. The baseline is also shared across graph methods. See [error quartiles](euclidean/summary.csv) and [paired comparisons](euclidean/paired_summary.csv).',
-        '- [Grid oracle](grid_oracle_samples.csv): the lowest error among connected points on the prescribed 24-budget grid, chosen separately for each of 720 cases. Extra diagnostic budgets are excluded. See [group summaries](grid_oracle_summary.csv) and [selector gaps](selected_vs_oracle.csv). This benchmark uses the clean reference.',
+        '- [Grid oracle](grid_oracle_samples.csv): the lowest error among connected graphs on the prescribed 24-budget grid, chosen separately for each of 720 cases. Extra diagnostic budgets are excluded. See [group summaries](grid_oracle_summary.csv) and [selector gaps](selected_vs_oracle.csv). This benchmark uses the clean reference.',
         '- [All amplitudes](all_amplitudes.csv): both rules, all six amplitudes, error medians/quartiles and median normalized budgets. Samples and displacements remain paired.',
         '- [Sample counts](rank_display_counts.json): the primary display has 5,000 shared seed/size combinations, 15,000 profile/seed samples and 30,000 method records. The full release has 30,780 method records.',
         '- [Literature sources](literature_checks.json): source details for the connectivity, spectral-distance and cyclic-graph comparisons in the paper.',
         '',
         '## Connected bridge-free graphs',
         '',
-        'The test inserts a whole integer-k layer, then checks that the graph is connected and has no bridge. A bridge is an edge whose removal disconnects the graph. Every record satisfies k_conn ≤ k_br ≤ k_close. The bridge-free test can still stop before closure.',
+        'The test adds a whole neighbor-rank layer, then checks that the graph is connected and has no bridge. A bridge is an edge whose removal disconnects the graph. In every record, first connectivity is no later than the first bridge-free layer, which is no later than cycle completion (k_conn <= k_br <= k_close). A bridge-free graph can still miss the loop.',
         '',
         'At n=512, each profile has 1,500 paired seeds. Closure rates at connection and at the first connected bridge-free layer are:',
         '']
@@ -100,7 +100,7 @@ def main(manuscript_dir=None,data_only=False):
         '']
     (OUT/'README.md').write_text('\n'.join(lines).replace('`', chr(96)))
     record = dict(
-        status='complete', scope='Bridge-free study (two n=512 proportions are cited in the paper), Example 1 certificate and the additional comparisons; this summary step reads saved measurements and does not regenerate them.',
+        status='complete', scope='Bridge-free study, additional cyclic-order certificate and additional comparisons; this summary step reads saved measurements and does not regenerate them.',
         largest_bridgeless_n=int(timings.n.max()),
         bridgeless_profile_seed_samples=len(timings), bridgeless_method_records=int(sweep.samples.sum()),
         clean_samples=60, distinct_euclidean_diagrams=220,

@@ -104,7 +104,7 @@ NAMES = {'R2_global':'Radius', 'OR_kNN':'OR', 'mutual_kNN':'Mutual'}
 
 
 def table_rows(report):
-    """Table 4: one row per noncircular waist; counts retain the three orders."""
+    """Table 2: one row per noncircular waist; counts retain the three orders."""
     lines = []
     for alpha in (.4, .6, .8, .9):
         groups = [next(g for g in report['groups']
@@ -153,12 +153,12 @@ def draw(root, report, manuscript=None):
             for k, (birth, death) in enumerate(bars):
                 y = j + (k - (len(bars)-1)/2)*.22
                 ax.plot([birth, death], [y, y], lw=2, color=color)
-        ax.set_yticks([0, 1, 2], ['Intrinsic', 'Euclidean', 'OR closure'])
+        ax.set_yticks([0, 1, 2], ['Arc-length metric', 'Euclidean', 'Symmetric kNN'])
         ax.set_ylim(2.5, -.5); ax.set_xlim(0, .35)
-        ax.set_xlabel('Rips threshold'); ax.set_title('Positive bars: a = 0.4, one seed')
+        ax.set_xlabel('Rips threshold'); ax.set_title(r'One point set at $a=0.4$')
     ax = fig.add_subplot(grid[1, 1])
     for field, label, color, marker in [('euclidean_error', 'Euclidean', '#b35c00', 'o'),
-            ('closure_error', 'OR closure', '#006da8', 's'), ('U_G', 'Certificate bound', '0.35', '^')]:
+            ('closure_error', 'Symmetric kNN', '#006da8', 's'), ('U_G', 'Bound $U_G$', '0.35', '^')]:
         xx, yy, low, high = [], [], [], []
         for a in (0., .4, .6, .8, .9):
             group = [r for r in report['records'] if r['method'] == 'OR_kNN' and r['alpha'] == a]
@@ -170,7 +170,8 @@ def draw(root, report, manuscript=None):
                     lw=1.1, ms=4, capsize=2)
     ax.set_yscale('log'); ax.set_ylim(3e-5, .7); ax.set_xticks([0, .4, .6, .8, .9])
     ax.set_xlabel('Peanut parameter a'); ax.set_ylabel('Normalized diagram error')
-    ax.set_title('20 paired seeds: medians and ranges'); ax.legend(frameon=False, loc='upper left')
+    ax.set_title('20 paired point sets')
+    ax.legend(frameon=False, loc='upper left', bbox_to_anchor=(0, .81))
     fig.tight_layout()
     png = root/'manuscript_figures/peanut_comparison.png'
     pdf = root/'results/figure_exports/peanut_comparison.pdf'

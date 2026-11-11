@@ -1,4 +1,4 @@
-"""The 24 cells of Table 3, rebuilt from the saved rank records only."""
+"""The 24 cells of Table 1, rebuilt from the saved rank records only."""
 from pathlib import Path
 import collections
 import csv

@@ -247,7 +247,7 @@ def verify(root,manuscript_dir=None,data_only=False,paper_only=False):
                     comparison_record['manuscript_pdf_sha256']==layout['pdf_sha256'])
         require('manuscript_structure_source_identity',hashlib.sha256((paper/'combined.tex').read_bytes()).hexdigest()==layout['source_sha256'])
         require('manuscript_structure_pdf_identity',hashlib.sha256((paper/'combined.pdf').read_bytes()).hexdigest()==layout['pdf_sha256'])
-        result_labels=['thm:loop-transition','thm:arc-supported','thm:circle-parameters','thm:smooth-radius']
+        result_labels=['thm:loop-transition','thm:arc-supported','thm:circle-parameters','thm:ties','thm:smooth-radius']
         positions=[manuscript.index('\\label{'+label+'}') for label in result_labels]
         require('manuscript_result_order',positions==sorted(positions) and manuscript.count(r'\begin{theorem}')==len(result_labels) and
                 all(layout['result_numbers']['theorem'][label]==i for i,label in enumerate(result_labels,1)))
@@ -282,7 +282,7 @@ def verify(root,manuscript_dir=None,data_only=False,paper_only=False):
     certificates=verify_rational_certificates(root,require)
     require('rational_certificates_check',certificates['status']=='passed',certificates)
     if paper_only:
-        verify_payload(root,require,['rank_table.csv','noncircular_locality/locality_check_results.csv',
+        verify_payload(root,require,['rank_table.csv','radial_noise_knn.csv','noncircular_locality/locality_check_results.csv',
                                     'retention_extra_layers/retention.csv','peanut_neck/trials.csv',
                                     'peanut_neck/closure_error_bound.csv','radius_enlargement/summary.csv','radius_enlargement_extra/summary.csv',
                                     'post_closure_rate/records.csv','post_closure_rate/equally_spaced.csv',
@@ -292,7 +292,7 @@ def verify(root,manuscript_dir=None,data_only=False,paper_only=False):
         return dict(status='passed',requested_scope='paper_saved_data',
             manuscript_comparison=dict(status='passed' if paper is not None else 'not_run',
                                        location='external' if paper is not None else None),
-            performed_checks=['Exact intrinsic-circle boundary reduction over F2, F3 and F5','Table 3 raw rank counts and export','Small examples',
+            performed_checks=['Exact intrinsic-circle boundary reduction over F2, F3 and F5','Table 1 raw rank counts and export','Tied-rank approximation and paired radial-noise table','Small examples',
                               'Fixed-k, bridge-free and diagram-cost claims, plus an independent-key check',
                                'Extra-layer counts, radius beta integral and independent finite certificates',
                                'Radius enlargement: 400000 saved gap pairs, two independent million-cloud checks, confidence intervals and six independent diagrams',

@@ -19,6 +19,8 @@ def stages(root,workers,manuscript_dir=None):
         ('generate_measurements.py',['--workers',str(workers)]),
         ('run_studies.py',['--aggregate-only']),
         ('generate_matched_noise.py',[]),
+        ('radial_noise_knn.py',['--workers',str(workers),'--output',str(root/'results/radial_noise_knn.csv')]),
+        ('check_tied_ranks.py',[]),
         ('generate_witness.py',[]),
         ('verify_separation.py',[]),
         ('verify_natural_instance.py',[]),

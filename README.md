@@ -1,6 +1,6 @@
-# Edge budget and loop closure in graph-geodesic persistent homology
+# Edge count and loop detection in graph-geodesic persistent homology
 
-The verified code, saved data, settings and figures for the focused noise-free paper are in [`final_release/`](final_release/). Start with the [release guide](final_release/README.md) for the paper-to-evidence map, installation and reproduction commands.
+The verified code, saved data, settings and figures for the focused noise-free paper are in [`final_release/`](final_release/). Start with the [release guide](final_release/README.md) for the paper-to-evidence map, installation and reproduction commands. The repository URL uses the manuscript’s earlier title.
 
 - [`code/`](final_release/code/): experiment generators, verification scripts and settings.
 - [`tools/`](final_release/tools/): manuscript comparison, portable-build and figure-export helpers.

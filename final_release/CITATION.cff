@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "Please cite the paper when you use this code or data."
-title: "Edge budget and loop closure in graph-geodesic persistent homology"
+title: "Edge count and loop detection in graph-geodesic persistent homology"
 type: software
 authors:
   - family-names: Singh
@@ -16,7 +16,7 @@ license:
   - CC-BY-4.0
 preferred-citation:
   type: manuscript
-  title: "Edge budget and loop closure in graph-geodesic persistent homology"
+  title: "Edge count and loop detection in graph-geodesic persistent homology"
   authors:
     - family-names: Singh
       given-names: Shivam

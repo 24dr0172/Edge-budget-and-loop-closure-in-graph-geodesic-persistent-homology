@@ -1,4 +1,4 @@
-"""Build Table 3 (ring retention) from the saved rank and bridge-free records.
+"""Build Table 1 (ring retention) from the saved rank and bridge-free records.
 
 Inputs (read only):
   results/extra_k/rank_sweep/samples.csv        (rank records: k_conn, k_close, largest_gap)
@@ -8,7 +8,7 @@ Inputs (read only):
   results/extra_k/rank_sweep/n512_comparison_summary.csv, results/rank_table.csv
   results/extra_k/rank_sweep/fixed_k_summary.csv (uniform-only fixed-k counts)
 Outputs, in results/retention_table/:
-  retention_compact.csv       six rows of Table 3 (retention at k_conn)
+  retention_compact.csv       six rows of Table 1 (retention at k_conn)
   retention_three_layers.csv  the same groups at k_conn, k_br and k_conn+3
   retention_fixed_k.csv        fixed k = 10 and 15
   retention_counts.csv         every count and Wilson interval

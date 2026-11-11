@@ -133,7 +133,7 @@ if __name__=='__main__':
     ap=argparse.ArgumentParser();ap.add_argument('--release',type=Path,default=Path(__file__).resolve().parents[1])
     ap.add_argument('--base-only',action='store_true',help='Rebuild the clean and radial summary tables only')
     ap.add_argument('--rank-table-only',action='store_true',help='Export the six-row n=512 bridge-free/+3 comparison')
-    ap.add_argument('--paper-table-only',action='store_true',help='Rebuild the 24-row Table 3 connectivity export from saved rank records')
+    ap.add_argument('--paper-table-only',action='store_true',help='Rebuild the 24-row Table 1 connectivity export from saved rank records')
     ap.add_argument('--fixed-k-only',action='store_true',help='Rebuild the fixed-k comparison from the uniform rank sweep only')
     args=ap.parse_args()
     if sum((args.base_only,args.fixed_k_only,args.rank_table_only,args.paper_table_only)) > 1:
@@ -141,7 +141,7 @@ if __name__=='__main__':
     if args.paper_table_only:
         from rank_table import write_table, latex_rows
         rows=write_table(args.release.resolve())
-        print('Table 3: 24 cells; saved-data export results/rank_table.csv')
+        print('Table 1: 24 cells; saved-data export results/rank_table.csv')
         print(latex_rows(rows))
     elif args.base_only:
         base_tables(args.release.resolve())

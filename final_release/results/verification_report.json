@@ -8,7 +8,7 @@
     "location": "external"
   },
   "scope": "Saved evidence for the paper, including retention counts, the peanut comparison, radius enlargement and finite examples; all additional studies, including the certified ellipse window, including 240 one-edge peanut-prefix replays, selected clean/noise/ellipse diagrams, seed and selector checks, rank counts, Wilson intervals and study comparisons. The full experiment cohorts are not regenerated.",
-  "checks_passed": 101467,
+  "checks_passed": 104684,
   "checks": {
     "release_structure": {
       "passed": true
@@ -17,13 +17,13 @@
       "passed": true,
       "detail": {
         "guides": 8,
-        "relative_links": 76
+        "relative_links": 79
       }
     },
     "manuscript_identity": {
       "passed": true,
       "detail": {
-        "pdf_pages": 37
+        "pdf_pages": 36
       }
     },
     "manuscript_structure_record": {
@@ -31,29 +31,29 @@
       "detail": {
         "status": "passed",
         "scope": "Source and PDF identities, labels, citations, environment counts and result numbering.",
-        "source_sha256": "d477672780edfdd1964505051c7ce82993499bb4d92a31df4b97a9220facf26c",
-        "pdf_sha256": "8cc916b0c5a71449176df2831e54f86518f0cdce0d2431098d9c42f3aca2f64e",
-        "pdf_pages": 37,
+        "source_sha256": "5abba6d4644a7357ef32f0c8890f41ecafbb13655866b3c85da3fbc4ceaf996e",
+        "pdf_sha256": "2531cc1a58c99baa11bb16063993444a6ce4459433b91199282908745fbe8780",
+        "pdf_pages": 36,
         "source_checks": {
-          "unique_labels": 69,
-          "resolved_citation_keys": 45,
+          "unique_labels": 68,
+          "resolved_citation_keys": 49,
           "unresolved_references": 0,
           "unresolved_citations": 0
         },
         "environment_counts": {
-          "definition": 4,
-          "theorem": 4,
+          "definition": 3,
+          "theorem": 5,
           "proposition": 1,
           "corollary": 5,
           "structurallemma": 0,
-          "appendixlemma": 0,
+          "appendixlemma": 3,
           "lemma": 9,
-          "remark": 4,
+          "remark": 2,
           "example": 1,
-          "proof": 19
+          "proof": 23
         },
         "display_math_blocks_by_type": {
-          "bracketed": 65,
+          "bracketed": 101,
           "equation": 13
         },
         "result_numbers": {
@@ -61,8 +61,9 @@
             "thm:loop-transition": 1,
             "thm:arc-supported": 2,
             "thm:circle-parameters": 3,
-            "thm:smooth-radius": 4,
-            "eq:smooth-miss": 4
+            "thm:ties": 4,
+            "thm:smooth-radius": 5,
+            "eq:smooth-miss": 5
           },
           "proposition": {
             "prop:locality": 1
@@ -97,9 +98,7 @@
           },
           "remark": {
             "rem:polygon": 1,
-            "rem:unsupported-shortcut": 2,
-            "rem:perturbation": 3,
-            "rem:retention-heuristic": 4
+            "rem:unsupported-shortcut": 2
           }
         },
         "figure_labels": [
@@ -109,16 +108,15 @@
           "fig:peanut-comparison"
         ],
         "table_labels": [
-          "tab:ingredients",
-          "tab:notation",
           "tab:rank-scaling",
+          "tab:radial-noise",
           "tab:peanut-summary",
           "tab:smooth-enlargement"
         ],
         "appendix_labels": [
           "app:curve-bounds",
           "app:ties",
-          "app:retention-heuristic",
+          "app:tied-rank-proof",
           "app:seven-point",
           "app:radius-enlargement",
           "app:protocols"
@@ -128,14 +126,14 @@
     "focused_abstract_length": {
       "passed": true,
       "detail": {
-        "words_with_each_math_expression_as_one": 207
+        "words_with_each_math_expression_as_one": 157
       }
     },
     "focused_bibliography_cited": {
       "passed": true,
       "detail": {
-        "cited": 45,
-        "listed": 45
+        "cited": 49,
+        "listed": 49
       }
     },
     "retention_table_join": {

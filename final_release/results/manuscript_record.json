@@ -3,31 +3,31 @@
   "path_base": "manuscript_directory",
   "source": {
     "file": "combined.tex",
-    "sha256": "d477672780edfdd1964505051c7ce82993499bb4d92a31df4b97a9220facf26c"
+    "sha256": "5abba6d4644a7357ef32f0c8890f41ecafbb13655866b3c85da3fbc4ceaf996e"
   },
   "pdf": {
     "file": "combined.pdf",
-    "sha256": "8cc916b0c5a71449176df2831e54f86518f0cdce0d2431098d9c42f3aca2f64e",
-    "pages": 37
+    "sha256": "2531cc1a58c99baa11bb16063993444a6ce4459433b91199282908745fbe8780",
+    "pages": 36
   },
   "inputs": [],
   "graphics": [
     {
       "file": "figures/arc_support_fan.png",
-      "sha256": "1379d56e7ef1f89f9c15e359dccee3f0cc2d27dd795fa100b1dd1ae2e7120618"
+      "sha256": "9c526e3e8477175f02b441864b118b7f7de262c856aa1ec45ab3164b0f30aba7"
     },
     {
       "file": "figures/post_closure_rate.png",
-      "sha256": "ea6c2798c1e21615a388f6beb23a52263f1f828bf25613f267ec678c6a54a8a3"
+      "sha256": "cc7f4ad7aeeb1a1b586b1a1953adc164b61621fe2f9be2055717d71600a2c756"
     },
     {
       "file": "figures/peanut_comparison.png",
-      "sha256": "23ca7b846b1b2ca5be32522d71f887b45c5ed47ef4aa216d183b70f86ac3c7bc"
+      "sha256": "f845a0704174f6916ef6e4c4038b41c59edf726c5619e4571e5d4eb86a6849d8"
     }
   ],
   "source_checks": {
-    "unique_labels": 69,
-    "resolved_citation_keys": 45,
+    "unique_labels": 68,
+    "resolved_citation_keys": 49,
     "unresolved_references": 0,
     "unresolved_citations": 0
   }

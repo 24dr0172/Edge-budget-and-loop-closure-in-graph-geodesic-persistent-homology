@@ -1276,5 +1276,16 @@
     "spacing_misses",
     "min_good_event_margin",
     "seed"
+  ],
+  "radial_noise_knn.csv": [
+    "seed",
+    "delta",
+    "method",
+    "k",
+    "empty",
+    "longest_ratio",
+    "at_least_quarter",
+    "at_least_half",
+    "all_consecutive"
   ]
 }

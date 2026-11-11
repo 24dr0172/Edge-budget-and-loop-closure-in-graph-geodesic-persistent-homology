@@ -4,10 +4,11 @@ These are saved measurements and checks. Load NPZ files with NumPy using `allow_
 
 ## Paper evidence
 
-- `retention_table/` and `extra_k/rank_sweep/`: the 24 profile/method/size cells in Table 3, their counts, intervals and raw ranks.
+- `retention_table/` and `extra_k/rank_sweep/`: the 24 profile/method/size cells in Table 1, their counts, intervals and raw ranks.
 - `clean_closure/` and `post_closure_rate/`: clean-circle diagrams and Figure 3's 320 records, including one omitted radius-doubling miss. `exact_optimum/` records the closure error and empty-diagram cost for 180 sample–order pairs.
-- `peanut_neck/`: 100 clouds paired over five waist parameters and 300 method records, with 15 saved closure groups. Table 4 aggregates the 12 noncircular groups into four waist rows; Figure 4 also shows the circle control. `first_nonempty/` records the prefix search and radius-doubling outcomes on those same clouds.
-- `radius_enlargement/`: 400,000 saved circle gap pairs and 12 rate rows. `radius_enlargement_extra/`: independent million-cloud checks at $\alpha=2$ for $n=4,096$ and $32,768$, with replayable batch counts. `smooth_curve_enlargement/`: the ellipse and peanut chord-event proxies, batch counts and full-diagram spot checks for Table 5. Proxy events are identified as such in the manuscript.
+- `radial_noise_knn.csv`: 3,200 method and amplitude records for the 400 paired point sets in Table 2.
+- `peanut_neck/`: 100 clouds paired over five waist parameters and 300 method records, with 15 saved closure groups. Table 3 aggregates the 12 noncircular groups into four waist rows; Figure 4 also shows the circle control. `first_nonempty/` records the prefix search and radius-doubling outcomes on those same clouds.
+- `radius_enlargement/`: 400,000 saved circle gap pairs and 12 rate rows. `radius_enlargement_extra/`: independent million-cloud checks at $\alpha=2$ for $n=4,096$ and $32,768$, with replayable batch counts. `smooth_curve_enlargement/`: the ellipse and peanut chord-event proxies, batch counts and full-diagram spot checks for Table 4. Proxy events are identified as such in the manuscript.
 - `rational_certificates/`, `seven_point_check/`, `useful_diagram/rational_counterexample.json`, `natural_instance_verification.json`, and `noncircular_locality/`: finite examples, exact or interval checks, and numerical locality estimates.
 
 ## Additional studies

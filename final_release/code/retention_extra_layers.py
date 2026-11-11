@@ -2,7 +2,7 @@
 
 No new sample or persistence diagram is generated. The main figure uses
 n=512; the CSV contains all four primary sample sizes and pointwise Wilson
-intervals. Methods and profiles share seeds, as in Table 3.
+intervals. Methods and profiles share seeds, as in Table 1.
 """
 from pathlib import Path
 import csv,hashlib,json,math

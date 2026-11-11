@@ -16,14 +16,14 @@ from record_current import result_numbers
 
 FIGURE_LABELS = ['fig:closure-schematic','fig:arc-support-fan','fig:rate','fig:peanut-comparison']
 GRAPHICS = ['arc_support_fan.png','post_closure_rate.png','peanut_comparison.png']
-TABLES = ['tab:ingredients','tab:notation','tab:rank-scaling','tab:peanut-summary','tab:smooth-enlargement']
+TABLES = ['tab:rank-scaling','tab:radial-noise','tab:peanut-summary','tab:smooth-enlargement']
 RESULTS = {
-    'theorem': ['thm:loop-transition','thm:arc-supported','thm:circle-parameters','thm:smooth-radius'],
+    'theorem': ['thm:loop-transition','thm:arc-supported','thm:circle-parameters','thm:ties','thm:smooth-radius'],
     'corollary': ['cor:geometric-survival','cor:first-nonempty','cor:closure-optimal','cor:rate','cor:certificate'],
     'proposition': ['prop:locality'],
     'lemma': ['lem:edge-path','lem:robinson','lem:circle-bar','lem:edgewise-death',
               'lem:rank-containment','lem:circle-orders','lem:local-rank-keys','lem:chord-arc','lem:cost-ceiling'],
-    'remark': ['rem:polygon','rem:unsupported-shortcut','rem:perturbation','rem:retention-heuristic'],
+    'remark': ['rem:polygon','rem:unsupported-shortcut'],
     'example': ['ex:natural-ellipse'],
 }
 
@@ -51,12 +51,15 @@ def verify_manuscript_tables(root, require, manuscript_dir=None):
         require('focused_result_numbers_'+kind,
                 text.count(r'\begin{'+kind+'}')==len(labels) and
                 all(numbers[kind].get(label)==i for i,label in enumerate(labels,1)))
-    headings=['Smooth-curve locality','Ties and parameter layers','Retention ties in an independent-key model',
+    headings=['Smooth-curve locality','Ties in edge orderings','Proof of the tied-rank theorem',
               'A seven-point example outside the gap condition','Comparisons with existing graph frameworks',
               'Finite-size check of radius enlargement','Protocols and numerical tolerances']
     appendix=text[text.index(r'\appendix'):]
     require('focused_appendices', re.findall(r'\\section\{([^}]+)\}',appendix)==headings)
-    require('focused_notation_placement',text.index(r'\label{tab:notation}')<text.index(r'\section{Before ring closure}'))
+    require('focused_intrinsic_proof_placement',
+            appendix.index(r'\label{app:ties}')<
+            appendix.index(r'\begin{proof}[Proof of Lemma~\ref{lem:circle-bar}]')<
+            appendix.index(r'\label{app:tied-rank-proof}'))
     require('focused_no_external_tex_inputs',manuscript_inputs(paper)==[] and
             not re.search(r'\\(?:input|include|bibliography|addbibresource)\s*\{',text))
     graphics=re.findall(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}',text)
@@ -71,38 +74,48 @@ def verify_manuscript_tables(root, require, manuscript_dir=None):
             r'\label{lem:winding-survival}' not in text and r'\label{fig:retention-extra}' not in text and
             r'\label{cor:first-nonempty}' in text and r'\label{thm:smooth-radius}' in text)
     abstract=flat(section(text,r'\begin{abstract}',r'\end{abstract}'))
-    require('focused_abstract_scope',all(x in abstract for x in ['noise-free',
-            'consecutive samples', 'nearest-neighbor rules', 'local sample counts',
-            'distances along the curve', 'circular order']) and
-            any(x in abstract for x in ['positive intrinsic bar',
-                'provided the loop appears in persistence computed from distances along the curve']) and
-            any(x in abstract for x in ['connectivity alone need not reveal a loop',
-                                       'being connected alone need not imply a loop']))
+    require('focused_abstract_scope',all(x in abstract for x in [
+        'noise-free', 'consecutive points', 'nearest-neighbor rules',
+        'local counts', 'distances along the curve', 'stated sampling conditions',
+        'can be connected and still miss the loop']))
     abstract_body=section(text,r'\begin{abstract}',r'\end{abstract}').split('}',1)[1]
-    require('focused_smooth_abstract_connected', all(x in abstract for x in ['independent uniform samples', 'fixed smooth closed curve', 'connected radius graph detects the loop exactly when it joins every consecutive pair of samples', 'high probability']))
+    require('focused_abstract_nonvanishing', all(x in abstract for x in [
+        'uniform circle samples', 'smallest connecting neighbor count',
+        'stays bounded away from zero']))
+    require('focused_smooth_abstract_connected', all(x in abstract for x in [
+        'independent uniform samples', 'fixed smooth closed curve',
+        'doubling the connecting radius gives a miss probability asymptotic to two divided by the sample size']))
     abstract_words=len(re.sub(r'\$[^$]*\$', 'MATH', abstract_body).split())
     require('focused_abstract_plain_language',not re.search(
-        r'short-hops-first|arc support|\bring\b|ring closure|edge budget|winding triple',abstract_body,re.I))
+        r'short-hops-first|arc support|cycle closure|\bring\b|edge budget|winding triple',abstract_body,re.I))
     require('focused_abstract_no_citations',not re.search(r'\\cite\w*',abstract_body))
     require('focused_abstract_no_math_notation','$' not in abstract_body)
-    require('focused_abstract_length',150<=abstract_words<=250,{'words_with_each_math_expression_as_one':abstract_words})
+    require('focused_abstract_length',abstract_words<=180,{'words_with_each_math_expression_as_one':abstract_words})
     citations={key.strip() for group in re.findall(r'\\cite\w*\*?(?:\[[^\]]*\])*\{([^}]+)\}',text) for key in group.split(',')}
     bibliography=set(re.findall(r'\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}',text))
     require('focused_bibliography_cited',citations==bibliography,{'cited':len(citations),'listed':len(bibliography)})
-    claims=section(text,'Our results address four claims.',r'\end{enumerate}')
-    require('focused_intro_claims_plain_language',not re.search(r'\\(?:psi|chi|alpha|Gamma)|g_0|b_\*|r_\{\\rm conn\}',claims))
-    require('focused_diagnostics_in_appendix',text.index(r'\appendix')<text.index(r'\label{app:retention-heuristic}')<text.index(r'\label{rem:retention-heuristic}'))
-    require('focused_protocols_in_appendix',text.index(r'\appendix')<text.index(r'\label{app:protocols}'))
-    require('focused_tolerance_text',all(x in text for x in [r'$10^{-6}$',r'$10^{-10}$',r'$5\times10^{-8}$',r'$5\times10^{-12}$']))
+    introduction=flat(section(text,r'\section{Introduction}',r'\section{Related work}'))
+    require('focused_intro_claims',all(x in introduction for x in [
+        'penultimate consecutive edge insertion', 'empty persistence in positive degrees',
+        'miss probability stays bounded away from zero',
+        r'$\Gamma(\alpha+1)n^{1-\alpha}$', '$2/n$ for doubling',
+        'edge to minimize diagram error']))
+    require('focused_tie_proof_in_appendix',text.index(r'\appendix')<text.index(r'\label{app:tied-rank-proof}')<
+            text.index(r'\begin{proof}[Proof of Theorem~\ref{thm:ties}]'))
+    protocols=section(text,r'\label{app:protocols}',r'\begin{thebibliography}')
+    require('focused_protocols_in_appendix',text.index(r'\appendix')<text.index(r'\label{app:protocols}') and
+            all(r'\path{'+f+'}' in protocols for f in ['code/README.md','code/config.json']))
+    protocol_guide=(root/'code/README.md').read_text()
+    require('focused_tolerance_text',all(x in protocol_guide for x in ['1e-6','1e-10','5e-8','5e-12']))
     for name in re.findall(r'\\path\{([^}]+)\}',text):
         require('focused_release_path_'+name,(root/name).exists())
 
-    # Every cell in Table 3 must agree with both its compact export and raw counts.
+    # Every cell in the circle-retention table must agree with both its compact export and raw counts.
     from verify_retention_cost_witness import practical_counts, wilson
     counts=practical_counts(root,require)
     display={}
     profiles={'Uniform':'uniform','Cosine':'strong_cosine','Trough':'localized_trough'}
-    methods={'OR-$k$NN':'OR_kNN','Mutual-$k$NN':'mutual_kNN'}
+    methods={'Symmetric $k$NN':'OR_kNN','Mutual $k$NN':'mutual_kNN'}
     table=section(text,r'\label{tab:rank-scaling}',r'\end{table}')
     for line in table.splitlines():
         cell=[x.strip() for x in line.rstrip('\\ ').split('&')]
@@ -118,12 +131,39 @@ def verify_manuscript_tables(root, require, manuscript_dir=None):
     for size, limit in ((1500,2.5),(500,4.1)):
         half=[50*(wilson(v['k_conn'],size)[1]-wilson(v['k_conn'],size)[0]) for v in counts.values() if v['samples']==size]
         require('focused_wilson_'+str(size),bool(half) and max(half)<limit)
-    practical=json.loads((root/'results/practical_claims_verification.json').read_text())
-    heuristic=flat(section(text,r'\label{rem:retention-heuristic}',r'\end{remark}'))
-    model=[v for v in practical['independent_key_model'] if v['n']==512]
-    require('focused_heuristic_values',len(model)==2 and all(f"{v['probability']:.3f}" in heuristic for v in model))
+    # Evaluate the approximation reported near Table 1.
+    from check_tied_ranks import tie_approximations
+    tie_statement=section(text,r'\label{thm:ties}',r'\end{theorem}')
+    require('focused_tie_asymptotic_remainder',r'e^{-n\pi_m}+o(1)' in tie_statement and
+            'The remainder is unquantified.' in tie_statement)
+    tie_comparison=flat(section(text,r'\label{thm:ties}','A separate clean-circle study'))
+    approximations=tie_approximations((128,512,4096,32768))['symmetric']
+    values=[f'{100*rate:.1f}'+r'\%' for rate in approximations]
+    display_values=', '.join('$'+value+'$' for value in values[:-1])+', and $'+values[-1]+'$'
+    require('focused_tie_table_approximation',display_values in tie_comparison)
+    from radial_noise_knn import AMPLITUDES, METHODS, N, SEEDS
+    noise=rows(root/'results/radial_noise_knn.csv')
+    expected_keys={(seed,delta,method) for seed in SEEDS for delta in AMPLITUDES for method in METHODS}
+    actual_keys={(int(row['seed']),float(row['delta']),row['method']) for row in noise}
+    require('focused_radial_pairing',len(noise)==len(expected_keys) and actual_keys==expected_keys)
+    noise_table=section(text,r'\label{tab:radial-noise}',r'\end{table}')
+    for row in noise:
+        ratio=float(row['longest_ratio'])
+        require('focused_radial_row_'+str((row['seed'],row['delta'],row['method'])),
+                ratio>=0 and 1<=int(row['k'])<N and row['all_consecutive'] in ('0','1')
+                and int(row['empty'])==(ratio==0)
+                and int(row['at_least_quarter'])==(ratio>=.25)
+                and int(row['at_least_half'])==(ratio>=.5)
+                and (float(row['delta'])>0 or int(row['all_consecutive'])==1-int(row['empty'])))
+    for delta in AMPLITUDES:
+        cells=[]
+        for method in METHODS:
+            group=[r for r in noise if float(r['delta'])==delta and r['method']==method]
+            cells.append('/'.join(str(sum(int(r[name]) for r in group))
+                                  for name in ('empty','at_least_quarter','at_least_half','all_consecutive')))
+        require('focused_radial_table_'+str(delta),'$'+f'{delta:g}$ & {cells[0]} & {cells[1]}' in noise_table)
 
-    # Table 4: four noncircular waists, preserving per-order counts and pooled ranges.
+    # Peanut closure table: four noncircular waists, preserving per-order counts and pooled ranges.
     from build_peanut_comparison import table_rows
     peanut=json.loads((root/'results/peanut_neck/closure_error_bound.json').read_text())
     table=section(text,r'\label{tab:peanut-summary}',r'\end{table}')
@@ -199,13 +239,13 @@ def verify_manuscript_tables(root, require, manuscript_dir=None):
     require('focused_narrow_waist_support',all(r['closure_supported']=='False' for r in closure_trials
             if float(r['alpha'])==.9 and r['method'] in ('R2_global','OR_kNN')))
     require('focused_peanut_doubling',len(radius)==100 and all(r['double_ring_present']=='True' and int(r['double_bars'])>0 for r in radius))
-    prose=section(text,r'\label{fig:peanut-comparison}',r'\section{Discussion}')
-    require('focused_peanut_reported_counts',all(v in flat(prose) for v in ['$20/20$', '$13/20$', '$18/20$', 'nine early stops', '$100$ clouds']))
+    prose=section(text,r'\label{fig:peanut-comparison}',r'\section{Discussion and conclusion}')
+    require('focused_peanut_reported_counts',all(v in flat(prose) for v in ['$20/20$', '$13/20$', '$18/20$', 'nine cases with a nonempty diagram before cycle closure', '$100$ point sets']))
 
     # Check the high-precision first-failure ranges and their reported margin.
     local_rows=rows(root/'results/noncircular_locality/locality_check_results.csv')
     local_summary=json.loads((root/'results/noncircular_locality/locality_check_summary.json').read_text())
-    local_text=flat(section(text,r'\paragraph{A numerical check on two curves.}',r'\section{Ties and parameter layers}'))
+    local_text=flat(section(text,r'\paragraph{A numerical check on two curves.}',r'\section{Ties in edge orderings}'))
     for curve,lo,hi,digits,tolerance in (('peanut',.1661840819,.1698344462,10,5.1e-11),
                                          ('ellipse',.1942495,.2064328,7,1e-7)):
         vals=[float(row[method+'_fail_chord']) for row in local_rows if row['curve']==curve
@@ -217,7 +257,7 @@ def verify_manuscript_tables(root, require, manuscript_dir=None):
                for method in ('radius','OR','mutual'))-threshold
     require('focused_local_peanut_margin',4.005e-7<margin<4.015e-7 and r'$4.01\times10^{-7}$' in local_text)
 
-    # Table 5: circle observations, two curve proxies, spacing law and asymptotic rate.
+    # Radius enlargement table: circle observations, two curve proxies, spacing law and asymptotic rate.
     circle={(int(r['n']),round(1+float(r['epsilon']),2)):r for r in rows(root/'results/radius_enlargement/summary.csv')}
     from radius_enlargement_extra import verify as verify_extra_circle
     verify_extra_circle(root,require)

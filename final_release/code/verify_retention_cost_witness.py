@@ -1,4 +1,4 @@
-"""Check Table 3, the additional post-closure plot and Appendix D against the saved records.
+"""Check the circle retention table, the additional post-closure plot and Appendix D against the saved records.
 
 Run from anywhere; paths are relative to the release root (the parent of `code/`).
 No measurements are generated. The checks cover:

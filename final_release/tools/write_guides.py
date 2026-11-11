@@ -18,6 +18,8 @@ The first checks the paper, file hashes and selected evidence; the second includ
 ## Rebuild from saved data
 
 - `build_retention_table.py` exports circle rank counts and pointwise Wilson intervals.
+- `check_tied_ranks.py` checks the spacing tests and evaluates the approximation in Theorem 4 at the Table 1 sample sizes.
+- `python3 code/radial_noise_knn.py --output /tmp/radial_noise_knn.csv` regenerates the 400 paired point sets for Table 2.
 - `post_closure_rate.py --plot-only` redraws Figure 3 from saved records; `--verify` checks them and replays selected graphs.
 - `build_peanut_comparison.py` reconstructs selected edges for the 300 saved closure graphs, checks U_G, refreshes the summary and draws Figure 4. Its JSON also includes winding-based checks as additional evidence. Add `--manuscript-dir /path/to/paper` to copy the rebuilt PNG to that paper's `figures/` directory. Regenerated image bytes can differ across plotting environments; rerecord the manuscript only after compiling the intended source and reviewing its PDF.
 - `radius_enlargement_check.py --verify`, `radius_enlargement_extra.py --verify` and `smooth_curve_enlargement.py --verify` check the saved circle and smooth-curve enlargement studies.
@@ -36,6 +38,8 @@ python3 code/reproduce.py --output /path/to/new-run --workers 6
 ```
 
 The full run starts from an empty output directory, generates the paper and additional studies, and can take hours. It retains the supplied Figure 4 PNG and PDF while rebuilding its underlying data, so the external manuscript comparison uses the same frozen figure. Use `--resume` with unchanged code to continue an interrupted run. The bridge-free generator requires a C++17 compiler. The recorded `code/config.json` describes sampling, seeds, grids and tolerances. Numerical diagrams keep every returned positive bar; shortest paths use float64 and Ripser endpoints use float32.
+
+Clean-circle checks use tolerances of `1e-6` for normalized diagram error and `1e-10` for arc support in raw distance units. Peanut closure checks use `5e-8` for saved endpoints in raw distance units and `5e-12` for the edgewise ratio. These tolerances do not impose a lifetime cutoff.
 ''',
 'results': r'''# Results
 
@@ -43,10 +47,11 @@ These are saved measurements and checks. Load NPZ files with NumPy using `allow_
 
 ## Paper evidence
 
-- `retention_table/` and `extra_k/rank_sweep/`: the 24 profile/method/size cells in Table 3, their counts, intervals and raw ranks.
+- `retention_table/` and `extra_k/rank_sweep/`: the 24 profile/method/size cells in Table 1, their counts, intervals and raw ranks.
 - `clean_closure/` and `post_closure_rate/`: clean-circle diagrams and Figure 3's 320 records, including one omitted radius-doubling miss. `exact_optimum/` records the closure error and empty-diagram cost for 180 sample–order pairs.
-- `peanut_neck/`: 100 clouds paired over five waist parameters and 300 method records, with 15 saved closure groups. Table 4 aggregates the 12 noncircular groups into four waist rows; Figure 4 also shows the circle control. `first_nonempty/` records the prefix search and radius-doubling outcomes on those same clouds.
-- `radius_enlargement/`: 400,000 saved circle gap pairs and 12 rate rows. `radius_enlargement_extra/`: independent million-cloud checks at $\alpha=2$ for $n=4,096$ and $32,768$, with replayable batch counts. `smooth_curve_enlargement/`: the ellipse and peanut chord-event proxies, batch counts and full-diagram spot checks for Table 5. Proxy events are identified as such in the manuscript.
+- `radial_noise_knn.csv`: 3,200 method and amplitude records for the 400 paired point sets in Table 2.
+- `peanut_neck/`: 100 clouds paired over five waist parameters and 300 method records, with 15 saved closure groups. Table 3 aggregates the 12 noncircular groups into four waist rows; Figure 4 also shows the circle control. `first_nonempty/` records the prefix search and radius-doubling outcomes on those same clouds.
+- `radius_enlargement/`: 400,000 saved circle gap pairs and 12 rate rows. `radius_enlargement_extra/`: independent million-cloud checks at $\alpha=2$ for $n=4,096$ and $32,768$, with replayable batch counts. `smooth_curve_enlargement/`: the ellipse and peanut chord-event proxies, batch counts and full-diagram spot checks for Table 4. Proxy events are identified as such in the manuscript.
 - `rational_certificates/`, `seven_point_check/`, `useful_diagram/rational_counterexample.json`, `natural_instance_verification.json`, and `noncircular_locality/`: finite examples, exact or interval checks, and numerical locality estimates.
 
 ## Additional studies

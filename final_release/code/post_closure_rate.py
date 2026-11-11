@@ -115,16 +115,16 @@ def plot(rows):
     ax.plot(xs,math.pi**2/9*xs**2,'k-',lw=1,label=r'$(\pi^2/9)g^2$')
     ax.plot(xs,math.pi**2/9*(2*xs)**2,'k--',lw=1,label=r'$(\pi^2/9)(2g)^2$')
     ax.axhline(euclid,color='0.45',lw=1,ls=':');ax.axhline(pstar,color='0.45',lw=1,ls='-.')
-    ax.text(.0042,euclid*1.12,'Euclidean',fontsize=8,color='0.3');ax.text(.0042,pstar*1.08,'missed loop',fontsize=8,color='0.3')
-    for graph,color,mark,label in (('radius_closure','#0072B2','o','radius, closure'),('radius_double','#D55E00','s',r'radius, $2r_{\rm conn}$')):
+    ax.text(.0042,euclid*1.12,'Euclidean',fontsize=8,color='0.3');ax.text(.0042,pstar*1.08,'empty diagram',fontsize=8,color='0.3')
+    for graph,color,mark,label in (('radius_closure','#0072B2','o',r'$\varepsilon=B$'),('radius_double','#D55E00','s',r'$\varepsilon=2\varepsilon_{\rm conn}$')):
         ax.scatter([r['g'] for r in ok(graph)],[r['e_PH'] for r in ok(graph)],s=14,color=color,marker=mark,label=label,alpha=.8,lw=0)
     ax.set_xscale('log');ax.set_yscale('log');ax.set_xlabel(r'Largest gap $g$');ax.set_ylabel(r'Diagram error $e_{\rm PH}$')
-    ax.set_title('(a) Radius graphs',fontsize=10);ax.legend(frameon=False,fontsize=7.5,loc='lower right')
+    ax.set_title(r'(a) $\varepsilon$-neighborhood graphs',fontsize=10);ax.legend(frameon=False,fontsize=7.5,loc='lower right')
     ax=axes[1]
     xs=np.geomspace(.004,.2,50);ax.plot(xs,math.pi**2/9*xs**2,'k-',lw=1,label=r'$(\pi^2/9)\ell_G^2$')
-    for graph,color,mark,label in (('radius_closure','#0072B2','o','radius'),('or_closure','#D55E00','s','OR'),('mutual_closure','#009E73','^','mutual')):
+    for graph,color,mark,label in (('radius_closure','#0072B2','o',r'$\varepsilon$-neighborhood'),('or_closure','#D55E00','s','symmetric kNN'),('mutual_closure','#009E73','^','mutual kNN')):
         ax.scatter([r['ell_G'] for r in ok(graph)],[r['e_PH'] for r in ok(graph)],s=14,color=color,marker=mark,label=label,alpha=.8,lw=0)
-    ax.set_xscale('log');ax.set_yscale('log');ax.set_xlabel(r'Longest edge arc $\ell_G$');ax.set_title('(b) Three orders at closure',fontsize=10)
+    ax.set_xscale('log');ax.set_yscale('log');ax.set_xlabel(r'Longest edge arc $\ell_G$');ax.set_title('(b) Cycle closure',fontsize=10)
     ax.legend(frameon=False,fontsize=7.5,loc='lower right')
     for ax in axes:ax.grid(alpha=.2,which='major')
     (ROOT/'results/figure_exports').mkdir(parents=True,exist_ok=True);(ROOT/'manuscript_figures').mkdir(exist_ok=True)

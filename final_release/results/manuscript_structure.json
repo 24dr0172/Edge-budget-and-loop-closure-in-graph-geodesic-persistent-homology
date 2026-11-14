@@ -1,8 +1,8 @@
 {
   "status": "passed",
   "scope": "Source and PDF identities, labels, citations, environment counts and result numbering.",
-  "source_sha256": "ccdbfe6a2067bf7571cfaee6c9c7c7accb6ada845494bef57f8bdb92e8f84064",
-  "pdf_sha256": "60d0569bb3a9200d54dc3cc382d8c80af849dad1d6aca1e6446e1707ad2cfff0",
+  "source_sha256": "8bbaeb228b2ff47fd57521b8e561b6f05a279a35c44cde157ebc50f019236a74",
+  "pdf_sha256": "9d657b8af064c5737b143f408f01a800bc250d1fc94573e2f7e628ed39081550",
   "pdf_pages": 38,
   "source_checks": {
     "unique_labels": 71,

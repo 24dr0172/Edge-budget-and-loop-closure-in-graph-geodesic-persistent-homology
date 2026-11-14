@@ -34,6 +34,8 @@ For all saved-data checks, including the additional studies, use `python3 code/v
 
 ## Tables and figures
 
+An unnumbered notation table appears at the start of Section 3; the numbered tables below report experimental results.
+
 | Manuscript item | Source or evidence |
 |---|---|
 | Table 1: circle loop detection | [retention_compact.csv](results/retention_table/retention_compact.csv), [raw ranks](results/extra_k/rank_sweep/samples.csv) |

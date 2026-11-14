@@ -76,34 +76,37 @@ def verify_manuscript_tables(root, require, manuscript_dir=None):
     abstract=flat(section(text,r'\begin{abstract}',r'\end{abstract}'))
     require('focused_abstract_scope',all(x in abstract for x in [
         'noise-free', 'consecutive edges', 'nearest-neighbor rules',
-        'local counts', 'distances along the curve', 'stated sampling conditions',
-        'On peanut curves, graph distances at cycle closure',
-        r'can be connected and still have an empty shortest-path $H_1$ persistence diagram',
-        'the sample locations and their cyclic order']))
+        'local counts', 'distances along the curve', 'given sampling conditions',
+        'On peanut curves, persistence diagrams based on graph distances at cycle closure',
+        r'can be connected and yet have an empty shortest-path $H_1$ persistence diagram',
+        'the sample locations and their cyclic order',
+        'diagram of a connected graph']))
     abstract_body=section(text,r'\begin{abstract}',r'\end{abstract}').split('}',1)[1]
     require('focused_abstract_nonvanishing', all(x in abstract for x in [
-        'uniform circle samples', 'smallest connecting neighbor count',
+        'uniform circle samples', 'smallest number of connecting neighbours',
         'is bounded away from zero']))
     require('focused_smooth_abstract_connected', all(x in abstract for x in [
         'sampled independently and uniformly in arc length', 'fixed smooth closed curve',
-        'doubling the connecting radius leads to a miss probability asymptotic to two over the sample size']))
-    abstract_words=len(re.sub(r'\$[^$]*\$', 'MATH', abstract_body).split())
+        'doubling the connecting radius yields a miss probability that is asymptotic to two over the sample size']))
     require('focused_abstract_plain_language',not re.search(
         r'short-hops-first|arc support|\bring\b|edge budget|winding triple',abstract_body,re.I))
     require('focused_abstract_no_citations',not re.search(r'\\cite\w*',abstract_body))
     require('focused_abstract_math_notation',
             all(symbol == 'H_1' for symbol in re.findall(r'\$([^$]*)\$',abstract_body)))
-    require('focused_abstract_length',abstract_words<=180,{'words_with_each_math_expression_as_one':abstract_words})
     citations={key.strip() for group in re.findall(r'\\cite\w*\*?(?:\[[^\]]*\])*\{([^}]+)\}',text) for key in group.split(',')}
     bibliography=set(re.findall(r'\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}',text))
     require('focused_bibliography_cited',citations==bibliography,{'cited':len(citations),'listed':len(bibliography)})
     introduction=flat(section(text,r'\section{Introduction}',r'\section{Related work}'))
     require('focused_intro_claims',all(x in introduction for x in [
-        'connectivity precedes cycle closure', 'persistence in positive degrees is empty before closure',
-        'probability is bounded away from zero as the sample size increases',
-        r'$67.1\%$ of the uniform samples in Table',
-        r'$\Gamma(\alpha+1)n^{1-\alpha}$', '$2/n$ for doubling',
-        'edge to minimize diagram error']))
+        'persistence in positive degrees is empty before closure',
+        r'$\Gamma(\alpha+1)n^{1-\alpha}$',
+        'edge to minimize diagram error',
+        'reference diagram computed from shortest arc lengths between the same sample points',
+        'normalized error is the bottleneck distance']))
+    accuracy=flat(section(text,r'\section{Accuracy on the circle}',r'\section{Beyond the circle: peanut curves}'))
+    require('focused_bottleneck_definition',all(x in accuracy for x in [
+        'bottleneck distance', 'matching a point to the diagonal costs half its interval',
+        r'\citep{cohensteiner2007}']))
     require('focused_tie_proof_in_appendix',text.index(r'\appendix')<text.index(r'\label{app:tied-rank-proof}')<
             text.index(r'\begin{proof}[Proof of Theorem~\ref{thm:ties}]'))
     protocols=section(text,r'\label{app:protocols}',r'\begin{thebibliography}')

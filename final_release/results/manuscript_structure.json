@@ -1,11 +1,11 @@
 {
   "status": "passed",
   "scope": "Source and PDF identities, labels, citations, environment counts and result numbering.",
-  "source_sha256": "5abba6d4644a7357ef32f0c8890f41ecafbb13655866b3c85da3fbc4ceaf996e",
-  "pdf_sha256": "2531cc1a58c99baa11bb16063993444a6ce4459433b91199282908745fbe8780",
-  "pdf_pages": 36,
+  "source_sha256": "ccdbfe6a2067bf7571cfaee6c9c7c7accb6ada845494bef57f8bdb92e8f84064",
+  "pdf_sha256": "60d0569bb3a9200d54dc3cc382d8c80af849dad1d6aca1e6446e1707ad2cfff0",
+  "pdf_pages": 38,
   "source_checks": {
-    "unique_labels": 68,
+    "unique_labels": 71,
     "resolved_citation_keys": 49,
     "unresolved_references": 0,
     "unresolved_citations": 0
@@ -23,8 +23,9 @@
     "proof": 23
   },
   "display_math_blocks_by_type": {
-    "bracketed": 101,
-    "equation": 13
+    "bracketed": 134,
+    "equation": 13,
+    "align": 1
   },
   "result_numbers": {
     "theorem": {

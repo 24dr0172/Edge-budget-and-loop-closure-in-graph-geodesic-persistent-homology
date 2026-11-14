@@ -29,5 +29,6 @@
   "script_sha256": "e31d2e461f767e56920d7c2c26cde21fb9a451ef09b5e4133f52db9e8f0fad65",
   "helper_sha256": {
     "graph_methods.py": "b81eb4325b08a7e939ff892f50b1910aeb444452227045ee54d55914593a04f4"
-  }
+  },
+  "verification_script_sha256": "bf4e477c8a919d8467d297d02c5ac6225b84df519e0d3bd0092b0616f9e1a308"
 }

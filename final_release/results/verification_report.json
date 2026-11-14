@@ -8,7 +8,7 @@
     "location": "external"
   },
   "scope": "Saved evidence for the paper, including retention counts, the peanut comparison, radius enlargement and finite examples; all additional studies, including the certified ellipse window, including 240 one-edge peanut-prefix replays, selected clean/noise/ellipse diagrams, seed and selector checks, rank counts, Wilson intervals and study comparisons. The full experiment cohorts are not regenerated.",
-  "checks_passed": 104684,
+  "checks_passed": 104691,
   "checks": {
     "release_structure": {
       "passed": true
@@ -23,7 +23,7 @@
     "manuscript_identity": {
       "passed": true,
       "detail": {
-        "pdf_pages": 36
+        "pdf_pages": 38
       }
     },
     "manuscript_structure_record": {
@@ -31,11 +31,11 @@
       "detail": {
         "status": "passed",
         "scope": "Source and PDF identities, labels, citations, environment counts and result numbering.",
-        "source_sha256": "5abba6d4644a7357ef32f0c8890f41ecafbb13655866b3c85da3fbc4ceaf996e",
-        "pdf_sha256": "2531cc1a58c99baa11bb16063993444a6ce4459433b91199282908745fbe8780",
-        "pdf_pages": 36,
+        "source_sha256": "ccdbfe6a2067bf7571cfaee6c9c7c7accb6ada845494bef57f8bdb92e8f84064",
+        "pdf_sha256": "60d0569bb3a9200d54dc3cc382d8c80af849dad1d6aca1e6446e1707ad2cfff0",
+        "pdf_pages": 38,
         "source_checks": {
-          "unique_labels": 68,
+          "unique_labels": 71,
           "resolved_citation_keys": 49,
           "unresolved_references": 0,
           "unresolved_citations": 0
@@ -53,8 +53,9 @@
           "proof": 23
         },
         "display_math_blocks_by_type": {
-          "bracketed": 101,
-          "equation": 13
+          "bracketed": 134,
+          "equation": 13,
+          "align": 1
         },
         "result_numbers": {
           "theorem": {
@@ -126,7 +127,7 @@
     "focused_abstract_length": {
       "passed": true,
       "detail": {
-        "words_with_each_math_expression_as_one": 157
+        "words_with_each_math_expression_as_one": 171
       }
     },
     "focused_bibliography_cited": {
@@ -8160,7 +8161,7 @@
             ],
             "exports": "PDF and 300-dpi PNG; native document sources are kept outside the release"
           },
-          "scope": "Table 3, the additional post-closure plot and Appendix D checked from saved records; no persistence diagrams are computed."
+          "scope": "Table 1, the additional post-closure plot and Appendix D checked against saved records, with independent diagram replays."
         },
         "radius_integral_checks": 12,
         "extra_layer_rows": 144,

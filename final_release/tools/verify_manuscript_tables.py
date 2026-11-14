@@ -75,29 +75,33 @@ def verify_manuscript_tables(root, require, manuscript_dir=None):
             r'\label{cor:first-nonempty}' in text and r'\label{thm:smooth-radius}' in text)
     abstract=flat(section(text,r'\begin{abstract}',r'\end{abstract}'))
     require('focused_abstract_scope',all(x in abstract for x in [
-        'noise-free', 'consecutive points', 'nearest-neighbor rules',
+        'noise-free', 'consecutive edges', 'nearest-neighbor rules',
         'local counts', 'distances along the curve', 'stated sampling conditions',
-        'can be connected and still miss the loop']))
+        'On peanut curves, graph distances at cycle closure',
+        r'can be connected and still have an empty shortest-path $H_1$ persistence diagram',
+        'the sample locations and their cyclic order']))
     abstract_body=section(text,r'\begin{abstract}',r'\end{abstract}').split('}',1)[1]
     require('focused_abstract_nonvanishing', all(x in abstract for x in [
         'uniform circle samples', 'smallest connecting neighbor count',
-        'stays bounded away from zero']))
+        'is bounded away from zero']))
     require('focused_smooth_abstract_connected', all(x in abstract for x in [
-        'independent uniform samples', 'fixed smooth closed curve',
-        'doubling the connecting radius gives a miss probability asymptotic to two divided by the sample size']))
+        'sampled independently and uniformly in arc length', 'fixed smooth closed curve',
+        'doubling the connecting radius leads to a miss probability asymptotic to two over the sample size']))
     abstract_words=len(re.sub(r'\$[^$]*\$', 'MATH', abstract_body).split())
     require('focused_abstract_plain_language',not re.search(
-        r'short-hops-first|arc support|cycle closure|\bring\b|edge budget|winding triple',abstract_body,re.I))
+        r'short-hops-first|arc support|\bring\b|edge budget|winding triple',abstract_body,re.I))
     require('focused_abstract_no_citations',not re.search(r'\\cite\w*',abstract_body))
-    require('focused_abstract_no_math_notation','$' not in abstract_body)
+    require('focused_abstract_math_notation',
+            all(symbol == 'H_1' for symbol in re.findall(r'\$([^$]*)\$',abstract_body)))
     require('focused_abstract_length',abstract_words<=180,{'words_with_each_math_expression_as_one':abstract_words})
     citations={key.strip() for group in re.findall(r'\\cite\w*\*?(?:\[[^\]]*\])*\{([^}]+)\}',text) for key in group.split(',')}
     bibliography=set(re.findall(r'\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}',text))
     require('focused_bibliography_cited',citations==bibliography,{'cited':len(citations),'listed':len(bibliography)})
     introduction=flat(section(text,r'\section{Introduction}',r'\section{Related work}'))
     require('focused_intro_claims',all(x in introduction for x in [
-        'penultimate consecutive edge insertion', 'empty persistence in positive degrees',
-        'miss probability stays bounded away from zero',
+        'connectivity precedes cycle closure', 'persistence in positive degrees is empty before closure',
+        'probability is bounded away from zero as the sample size increases',
+        r'$67.1\%$ of the uniform samples in Table',
         r'$\Gamma(\alpha+1)n^{1-\alpha}$', '$2/n$ for doubling',
         'edge to minimize diagram error']))
     require('focused_tie_proof_in_appendix',text.index(r'\appendix')<text.index(r'\label{app:tied-rank-proof}')<
@@ -134,13 +138,13 @@ def verify_manuscript_tables(root, require, manuscript_dir=None):
     # Evaluate the approximation reported near Table 1.
     from check_tied_ranks import tie_approximations
     tie_statement=section(text,r'\label{thm:ties}',r'\end{theorem}')
-    require('focused_tie_asymptotic_remainder',r'e^{-n\pi_m}+o(1)' in tie_statement and
-            'The remainder is unquantified.' in tie_statement)
     tie_comparison=flat(section(text,r'\label{thm:ties}','A separate clean-circle study'))
-    approximations=tie_approximations((128,512,4096,32768))['symmetric']
-    values=[f'{100*rate:.1f}'+r'\%' for rate in approximations]
-    display_values=', '.join('$'+value+'$' for value in values[:-1])+', and $'+values[-1]+'$'
-    require('focused_tie_table_approximation',display_values in tie_comparison)
+    require('focused_tie_asymptotic_remainder',r'e^{-n\pi_m}+o(1)' in tie_statement and
+            'The $o(1)$ remainder is unquantified.' in tie_comparison)
+    for rule, approximations in tie_approximations((128,512,4096,32768)).items():
+        values=[f'{100*rate:.1f}'+r'\%' for rate in approximations]
+        display_values=', '.join('$'+value+'$' for value in values[:-1])+', and $'+values[-1]+'$'
+        require('focused_tie_table_approximation_'+rule,display_values in tie_comparison)
     from radial_noise_knn import AMPLITUDES, METHODS, N, SEEDS
     noise=rows(root/'results/radial_noise_knn.csv')
     expected_keys={(seed,delta,method) for seed in SEEDS for delta in AMPLITUDES for method in METHODS}
@@ -155,13 +159,25 @@ def verify_manuscript_tables(root, require, manuscript_dir=None):
                 and int(row['at_least_quarter'])==(ratio>=.25)
                 and int(row['at_least_half'])==(ratio>=.5)
                 and (float(row['delta'])>0 or int(row['all_consecutive'])==1-int(row['empty'])))
+    noise_display={}
+    for line in noise_table.splitlines():
+        cells=[cell.strip().strip('$') for cell in line.rstrip('\\ ').split('&')]
+        if len(cells)==7 and all(cell.isdecimal() for cell in cells[1:]):
+            noise_display[float(cells[0])]=list(map(int,cells[1:]))
+    require('focused_radial_table_inventory',set(noise_display)==set(AMPLITUDES))
+    require('focused_radial_lifetime_caption',
+            'Using a quarter of the lifetime gives the same counts for both rules at every amplitude.'
+            in flat(section(text,r'\caption{Counts at the smallest connecting',r'\label{tab:radial-noise}')))
     for delta in AMPLITUDES:
         cells=[]
         for method in METHODS:
             group=[r for r in noise if float(r['delta'])==delta and r['method']==method]
-            cells.append('/'.join(str(sum(int(r[name]) for r in group))
-                                  for name in ('empty','at_least_quarter','at_least_half','all_consecutive')))
-        require('focused_radial_table_'+str(delta),'$'+f'{delta:g}$ & {cells[0]} & {cells[1]}' in noise_table)
+            require('focused_radial_equal_cutoffs_'+str((delta,method)),
+                    sum(int(r['at_least_quarter']) for r in group)==
+                    sum(int(r['at_least_half']) for r in group))
+            cells.extend(sum(int(r[name]) for r in group)
+                         for name in ('empty','at_least_half','all_consecutive'))
+        require('focused_radial_table_'+str(delta),noise_display.get(delta)==cells)
 
     # Peanut closure table: four noncircular waists, preserving per-order counts and pooled ranges.
     from build_peanut_comparison import table_rows
@@ -239,7 +255,7 @@ def verify_manuscript_tables(root, require, manuscript_dir=None):
     require('focused_narrow_waist_support',all(r['closure_supported']=='False' for r in closure_trials
             if float(r['alpha'])==.9 and r['method'] in ('R2_global','OR_kNN')))
     require('focused_peanut_doubling',len(radius)==100 and all(r['double_ring_present']=='True' and int(r['double_bars'])>0 for r in radius))
-    prose=section(text,r'\label{fig:peanut-comparison}',r'\section{Discussion and conclusion}')
+    prose=section(text,r'\label{fig:peanut-comparison}',r'\section{Limitations and future work}')
     require('focused_peanut_reported_counts',all(v in flat(prose) for v in ['$20/20$', '$13/20$', '$18/20$', 'nine cases with a nonempty diagram before cycle closure', '$100$ point sets']))
 
     # Check the high-precision first-failure ranges and their reported margin.
@@ -292,6 +308,7 @@ def verify_manuscript_tables(root, require, manuscript_dir=None):
     title=' '.join(re.search(r'\\title\{([\s\S]*?)\}\s*\\author',text)[1].replace('\\\\',' ').split())
     require('focused_title',readme.splitlines()[0]=='# '+title and citation.count(f'title: "{title}"')==2)
     disclosure=flat(section(text,r'\subsection*{Use of generative-AI tools}',r'\subsection*{Author contributions}')).split('}',1)[1].strip()
+    disclosure=disclosure.replace(r'\LaTeX{}','LaTeX')
     require('focused_ai_binding',disclosure in flat(readme))
 
 if __name__=='__main__':

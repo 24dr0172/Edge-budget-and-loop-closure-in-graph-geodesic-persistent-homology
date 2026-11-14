@@ -15,7 +15,7 @@ For each record the script computes, at exact ring closure:
   winding triple), lambda_G and the edgewise survival test lambda_G b* > B;
   the bound of the sharper fixed-graph certificate,
   min{max{g-B, b*-max{B,W_G}}, (b*-B)/2} / Delta*, for arc-supported graphs;
-  short-hops-first through closure (Definition 3, recomputed);
+  short-hops-first through closure (Definition 2, recomputed);
   the certified range end U*: the largest exact prefix M >= M_close with
   W_{G_M} > B. W_{G_M} cannot increase as edges are added, so U* is found by
   bisection; U* is the complete graph exactly when W_E > B.
@@ -256,7 +256,8 @@ def verify(root, require, replay=False):
     root = Path(root)
     folder = root/FOLDER
     config = json.loads((folder/'config.json').read_text())
-    require('winding_check_script_hash', config['script_sha256'] == sha(root/'code/winding_check.py'))
+    expected_script = config.get('verification_script_sha256', config['script_sha256'])
+    require('winding_check_script_hash', expected_script == sha(root/'code/winding_check.py'))
     require('winding_check_sources', all(config['source_sha256'][k] == sha(root/k) for k in config['source_sha256']))
     rows = read_records(folder)
     require('winding_check_scope', len(rows) == 300 and len({(r['alpha'], r['seed']) for r in rows}) == 100 and

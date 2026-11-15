@@ -15,6 +15,6 @@
     "numpy": "2.5.3",
     "pandas": "3.0.5"
   },
-  "manuscript_source_sha256": "8bbaeb228b2ff47fd57521b8e561b6f05a279a35c44cde157ebc50f019236a74",
-  "manuscript_pdf_sha256": "9d657b8af064c5737b143f408f01a800bc250d1fc94573e2f7e628ed39081550"
+  "manuscript_source_sha256": "8042b9fd5ec1d80156f7937a96e57e38ae6a98999899838844591f9c64f8fbc4",
+  "manuscript_pdf_sha256": "f26ecbc3722964f178e45ac2848ea79b9447f49bb8cbacbe4476aec9118008f3"
 }

@@ -57,7 +57,7 @@ The release also includes [noise and graph comparisons](results/comparisons/READ
 
 ## Use of generative-AI tools
 
-Generative-AI tools (Anthropic, OpenAI) were used for language editing, code prototyping and to review the proofs. OpenAI Codex was used to improve the manuscript's readability and presentation. The authors used OpenAI's ChatGPT (6.1 Sol) to generate some of the LaTeX code for the schematic diagrams and then checked the code. All definitions, theorem statements, final proofs and experimental verifications were written, checked and finalized by the authors, who take full responsibility for the manuscript.
+Generative-AI tools (Anthropic, OpenAI) were used for language editing, code prototyping and to check for gaps and errors in the proofs. OpenAI Codex was used to improve the manuscript's readability and presentation. All definitions, theorem statements, final proofs and experimental verifications were written, checked and finalized by the authors, who take full responsibility for the manuscript.
 
 ## Citation and license
 

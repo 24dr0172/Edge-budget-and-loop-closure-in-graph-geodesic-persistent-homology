@@ -14,19 +14,29 @@ from graph_methods import (sample_cloud, build_orders, first_connected,
 
 
 def neighboring_keys(s):
-    """Exact local count identity for sorted cyclic points with largest gap < 1/2.
+    """Local count identity for sorted circular coordinates in [0, 1).
 
-    Counts use open intervals: no center, pair endpoint, or equal-distance tie.
+    The largest gap must be < 1/2 and distances to consecutive neighbors
+    must have no ties. Exact floating-point ties at the search boundaries are
+    rejected; numerically near-tied inputs need separate care.
     Searching the sorted three-copy lift uses O(n log n) time and O(n) space.
     """
     s=np.asarray(s,dtype=float)
-    if len(s)<3 or np.any(np.diff(s)<=0):
-        raise ValueError('Need at least three distinct points in sorted order')
+    if s.ndim!=1 or len(s)<3 or not np.isfinite(s).all():
+        raise ValueError('Need a finite one-dimensional array of at least three points')
+    if np.any(s<0) or np.any(s>=1) or np.any(np.diff(s)<=0):
+        raise ValueError('Coordinates must be distinct and sorted in [0, 1)')
     n=len(s);lift=np.concatenate((s-1,s,s+1))
     a=np.arange(n)+n;b=a+1;g=lift[b]-lift[a]
     if g.max()>=.5: raise ValueError('Circle certificate requires g < 1/2')
-    left=a-np.searchsorted(lift,lift[a]-g,side='right')
-    right=np.searchsorted(lift,lift[b]+g,side='left')-b-1
+    left_boundary=lift[a]-g;right_boundary=lift[b]+g
+    left_lo=np.searchsorted(lift,left_boundary,side='left')
+    left_hi=np.searchsorted(lift,left_boundary,side='right')
+    right_lo=np.searchsorted(lift,right_boundary,side='left')
+    right_hi=np.searchsorted(lift,right_boundary,side='right')
+    if np.any(left_lo!=left_hi) or np.any(right_lo!=right_hi):
+        raise ValueError('Equal-distance ties at consecutive neighbors are not supported')
+    left=a-left_hi;right=right_lo-b-1
     return {'OR_kNN':1+np.minimum(left,right),
             'mutual_kNN':1+np.maximum(left,right)},left,right
 
@@ -119,10 +129,25 @@ def audit_local(seed_start,tests):
             'maximum_sampler_coordinate_difference':residual}
 
 
+def audit_neighboring_input_guards():
+    """Check that unsupported inputs fail instead of producing misleading ranks."""
+    invalid=[[], [0.,.2], [0.,.2,.2,.5], [0.,.2,.4,.6,.8,1.],
+             [0.,.25,.5,.75], [0.,.1,.2,.3], [0.,.2,float('nan')],
+             [[0.,.2,.4]], [-.1,.2,.4,.7]]
+    for sample in invalid:
+        try: neighboring_keys(sample)
+        except ValueError: continue
+        raise AssertionError(f'Unsupported circular coordinates accepted: {sample!r}')
+    return len(invalid)
+
+
 def verify_rank_sweep(root=None):
     """Recheck all stored summaries and model values; replay one seed per block."""
     root=Path(root) if root is not None else Path(__file__).resolve().parents[1]
     out=root/'results/extra_k/rank_sweep';checks=0
+    input_guard_checks=audit_neighboring_input_guards();checks+=input_guard_checks
+    local_audit=audit_local(29010000,32)
+    assert local_audit['samples']>0;checks+=local_audit['neighbor_keys_checked']
     with (out/'samples.csv').open() as f: rows=list(csv.DictReader(f))
     with (out/'summary.csv').open() as f: summaries=list(csv.DictReader(f))
     assert len(rows)==30780
@@ -162,6 +187,7 @@ def verify_rank_sweep(root=None):
     return {'status':'passed','checks':checks,'method_records':len(rows),
             'profile_seed_samples':len(rows)//2,'summary_rows':len(summaries),
             'seed_replays':len(summaries),'poisson_integral_checks':12,
+            'input_guard_checks':input_guard_checks,'local_rank_recheck':local_audit,
             'maximum_poisson_integral_error':max(integral_errors)}
 
 

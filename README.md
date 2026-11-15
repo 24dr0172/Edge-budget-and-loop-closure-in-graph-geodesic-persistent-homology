@@ -23,4 +23,4 @@ For every saved-data check, including the additional studies:
 python3 final_release/code/verify_release.py --data-only --report /tmp/edge-budget-complete-check.json
 ```
 
-The [release guide](final_release/README.md) also explains how to compare an external manuscript. See the release [citation](final_release/CITATION.cff) and [license](final_release/LICENSE).
+The [release guide](final_release/README.md) also explains how to compare an external manuscript. See the [citation](CITATION.cff) and [license](LICENSE). To identify a reproducible snapshot, cite the Git commit used.

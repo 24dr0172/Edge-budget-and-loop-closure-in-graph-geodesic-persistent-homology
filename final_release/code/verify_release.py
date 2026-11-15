@@ -10,7 +10,8 @@ replays cover the peanut/trough failure cases, a tiny positive-edge case and
 the seven-point example (by F2 reduction).
 """
 from pathlib import Path
-import argparse,hashlib,json,sys
+from importlib import metadata
+import argparse,hashlib,json,platform,sys
 sys.dont_write_bytecode=True
 import numpy as np
 import pandas as pd
@@ -22,6 +23,19 @@ from external_manuscript import locate_manuscript, manuscript_text
 # Figure assets kept for the additional studies (see results/additional_figures/README.md).
 ADDITIONAL_FIGURES=('clean_budget_curves','noise_budget_curves','extra_neighbor_distribution',
                     'radial_first_connectivity','noise_amplitude_errors','unsupported_shortcut')
+
+
+def verification_environment(root):
+    """Record installed direct dependencies without changing historical records."""
+    packages={}
+    for line in (root/'code/requirements.txt').read_text().splitlines():
+        line=line.split('#',1)[0].strip()
+        if not line: continue
+        package,required=line.split('==',1)
+        try: installed=metadata.version(package)
+        except metadata.PackageNotFoundError: installed=None
+        packages[package]={'required':required,'installed':installed,'matches':installed==required}
+    return {'python':platform.python_version(),'packages':packages}
 
 
 def verify_manuscript_identity(root, require, paper):
@@ -518,5 +532,6 @@ if __name__=='__main__':
         ap.error('Write --paper-only reports outside the release folder.')
     if args.data_only and args.manuscript_dir:ap.error('Choose --data-only or --manuscript-dir.')
     report=verify(args.release.resolve(),args.manuscript_dir,args.data_only,args.paper_only)
+    report['verification_environment']=verification_environment(args.release.resolve())
     (args.report or args.release/('results/paper_verification_report.json' if args.paper_only else 'results/verification_report.json')).write_text(json.dumps(report,indent=2)+'\n')
     print(f"Release verification passed: {report['checks_passed']} checks.")

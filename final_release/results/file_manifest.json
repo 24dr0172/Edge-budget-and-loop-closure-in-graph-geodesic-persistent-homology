@@ -6,10 +6,10 @@
     "results/run_logs/"
   ],
   "sha256": {
-    "CITATION.cff": "d87d8f300e9b0a47cdf239d6f9449e579d1fd5c8926f02187c55d87888a6e9ea",
+    "CITATION.cff": "c47f83fe300e2e2c34b7f93d9add10816f915dd63fa95228573f3358f5c5b8d4",
     "Dockerfile": "ba9022b5975878fdb17c83c5fd693a0bd8d76c8ff8de65afdcd027d2af030eab",
-    "LICENSE": "6f2cb167d34ba3a5c6172d43f255cb09ea78c81745b8de452a4256ac1b161213",
-    "README.md": "f48e524ba59285345daf6f877c9f84498358b8af9dfe0912da94e01262363262",
+    "LICENSE": "1b040cc543b37ecbf6b42ae9ce13ccc1970e20d8bc87048f97d1522a5b6e6f21",
+    "README.md": "c6a4ae0b66be09fb8c8e920fdd83d6ceeb48c6893a5627067c3263ce33e9cad3",
     "code/README.md": "c25c8ac0b4e8c3028de2a7e705d6231c4647ff1e43a62f9e0060c0a659a288b5",
     "code/audit_numbers.py": "fed468eac4281ed0281600f0a33b366a91a0da276349c7b0e5def1b5da856036",
     "code/audit_rank_scaling.py": "d40054e4f578d6b99c90f9058fcf3e4955268fa29df0cf211d006dbeb39470d2",
@@ -49,7 +49,7 @@
     "code/radial_noise_knn.py": "63e8d47e0e2c66ff9f629488ee686b3e6ec8c3c1c41c6d5cae19fb9f6561ad65",
     "code/radius_enlargement_check.py": "631481ca3829cb33022ccdf6bbf5460bb14b5f017513f48a28b105ff9c82ae82",
     "code/radius_enlargement_extra.py": "3e3b7ef05c3400b482b6b6b769118e52aa88ea8f0f83a7fae1569c7a4c9300d6",
-    "code/rank_sweep.py": "bf4b2f798ef3e4ad526c913991945bf9b2e053df09c858c93074840435ea822d",
+    "code/rank_sweep.py": "d4cd7a5888f5b4358bca4813b7a709cdb63ef8f7527a7edf4bc08e660eac55d9",
     "code/rank_table.py": "f0770a2bc1efab2b5f24cb5ae4efd9f4bc23bb4a105734695846470fbf205cdc",
     "code/rational_certificates.py": "211b3984cf17e6ecd38ad0bfc98cc768d11eda3370553e919d6091e64e5cfd9e",
     "code/reproduce.py": "02766b4b8b34689cd3b8dffc99a59054e9ccf02983d1df24af15f3a6e7517dd7",
@@ -75,7 +75,7 @@
     "code/verify_noncircular_locality.py": "bc882bd0fdf47e75c6941e1a959ce124885fb5a5a2235bccd6a00b7df11f41e0",
     "code/verify_paper_evidence.py": "9e21e22ff04ebc3be88e53341be084f7a93ed50e7afcd271a90482728ef1a136",
     "code/verify_peanut_neck.py": "58eabe890952be4e4e4d362a4a8515902a8ad5998c30484ee54c9eebe4fdfba7",
-    "code/verify_release.py": "c375dcc278b5eae7c5fb005111cc267a34838f62517cca495744b8a66b21bb59",
+    "code/verify_release.py": "1a6a6d5fded0859f4cc610466a94243db992eed0e1790028f420fcd4601ccbd5",
     "code/verify_reported_claims.py": "605fac9e9c1a16367688bd7249e89676536720259ee69c395a50ed065b86cfca",
     "code/verify_retention_cost_witness.py": "ac0a88762ed9c2a059d3986554ffc4cf8d07c606df591157659891415feef90f",
     "code/verify_separation.py": "0588c14d0d783616278d76f4eadd44447c56c6895c7f56ab3a68aed4dcf10797",
@@ -86,7 +86,7 @@
     "manuscript_figures/arc_support_fan.png": "9c526e3e8477175f02b441864b118b7f7de262c856aa1ec45ab3164b0f30aba7",
     "manuscript_figures/peanut_comparison.png": "f845a0704174f6916ef6e4c4038b41c59edf726c5619e4571e5d4eb86a6849d8",
     "manuscript_figures/post_closure_rate.png": "cc7f4ad7aeeb1a1b586b1a1953adc164b61621fe2f9be2055717d71600a2c756",
-    "results/README.md": "4f6588c6eeb8084f2ef4f0fe180a61655fb690a4481630765612c1c10d1e2d52",
+    "results/README.md": "a844ae08aeae90dfb32d1a3f8ea4e4843d06383bcf6a9ee37f5b37d05877b7e9",
     "results/additional_figures/README.md": "a986d64ac7fd49604b7069e06dd8ce001d9d7a2620ae90eee9e3a7696ccf96a2",
     "results/additional_figures/arc_support_figure.pdf": "3a8ed836b4791eb430f355f5320ca20d740fe28b2981ee9402dd87f8d4a23c56",
     "results/additional_figures/arc_support_figure.png": "61a79e9d016d0d7840a5d9b388fd8f35bf77916e80347a9979902b5e3fa9d1b8",
@@ -2337,6 +2337,6 @@
     "tools/external_manuscript.py": "69baf8ce4c2dc49c6ffe8398a609858f13bd7a122bb6564966806de1626da83a",
     "tools/record_current.py": "b8feeabb590189244e7191aa835dbe0036c05a0dcf46907758028b5995573102",
     "tools/verify_manuscript_tables.py": "dbe7065400d21079a9240f4e130faf664f248051f84d6eff5c684fa5dd93488a",
-    "tools/write_guides.py": "a1063489025daea786814507b9017c0695944a2e0718b04508d7f2cfc26c4e75"
+    "tools/write_guides.py": "055957be0b342f147b599f45229997d8c0b413b1915284ca1bdeea234eaf773b"
   }
 }

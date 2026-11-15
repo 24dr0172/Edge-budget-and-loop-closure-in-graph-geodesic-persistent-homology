@@ -8685,12 +8685,19 @@
       "passed": true,
       "detail": {
         "status": "passed",
-        "checks": 949,
+        "checks": 2974,
         "method_records": 30780,
         "profile_seed_samples": 15390,
         "summary_rows": 36,
         "seed_replays": 36,
         "poisson_integral_checks": 12,
+        "input_guard_checks": 9,
+        "local_rank_recheck": {
+          "samples": 32,
+          "neighbor_keys_checked": 2016,
+          "full_connectivity_checks": 64,
+          "maximum_sampler_coordinate_difference": 1.599276266972538e-13
+        },
         "maximum_poisson_integral_error": 1.1102230246251565e-16
       }
     },
@@ -9246,6 +9253,51 @@
     },
     "code_syntax": {
       "passed": true
+    }
+  },
+  "verification_environment": {
+    "python": "3.12.3",
+    "packages": {
+      "numpy": {
+        "required": "2.5.3",
+        "installed": "2.5.3",
+        "matches": true
+      },
+      "scipy": {
+        "required": "1.18.1",
+        "installed": "1.18.1",
+        "matches": true
+      },
+      "pandas": {
+        "required": "2.2.3",
+        "installed": "2.2.3",
+        "matches": true
+      },
+      "matplotlib": {
+        "required": "3.11.2",
+        "installed": "3.11.2",
+        "matches": true
+      },
+      "ripser": {
+        "required": "0.6.15",
+        "installed": "0.6.15",
+        "matches": true
+      },
+      "persim": {
+        "required": "0.3.8",
+        "installed": "0.3.8",
+        "matches": true
+      },
+      "Pillow": {
+        "required": "12.3.0",
+        "installed": "12.3.0",
+        "matches": true
+      },
+      "pypdf": {
+        "required": "6.10.0",
+        "installed": "6.10.0",
+        "matches": true
+      }
     }
   }
 }

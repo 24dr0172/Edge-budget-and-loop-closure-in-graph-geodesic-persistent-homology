@@ -11,11 +11,8 @@ authors:
     given-names: S. P.
 url: "https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology"
 repository-code: "https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology"
-license:
-  - MIT
-  - CC-BY-4.0
 preferred-citation:
-  type: manuscript
+  type: unpublished
   title: "Edge count and loop detection in graph-geodesic persistent homology"
   authors:
     - family-names: Singh

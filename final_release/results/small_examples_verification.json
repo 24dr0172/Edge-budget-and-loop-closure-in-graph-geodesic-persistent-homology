@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "scope": "Small finite examples and an additional cyclic-order check.",
+  "scope": "Small finite examples in the paper.",
   "fields_checked": [
     2,
     3,
@@ -8,145 +8,6 @@
   ],
   "float64_comparison_tolerance": 1e-12,
   "independent_reduction_positive_tolerance": 1e-12,
-  "separation": {
-    "proof_thresholds": [
-      {
-        "threshold_numerator": 3,
-        "threshold_denominator": 2,
-        "threshold_float": 1.5,
-        "edges": [
-          [
-            0,
-            1
-          ],
-          [
-            0,
-            2
-          ],
-          [
-            0,
-            5
-          ],
-          [
-            1,
-            2
-          ],
-          [
-            2,
-            3
-          ],
-          [
-            3,
-            4
-          ],
-          [
-            4,
-            5
-          ]
-        ],
-        "admissible_orders": [
-          [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          [
-            0,
-            5,
-            4,
-            3,
-            2,
-            1
-          ]
-        ],
-        "betti_1_by_field": {
-          "2": 1,
-          "3": 1,
-          "5": 1
-        },
-        "comparison_arithmetic": "Outward 80-digit radical bounds against an exact rational threshold."
-      },
-      {
-        "threshold_numerator": 19,
-        "threshold_denominator": 10,
-        "threshold_float": 1.9,
-        "edges": [
-          [
-            0,
-            1
-          ],
-          [
-            0,
-            2
-          ],
-          [
-            0,
-            3
-          ],
-          [
-            0,
-            5
-          ],
-          [
-            1,
-            2
-          ],
-          [
-            1,
-            5
-          ],
-          [
-            2,
-            3
-          ],
-          [
-            2,
-            4
-          ],
-          [
-            3,
-            4
-          ],
-          [
-            4,
-            5
-          ]
-        ],
-        "admissible_orders": [
-          [
-            0,
-            1,
-            5,
-            4,
-            3,
-            2
-          ],
-          [
-            0,
-            2,
-            3,
-            4,
-            5,
-            1
-          ]
-        ],
-        "betti_1_by_field": {
-          "2": 1,
-          "3": 1,
-          "5": 1
-        },
-        "comparison_arithmetic": "Outward 80-digit radical bounds against an exact rational threshold."
-      }
-    ],
-    "common_orders": [],
-    "positive_interval_radius_one": [
-      1.4142135623730951,
-      2.046669094406771
-    ]
-  },
   "hexagon": {
     "status": "passed",
     "missing_ring_edge": [
@@ -841,5 +702,5 @@
     "proof_scope": "The paper gives all-field independence and an all-order impossibility argument; F2/F3/F5 calculations and enumeration corroborate them.",
     "checker_sha256": "cf929d8da7f4bb8e98e1df46a62f7de2c2a6e86b89d44bdb21d7e8792c86b6c4"
   },
-  "checker_sha256": "69fe974b29980cd766ea4d0b295a3641b9f27d5e73beedf860ef579191b39f53"
+  "checker_sha256": "c1c26335dc54a93d720872d948e280cebd26db0986c18615c196fe1107d5b2f5"
 }

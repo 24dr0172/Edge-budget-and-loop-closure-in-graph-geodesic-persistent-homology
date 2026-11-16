@@ -1,11 +1,4 @@
-# Numerical environment; Python 3.12.3.
+# Python 3.12; versions used for the reported numerical work.
 numpy==2.5.3
 scipy==1.18.1
-pandas==2.2.3
-matplotlib==3.11.2
 ripser==0.6.15
-persim==0.3.8
-# Cost-figure greyscale export.
-Pillow==12.3.0
-# PDF figure and optional manuscript identity checks.
-pypdf==6.10.0

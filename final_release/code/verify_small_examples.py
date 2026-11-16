@@ -14,7 +14,6 @@ sys.dont_write_bytecode = True
 import numpy as np
 from finite_diagram import reduction_h1, POSITIVE_TOL
 from verify_arc_support import metric, supported, supporting_arc, betti_at, check_witness
-from verify_separation import build_report as separation_report
 from verify_natural_instance import build_report as natural_report
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -113,15 +112,10 @@ def shortcut_decimal_certificate():
 
 
 def build_report():
-    separation = separation_report()
-    assert not separation['common_orders_at_live_thresholds']
     witness = check_witness()
-    return dict(status='passed',scope='Small finite examples and an additional cyclic-order check.',
+    return dict(status='passed',scope='Small finite examples in the paper.',
                 fields_checked=[2, 3, 5],float64_comparison_tolerance=1e-12,
                 independent_reduction_positive_tolerance=POSITIVE_TOL,
-                separation=dict(proof_thresholds=separation['proof_thresholds'],
-                    common_orders=separation['common_orders_at_live_thresholds'],
-                    positive_interval_radius_one=separation['positive_interval_radius_one']),
                 hexagon=check_hexagon(),unsupported_shortcut=witness,ties=check_ties(),
                 shortcut_decimal_certificate=shortcut_decimal_certificate(),
                 natural_ellipse=natural_report(),
@@ -136,4 +130,4 @@ if __name__ == '__main__':
     report = build_report()
     target = args.report or args.release/'results/small_examples_verification.json'
     target.write_text(json.dumps(report, indent=2)+'\n')
-    print('Small examples passed: live separation, natural ellipse, hexagon, unsupported shortcut and tie cases.')
+    print('Small examples passed: ellipse, hexagon, unsupported shortcut and tie cases.')

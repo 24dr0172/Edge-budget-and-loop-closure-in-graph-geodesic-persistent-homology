@@ -85,8 +85,7 @@ def verify():
                 if max(gaps)<Q(1,2):break
             samples.append(points)
     samples.extend([[Q(i,n) for i in range(n)] for n in range(3,31)])
-    samples.extend([[Q(0),Q(49,100),Q(1,2),Q(99,100)],
-                    list(map(Q,['0','0.08','0.15','0.161','0.29','0.60','0.66']))])
+    samples.append([Q(0),Q(49,100),Q(1,2),Q(99,100)])
     checks=large=empty=0
     for sample in samples:
         count,is_large,is_empty=check_sample(sample)

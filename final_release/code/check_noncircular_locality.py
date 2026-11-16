@@ -20,7 +20,7 @@ Per sample and order:
                 radius: B < r_loc; kNN: with k_c the largest consecutive key, every
                 vertex's distance to its k_c-th nearest neighbour is < r_loc
   shh_ok        short-hops-first holds for every edge inserted through ring closure
-                (Definition 3, checked edge by edge, independent of loc_ok)
+                (Definition 2, checked edge by edge, independent of loc_ok)
   conn_close    closure at connectivity: exact prefix for radius (M_conn == M_close);
                 integer k for OR and mutual (k_conn == k_close), computed directly
   closed_sup    the prefix at M_close is arc-supported (Definition 4 with that prefix's

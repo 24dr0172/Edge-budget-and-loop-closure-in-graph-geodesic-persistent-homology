@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 
 import graph_methods as graph
-from run_studies import finite_graph_diagram
+from graph_methods import finite_graph_diagram
 
 N = 512
 SEEDS = range(20320301, 20320701)

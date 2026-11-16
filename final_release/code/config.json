@@ -1,247 +1,80 @@
 {
-  "python": "3.12.3",
-  "packages": {
-    "numpy": "2.5.3",
-    "pandas": "2.2.3",
-    "scipy": "1.18.1",
-    "matplotlib": "3.11.2",
-    "ripser": "0.6.15",
-    "persim": "0.3.8",
-    "pypdf": "6.10.0"
+  "python": "3.12",
+  "numeric_conventions": {
+    "edge_costs": "float64 Euclidean chord lengths",
+    "shortest_paths": "SciPy Dijkstra in float64",
+    "persistence": "Ripser.py, F2, float32 endpoints, retain all intervals with death > birth",
+    "rips_threshold": "distance <= t",
+    "arc_support_tolerance": "0 for peanut closure; 1e-10 in the locality check",
+    "clean_circle_count_tolerance": "positive returned intervals, no lifetime cutoff",
+    "peanut_endpoint_replay_tolerance": 5e-8
   },
-  "n": 512,
-  "noise": {
-    "seeds": [
-      20320101,
-      20320102,
-      20320103,
-      20320104,
-      20320105,
-      20320106,
-      20320107,
-      20320108,
-      20320109,
-      20320110,
-      20320111,
-      20320112,
-      20320113,
-      20320114,
-      20320115,
-      20320116,
-      20320117,
-      20320118,
-      20320119,
-      20320120
-    ],
-    "models": [
-      "radial",
-      "isotropic"
-    ],
-    "amplitudes": [
-      0,
-      0.0005,
-      0.001,
-      0.002,
-      0.005,
-      0.01
-    ],
-    "radial_seed_offset": 70000003,
-    "disk_seed_offset": 90000011,
-    "common_random_vectors_across_amplitudes": true,
-    "clean_shared_between_models": true,
-    "grid_M": [
-      1597,
-      1834,
-      2105,
-      2417,
-      2776,
-      3187,
-      3659,
-      4201,
-      4824,
-      5538,
-      6359,
-      7302,
-      8383,
-      9626,
-      11052,
-      12690,
-      14570,
-      16729,
-      19208,
-      22054,
-      25322,
-      29074,
-      33382,
-      38328
-    ],
-    "additional_events": [
-      "exact_first_connected",
-      "exact_closure_minus_one",
-      "exact_closure"
-    ],
-    "selectors_use_grid_only": true,
-    "earliest_maximum_raw_lifetime_tolerance": 1e-07,
-    "lifetime_screen_fractions": [
-      0.25,
-      0.5,
-      0.75
-    ],
-    "model_definitions": {
-      "radial": "Signed uniform displacement along the clean normal.",
-      "isotropic": "Uniform displacement in a disk."
+  "rank_table": {
+    "sizes": [128, 512, 4096, 32768],
+    "samples_per_profile": [20000, 20000, 20000, 5000],
+    "profiles": ["uniform", "strong_cosine", "localized_trough"],
+    "seed_formula": "202611160000000 + 100000*n + repetition (zero-based)",
+    "pairing": "one uniform point set and phase shared across profiles; both graph rules share each sample"
+  },
+  "uniform_rank_comparison": {
+    "samples_per_size": 100000,
+    "sizes": [128, 512, 4096, 32768],
+    "seed_formula": "202611150000+n",
+    "generator": "std::mt19937_64, open-interval uniforms converted to exponential spacings"
+  },
+  "clean_circle": {
+    "n": 512,
+    "seeds_inclusive": [20310101, 20310120],
+    "phase_seed_offset": 50000017,
+    "profiles": ["uniform", "strong_cosine", "localized_trough"],
+    "events": ["first connected prefix", "prefix before cycle closure", "cycle closure", "smallest connecting k for both kNN rules"]
+  },
+  "radial_noise": {
+    "n": 512,
+    "seeds_inclusive": [20320301, 20320700],
+    "amplitudes": [0, 0.0005, 0.002, 0.01],
+    "normal_draw_seed_offset": 70000003,
+    "cutoffs_of_noise_free_reference_lifetime": [0.25, 0.5],
+    "pairing": "same point set and normal draws for all amplitudes"
+  },
+  "locality": {
+    "n": 512,
+    "point_sets_per_curve": 20,
+    "curves": ["circle control", "2:1 ellipse", "a=0.4 peanut"],
+    "seeds_inclusive": {
+      "ellipse": [20350101, 20350120],
+      "peanut": [20350201, 20350220],
+      "circle control": [20350301, 20350320]
     },
-    "no_positive_grid_diagram": "no selected budget; infinite selected loss for both selectors"
+    "locality_grid_sizes": [4000, 8000],
+    "thresholds_are_estimates": true
   },
-  "ellipse": {
-    "seeds": [
-      20310101,
-      20310102,
-      20310103,
-      20310104,
-      20310105,
-      20310106,
-      20310107,
-      20310108,
-      20310109,
-      20310110,
-      20310111,
-      20310112,
-      20310113,
-      20310114,
-      20310115,
-      20310116,
-      20310117,
-      20310118,
-      20310119,
-      20310120
-    ],
-    "profiles": [
-      "uniform",
-      "strong_cosine",
-      "localized_trough"
-    ],
-    "locality_threshold": 0.18,
-    "nonlocal_event": "first chord >= locality_threshold",
-    "include_event_beyond_grid": true,
-    "nn_crust_permutation_offset": 110000009,
-    "nn_crust": "nearest-neighbor union, then simultaneous half-neighbor additions at initial degree-one vertices",
-    "arc_grid_points": 400001
+  "peanut_detection": {
+    "n": 512,
+    "seeds_inclusive": [20361021, 20361040],
+    "shape_parameters": [0, 0.4, 0.6, 0.8, 0.9],
+    "arc_grid_points": 400001,
+    "search": "all connected prefixes in increasing order until the first nonempty H1 diagram",
+    "pairing": "same seed and arc coordinates for all five shapes"
   },
-  "arithmetic": {
-    "edge_costs": "float64",
-    "shortest_paths": "float64 Dijkstra",
-    "ripser_endpoints": "float32",
-    "positive_interval": "finite death strictly greater than birth",
-    "positive_lifetime_cutoff": null,
-    "raw_stability_tolerance": 5e-08,
-    "ellipse_monotonicity_tolerance": 1e-06,
-    "support_tolerance": 1e-10,
-    "clean_normalized_error_tolerance": 5e-08,
-    "selected_normalized_error_tolerance": 1e-07,
-    "selected_raw_endpoint_tolerance": 1e-07,
-    "ellipse_raw_endpoint_tolerance": 1e-06,
-    "ellipse_monotonicity_tolerance_units": "normalized error",
-    "rips_filtration": "D <= t; bars [birth, death)",
-    "curve_order_diagnostic": "D < t, the left limit; bars (birth, death]",
-    "tolerance_recheck_normalized_error_tolerance": 1e-06
+  "radius_enlargement": {
+    "sizes": [128, 512, 4096, 32768],
+    "factors": [1.25, 1.5, 2.0],
+    "circle_samples_per_size": 100000,
+    "large_circle_alpha_2_samples": 1000000,
+    "ellipse_and_peanut_samples_per_size": 1000000,
+    "circle_seed": 20261024,
+    "large_circle_seed": 20261104,
+    "curve_master_seed": 20261027,
+    "arc_grid_points": 400001,
+    "curve_results": "consecutive-chord proxy; full-diagram spot checks are saved separately"
   },
-  "clean": {
-    "seeds": [
-      20310101,
-      20310102,
-      20310103,
-      20310104,
-      20310105,
-      20310106,
-      20310107,
-      20310108,
-      20310109,
-      20310110,
-      20310111,
-      20310112,
-      20310113,
-      20310114,
-      20310115,
-      20310116,
-      20310117,
-      20310118,
-      20310119,
-      20310120
-    ],
-    "profiles": [
-      "uniform",
-      "strong_cosine",
-      "localized_trough"
-    ],
-    "a_grid": {
-      "minimum": 0.5,
-      "maximum": 12.0,
-      "points": 24,
-      "round_decimals": 4
-    },
-    "scale_permutation_offset": 80000031,
-    "scale_permutation_n_factor": 1009
-  },
-  "ranks": {
-    "seed_start": 20330101,
-    "seed_formula": "seed_start + 10000 + 100000*size_index + repetition_index",
-    "settings": [
-      [
-        128,
-        1500
-      ],
-      [
-        512,
-        1500
-      ],
-      [
-        4096,
-        1500
-      ],
-      [
-        32768,
-        500
-      ],
-      [
-        262144,
-        100
-      ],
-      [
-        1000000,
-        30
-      ]
-    ],
-    "bridge_maximum_n": 1000000
-  },
-  "post_closure_rate": {
-    "script": "code/post_closure_rate.py",
-    "sizes": [
-      64,
-      128,
-      256,
-      512
-    ],
-    "seeds_per_size": 20,
-    "seeds_n512": "20310101-20310120 (the uniform clouds of the clean-circle study)",
-    "seeds_other": "20400000 + 100n + i, i = 1..20",
-    "graphs": [
-      "radius order at exact closure",
-      "OR order at exact closure",
-      "mutual order at exact closure",
-      "radius graph at twice the smallest connecting radius"
-    ],
-    "bound": "(pi^2/6) * l_G^2 * b_* / Delta, l_G the longest minor arc of an edge",
-    "equally_spaced_check": {
-      "sizes": [
-        64,
-        128,
-        256,
-        512,
-        1024
-      ],
-      "jitter": "1e-7/n"
-    },
-    "bound_tolerance": "relative 1e-6 plus 1e-6/Delta absolute (Ripser endpoints are float32)"
+  "interpolation": {
+    "arc_grid_points": 400001,
+    "reference_grid_points": [1600001, 3200001],
+    "probe_points_per_curve": 200001,
+    "point_sets_per_curve": 1000,
+    "candidate_gaps_per_set": 8,
+    "seed_base": 2026111502
   }
 }

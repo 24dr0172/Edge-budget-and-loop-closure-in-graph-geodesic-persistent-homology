@@ -1,28 +1,23 @@
 # Loop detection in graph-geodesic persistent homology
 
-The release described below accompanies an earlier manuscript version. The revised manuscript and its current local release have not yet been uploaded to this repository.
+Code and numerical evidence for the paper by Shivam Singh, Annesha Sen and S. P. Tiwari. The current release is in [final_release/](final_release/).
 
-The verified code, saved data, settings and figures for the focused noise-free paper are in [`final_release/`](final_release/). Start with the [release guide](final_release/README.md) for the paper-to-evidence map, installation and reproduction commands. The repository URL uses the manuscript’s earlier title.
+- [Code and numerical protocols](final_release/code/) contain the generators, verification scripts, settings and pinned Python dependencies.
+- [Results](final_release/results/) contain the saved rank sweeps, diagrams, radial-noise and winding checks, and smooth-curve experiments.
+- [Manuscript figure](final_release/manuscript_figures/) contains the figure used by the paper.
+- [Release guide](final_release/README.md) maps the saved evidence to the paper and gives reproduction commands.
 
-- [`code/`](final_release/code/): experiment generators, verification scripts and settings.
-- [`tools/`](final_release/tools/): manuscript comparison, portable-build and figure-export helpers.
-- [`results/`](final_release/results/): saved measurements, diagrams, tables and verification records.
-- [`manuscript_figures/`](final_release/manuscript_figures/): exactly the three PNG figures used in the paper: `arc_support_fan.png`, `post_closure_rate.png` and `peanut_comparison.png`.
+The manuscript and Overleaf project are maintained separately and are not included in this repository.
 
-Plots from additional studies are separate in [`results/additional_figures/`](final_release/results/additional_figures/). Vector figure masters are in [`results/figure_exports/`](final_release/results/figure_exports/). These are image exports, not the paper or LaTeX source.
+## Verify the release
 
-The manuscript and Overleaf project are kept separately and are not published in this code/data distribution. The release contains no `.tex` or `.bib` files, paper PDF or manuscript ZIP. The manuscript itself compiles from one TeX file plus three PNGs. Its tables, proofs, appendices and bibliography are inline. No separate supplement is required or distributed. The release retains additional-study evidence, clearly distinguished from the focused paper's claims.
-
-After installing the pinned Python dependencies, check the paper's saved evidence from this repository folder with:
+With Python 3.12, from the repository root:
 
 ```sh
-python3 final_release/code/verify_release.py --paper-only --data-only --report /tmp/edge-budget-paper-check.json
+python3 -m venv /path/to/geodesic-env
+. /path/to/geodesic-env/bin/activate
+python3 -m pip install -r final_release/code/requirements.txt
+python3 final_release/tools/verify_release.py
 ```
 
-For every saved-data check, including the additional studies:
-
-```sh
-python3 final_release/code/verify_release.py --data-only --report /tmp/edge-budget-complete-check.json
-```
-
-The [release guide](final_release/README.md) also explains how to compare an external manuscript. See the [citation](CITATION.cff) and [license](LICENSE). To identify a reproducible snapshot, cite the Git commit used.
+The verifier checks the release checksums and saved numerical evidence; it does not check the manuscript or prove the theorems. For full reproduction instructions, see the [code guide](final_release/code/README.md). See also the [citation](CITATION.cff) and [license](LICENSE).

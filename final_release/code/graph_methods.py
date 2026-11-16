@@ -79,7 +79,7 @@ def sample_cloud(seed,profile,n=512,sigma=0.):
 def intrinsic(s):
     sep=np.abs(s[:,None]-s[None,:]);return np.minimum(sep,1.-sep)
 
-def build_orders(observed,include_cknn=False):
+def build_orders(observed):
     n=len(observed);chord=cdist(observed,observed);iu,ju=np.triu_indices(n,1);length=chord[iu,ju]
     mask=chord.copy();np.fill_diagonal(mask,np.inf)
     nbr=np.argsort(mask,axis=1,kind='mergesort');rank=np.empty((n,n),np.int64)
@@ -88,9 +88,6 @@ def build_orders(observed,include_cknn=False):
     orders={'R2_global':np.lexsort((ju,iu,length)),
             'OR_kNN':np.lexsort((ju,iu,length,r_or)),
             'mutual_kNN':np.lexsort((ju,iu,length,r_mu))}
-    if include_cknn:
-        k0=max(8,int(math.ceil(2*math.log(n))));rho=mask[np.arange(n),nbr[:,k0-1]]
-        orders['R1_local']=np.lexsort((ju,iu,length/np.sqrt(rho[iu]*rho[ju])))
     return chord,iu,ju,length,orders,{'OR_kNN':r_or,'mutual_kNN':r_mu}
 
 def first_connected(order,iu,ju,n):
@@ -121,13 +118,25 @@ def diagram(d):
     from ripser import ripser
     return np.asarray(ripser(d,distance_matrix=True,maxdim=1)['dgms'][1],float)
 
-def score(d,reference,reference_diagram):
-    from persim import bottleneck
-    if not np.isfinite(d).all():return {'connected':False}
-    diam=float(reference.max());err=(d-reference)[np.triu_indices(len(d),1)];bars=diagram(d)
-    life=(bars[:,1]-bars[:,0]).max() if len(bars) else 0.
-    return {'connected':True,'e_inf':float(np.max(np.abs(err)))/diam,'e_2':float(np.sqrt(np.mean(err**2)))/diam,
-            'p1':float(bottleneck(bars,reference_diagram))/diam,'est_h1_bars':len(bars),'est_longest_lifetime':float(life)/diam}
+def finite_graph_diagram(D, maximum_edge):
+    """Exact H1 with an adaptive cutoff for a positive weighted graph metric.
+
+    Above the largest generating graph edge, every Rips edge is homologous
+    to its shortest graph path, through the fan based at its first endpoint.
+    Thus H1 maps are surjective there: no later positive H1 interval can
+    start. Once the cutoff is above that edge and has no surviving H1,
+    the entire H1 barcode is known. A cone radius gives a safe last cutoff.
+    """
+    from ripser import ripser
+    cone=float(np.min(np.max(D,axis=1)))
+    first=float(np.nextafter(np.float32(maximum_edge),np.float32(np.inf)))
+    cutoffs=sorted(set([first,max(first,.75*cone),max(first,float(np.nextafter(np.float32(cone),np.float32(np.inf))))]))
+    for cutoff in cutoffs:
+        bars=np.asarray(ripser(D,distance_matrix=True,maxdim=1,thresh=cutoff)['dgms'][1],float)
+        if not len(bars) or np.isfinite(bars[:,1]).all():
+            return bars[bars[:,1]>bars[:,0]]
+    raise AssertionError('A universal vertex must kill all H1 at the cone radius')
+
 
 def certificate(s, chord, order, iu, ju):
     n=len(s)

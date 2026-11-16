@@ -1,0 +1,85 @@
+{
+  "protocol": "1000 new independent uniform point sets per curve; all eight largest candidate gaps; same three enlargement factors",
+  "seed_rule": "2026111502+curve_stream",
+  "numerical_not_certified": true,
+  "results": [
+    {
+      "curve": "ellipse",
+      "clouds": 1000,
+      "n": 32768,
+      "candidate_chords": 8000,
+      "original_arc_grid": 400001,
+      "reference_grids": [
+        1600001,
+        3200001
+      ],
+      "reference_method": "Exact speed; cumulative Simpson integration; cubic inverse interpolation",
+      "probe_points": 200001,
+      "max_coordinate_error": 5.3105955065651405e-12,
+      "reference_coordinate_difference": 5.78357073290852e-14,
+      "max_chord_error": 3.1568491852713987e-12,
+      "reference_chord_difference": 6.560236295166666e-15,
+      "chord_arc_difference_quantiles": {
+        "minimum": 3.023011284656804e-12,
+        "q01": 3.75748893046042e-12,
+        "median": 1.3896374638023082e-11,
+        "q99": 4.700766406570646e-10,
+        "maximum": 1.4031418716807173e-09
+      },
+      "top_two_error_over_correction_quantiles": {
+        "minimum": 2.8849523817373306e-06,
+        "median": 0.01378127827690183,
+        "q99": 0.1698654195125057,
+        "maximum": 0.3022755148226005
+      },
+      "top_two_error_below_correction": 2000,
+      "top_two_resolved_pairs": 2000,
+      "top_two_unresolved_corrections": 0,
+      "correction_resolution_cutoff": 1e-13,
+      "changed_enlargement_classifications": 0,
+      "comparisons": 3000,
+      "perimeter": 9.688448220547915,
+      "reference_perimeter_difference": 3.6415315207705135e-13
+    },
+    {
+      "curve": "peanut",
+      "clouds": 1000,
+      "n": 32768,
+      "candidate_chords": 8000,
+      "original_arc_grid": 400001,
+      "reference_grids": [
+        1600001,
+        3200001
+      ],
+      "reference_method": "Exact speed; cumulative Simpson integration; cubic inverse interpolation",
+      "probe_points": 200001,
+      "max_coordinate_error": 5.038464461210115e-12,
+      "reference_coordinate_difference": 6.857340230720838e-14,
+      "max_chord_error": 4.7812375261226114e-12,
+      "reference_chord_difference": 8.768485069976517e-15,
+      "chord_arc_difference_quantiles": {
+        "minimum": -1.710274716987259e-15,
+        "q01": 1.7895333001907708e-13,
+        "median": 6.882622725597805e-11,
+        "q99": 3.850849972572699e-10,
+        "maximum": 1.059915102517503e-09
+      },
+      "top_two_error_over_correction_quantiles": {
+        "minimum": 6.500502017349375e-07,
+        "median": 0.0022300774042204718,
+        "q99": 1.511197668184068,
+        "maximum": 31.123765054285172
+      },
+      "top_two_error_below_correction": 1961,
+      "top_two_resolved_pairs": 1989,
+      "top_two_unresolved_corrections": 11,
+      "correction_resolution_cutoff": 1e-13,
+      "changed_enlargement_classifications": 0,
+      "comparisons": 3000,
+      "perimeter": 7.220925614748754,
+      "reference_perimeter_difference": 5.835332217429823e-13
+    }
+  ],
+  "generation_script_sha256": "5a1c2c82ef1eff4bcf2503e80ce618084fdfbd7c5dae0892a4a437e319a4ef1e",
+  "verification_script_sha256": "bf1062045b2fb285599f01b959ac5cada83715f67522d7007086d8c20231376c"
+}

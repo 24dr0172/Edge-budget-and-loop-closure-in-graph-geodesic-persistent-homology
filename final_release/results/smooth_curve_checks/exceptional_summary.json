@@ -1,0 +1,22 @@
+{
+  "point_sets": 41,
+  "diagrams": 123,
+  "table_proxy_disagreements": 0,
+  "connectivity_threshold_disagreements": 0,
+  "circle_equivalence_not_assumed": true,
+  "geometric_thresholds": "Grid estimates, as in the original study",
+  "per_curve": {
+    "ellipse": {
+      "point_sets": 2,
+      "nonempty": 0,
+      "empty": 6
+    },
+    "peanut": {
+      "point_sets": 39,
+      "nonempty": 0,
+      "empty": 117
+    }
+  },
+  "generation_script_sha256": "d1479324314814168f42d1c751c224b2bda4d58d546ca6d3037fb603d5da5eb1",
+  "verification_script_sha256": "02ec8e3186441b440cb62154ab1a6636085dbfd5274879f38a8124888016b899"
+}

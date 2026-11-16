@@ -1,20 +1,9 @@
 # Results
 
-These are saved measurements and checks. Load NPZ files with NumPy using `allow_pickle=False`. The [release README](../README.md#tables-and-figures) maps the manuscript's tables and figures to their sources.
+The release README maps these files to the manuscript. All point sets, summary counts, saved intervals and numerical checks in this folder support the current paper.
 
-## Paper evidence
+The paired rank sweep stores arrays as `ranks[repetition, profile, method, (k_conn, k_close)]` and `largest_gap[repetition, profile]`. The peanut checkpoint files retain sample coordinates and the diagrams used for the closure, first-detection and doubled-radius claims. Smooth-curve exceptional checkpoints retain coordinates, gaps and the three returned diagrams. Load all NPZ files with `allow_pickle=False`.
 
-- `retention_table/` and `extra_k/rank_sweep/`: the 24 profile/method/size cells in Table 1, their counts, intervals and raw ranks.
-- `clean_closure/` and `post_closure_rate/`: clean-circle diagrams and Figure 3's 320 records, including one omitted radius-doubling miss. `exact_optimum/` records the closure error and empty-diagram cost for 180 sample–order pairs.
-- `radial_noise_knn.csv`: 3,200 method and amplitude records for the 400 paired point sets in Table 2.
-- `peanut_neck/`: 100 clouds paired over five waist parameters and 300 method records, with 15 saved closure groups. Table 3 aggregates the 12 noncircular groups into four waist rows; Figure 4 also shows the circle control. `first_nonempty/` records the prefix search and radius-doubling outcomes on those same clouds.
-- `radius_enlargement/`: 400,000 saved circle gap pairs and 12 rate rows. `radius_enlargement_extra/`: independent million-cloud checks at $\alpha=2$ for $n=4,096$ and $32,768$, with replayable batch counts. `smooth_curve_enlargement/`: the ellipse and peanut chord-event proxies, batch counts and full-diagram spot checks for Table 4. Proxy events are identified as such in the manuscript.
-- `rational_certificates/`, `seven_point_check/`, `useful_diagram/rational_counterexample.json`, `natural_instance_verification.json`, and `noncircular_locality/`: finite examples, exact or interval checks, and numerical locality estimates.
+`radial_noise_winding.csv` records spanning-tree fundamental-cycle checks for the 129 long-interval graphs per rule at amplitude 0.01. The cycle counts refer to graph cycles; they do not identify persistence-interval representatives.
 
-## Additional studies
-
-`winding_check/`, `retention_extra_layers/`, `certified_ellipse_window/`, `noise/`, `matched_noise/`, `peanut_trough/`, `ellipse/`, `ellipse_checks/`, `order_checks/` and [comparisons](comparisons/README.md) contain additional investigations and measurements. [additional_figures](additional_figures/README.md) contains the corresponding plots.
-
-## Records
-
-`manuscript_record.json` hashes the external manuscript source, PDF and its three figure files. `manuscript_structure.json` records pages, result labels, citations and environment counts. `generation_summary.json` gives saved-data counts and the evidence map. `file_manifest.json` hashes release files, excluding itself, the verification report and diagnostic logs. `verification_report.json` describes the most recent complete saved-data verification and its environment; a paper-only report is written outside the release. The environment in `comparisons/completion.json` records the historical summary step, which reads saved measurements and may use different versions from the reproduction requirements. See the [tools guide](../tools/README.md).
+The detailed data-generation protocols contain generation-script hashes. Where a script has separate generation and verification checksums, the former identifies the code used for the saved measurements and the latter identifies the supplied script used to replay them.

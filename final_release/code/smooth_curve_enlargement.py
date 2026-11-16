@@ -64,7 +64,7 @@ def sha(path):
 
 @lru_cache(maxsize=None)
 def arc_table(curve):
-    """The arc-length tables of experiment_core.ellipse_points and peanut_neck_study.arc_table."""
+    """The arc-length tables for the ellipse and peanut samples."""
     if curve == 'ellipse':
         theta = np.linspace(0, 2*np.pi, ARC_GRID)
         speed = np.sqrt(4*np.sin(theta)**2+np.cos(theta)**2)
@@ -316,8 +316,8 @@ def generate(root=ROOT, workers=4):
             spots.extend(rows)
     spots.sort(key=lambda r: (CURVES.index(r['curve']), r['n'], r['cloud'], r['alpha']))
     write_csv(folder/'spot_checks.csv', SPOT_FIELDS, spots)
-    config = dict(curves={'ellipse': '(2 cos t, sin t), normalized to length one; trapezoid arc table as in experiment_core.ellipse_points',
-                          'peanut': 'r = 1 + 0.4 cos 2t, normalized to length one; polyline arc table as in peanut_neck_study.arc_table'},
+    config = dict(curves={'ellipse': '(2 cos t, sin t), normalized to length one; trapezoid arc table',
+                          'peanut': 'r = 1 + 0.4 cos 2t, normalized to length one; polyline arc table'},
                   arc_grid_points=ARC_GRID, sizes=list(SIZES), alphas=list(ALPHAS),
                   samples_per_size=REPETITIONS, batch_size=BATCH, master_seed=MASTER_SEED,
                   curve_streams=CURVE_STREAMS,
@@ -377,7 +377,7 @@ def verify(root, require, replay_batches=2):
             and config['samples_per_size'] == REPETITIONS and config['master_seed'] == MASTER_SEED
             and config.get('curve_streams') == CURVE_STREAMS
             and config['new_clouds'] == len(SIZES)*REPETITIONS and config['discarded_clouds'] == 0)
-    require('smooth_enlargement_script_hash', config['script_sha256'] == sha(root/'code/smooth_curve_enlargement.py'))
+    require('smooth_enlargement_script_hash', config.get('verification_script_sha256',config['script_sha256']) == sha(root/'code/smooth_curve_enlargement.py'))
     geometry = json.loads((folder/'curve_constants.json').read_text())
     locality = json.loads((root/'results/noncircular_locality/locality_check_summary.json').read_text())
     for curve in CURVES:
@@ -386,8 +386,14 @@ def verify(root, require, replay_batches=2):
                 abs(g['good_event_threshold']-min(g['r_loc'], g['chord_arc_ratio']/3)) < 1e-15 and
                 max(g['chord_arc_ratio_grid'].values())-min(g['chord_arc_ratio_grid'].values()) < 1e-9)
     # The cached tables reproduce the study samplers.
-    from experiment_core import ellipse_points
-    from peanut_neck_study import sample as peanut_sample
+    from peanut_detection import sample as peanut_sample
+    def ellipse_points(s):
+        t=np.linspace(0,2*np.pi,ARC_GRID)
+        speed=np.sqrt(4*np.sin(t)**2+np.cos(t)**2)
+        cumulative=np.r_[0,np.cumsum((speed[1:]+speed[:-1])*.5*np.diff(t))]
+        perimeter=float(cumulative[-1]);cumulative/=perimeter
+        angles=np.interp(np.asarray(s)%1,cumulative,t)
+        return np.c_[2*np.cos(angles),np.sin(angles)]/perimeter
     s = np.sort(np.random.default_rng(7).random(64))
     require('smooth_enlargement_ellipse_sampler', np.array_equal(points('ellipse', s), ellipse_points(s)))
     _, xy, _ = peanut_sample(20361021, PEANUT_A)

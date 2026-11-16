@@ -1,4 +1,6 @@
-# Edge count and loop detection in graph-geodesic persistent homology
+# Loop detection in graph-geodesic persistent homology
+
+The release described below accompanies an earlier manuscript version. The revised manuscript and its current local release have not yet been uploaded to this repository.
 
 The verified code, saved data, settings and figures for the focused noise-free paper are in [`final_release/`](final_release/). Start with the [release guide](final_release/README.md) for the paper-to-evidence map, installation and reproduction commands. The repository URL uses the manuscript’s earlier title.
 

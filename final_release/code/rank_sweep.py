@@ -1,8 +1,7 @@
-"""Local consecutive-edge rank calculations and tied-rank probabilities."""
+"""Local consecutive-edge rank calculations for circle samples."""
 from __future__ import annotations
 import argparse, csv, json, math, time, sys
 sys.dont_write_bytecode=True
-from fractions import Fraction
 from pathlib import Path
 import numpy as np
 from graph_methods import (sample_cloud, build_orders, first_connected,
@@ -56,26 +55,6 @@ def fast_inverse(u,profile,phi):
         proposal=np.where((step>lo)&(step<hi),step,(lo+hi)/2)
         s=np.where(np.abs(residual)<=2e-13,s,proposal)
     raise RuntimeError('Vectorized cosine inverse did not reach tolerance')
-
-
-def tails(kmax=120):
-    """Exact rational one-gap Poisson tails, converted only after cancellation."""
-    tor=[Fraction(1)]
-    for k in range(1,kmax+1):
-        correction=sum((Fraction(math.comb(k+j-1,j),3**(k+j))
-                        for j in range(k)),Fraction())
-        tor.append(Fraction(2,2**k)-2*correction)
-    tmu=[Fraction(1)]+[Fraction(2,2**k)-tor[k] for k in range(1,kmax+1)]
-    return {'OR_kNN':np.array([float(t) for t in tor]),
-            'mutual_kNN':np.array([float(t) for t in tmu])}
-
-
-def iid_extra_cdf(n,tail,j):
-    # For Z=min(L,R) or max(L,R), tail[m]=P(Z >= m), p[m]=P(Z=m).
-    # The gap exceeds j iff exactly one mark is m and all others are < m-j.
-    p=tail[:-1]-tail[1:];m=np.arange(j+1,len(p))
-    logs=np.log1p(-tail[m-j]);terms=n*p[m]*np.exp((n-1)*logs)
-    return float(1-terms.sum())
 
 
 def wilson(successes,total):

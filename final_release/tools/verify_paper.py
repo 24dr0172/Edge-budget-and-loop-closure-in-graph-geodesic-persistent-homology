@@ -8,7 +8,6 @@ import argparse
 import csv
 import importlib.util
 import json
-import math
 import re
 from statistics import median
 import subprocess
@@ -64,7 +63,7 @@ def main(paper):
     appendix = text[text.index(r'\appendix'):]
     check(re.findall(r'\\section\{([^}]+)\}', appendix) == [
         'Smooth-curve locality', 'Chord ties and the arc-length interval',
-        'Proof of the tied-rank theorem', 'Comparisons with existing graph frameworks',
+        'Comparisons with existing graph frameworks',
         'Finite-size check of radius enlargement', 'Protocols and numerical tolerances'],
         'appendix order')
 
@@ -110,6 +109,16 @@ def main(paper):
                 cell=displayed[method_names[method]][[128,512,4096,32768].index(n)]
                 check(cell==f'{100*count/reps:.1f}', f'Table 1 entry {n}/{profile}/{method}')
     check(len(displayed)==2, 'Table 1 rows')
+    abstract = section(text, r'\begin{abstract}', r'\end{abstract}')
+    conclusion = section(text, r'\section{Conclusion}', r'\section*{Statements and Declarations}')
+    miss_ranges = []
+    for method in sweep.METHODS:
+        uniform_rows = [summary[n, 'uniform', method] for n, _ in sweep.SETTINGS]
+        misses = [100 - float(row['tie_percent']) for row in uniform_rows]
+        low, high = f'{min(misses):.1f}', f'{max(misses):.1f}'
+        tex_range = r'$' + low + r'$--$' + high + r'\%$'
+        check(tex_range in abstract and tex_range in conclusion, f'observed miss range for {method}')
+        miss_ranges.append(f'{low}–{high}%')
     event_records=rows(ROOT/'results/clean_closure/events.csv')
     check(len(event_records)==660,'clean-circle event records')
     for method in ('R2_global','OR_kNN','mutual_kNN'):
@@ -124,7 +133,7 @@ def main(paper):
                  if r['method'] == method and r['event'] == 'smallest_connected_k']
         check(len(group) == 60 and all(r['connected'] == 'True' for r in group)
               and sum(float(r['h1_bars']) > 0 for r in group) == expected,
-              f'Appendix F first connected integer k: {method}')
+              f'Appendix E first connected integer k: {method}')
     clouds=rows(ROOT/'results/clean_closure/clouds.csv')
     check(len(clouds)==60,'clean-circle cloud inventory')
     for cloud in clouds:
@@ -135,16 +144,6 @@ def main(paper):
             budget={r['event']:int(r['M']) for r in sample if r['method']==method}
             check(budget['first_connected']<=budget['pre_completion'] and
                   budget['pre_completion']+1==budget['completion'],'clean-circle event budgets')
-    large={(int(r['n']),r['method']):r for r in rows(DATA/'uniform_100k/rank_sweep.csv')}
-    for n,reported in ((128,1.74),(512,.94),(4096,.27),(32768,.015)):
-        record=large[n,'mutual_kNN']
-        difference=100*(float(record['tie_rate'])-float(record['formula']))
-        tolerance=.0005 if n==32768 else .005
-        check(int(record['samples'])==100000 and abs(difference-reported)<tolerance,
-              f'100,000-sample mutual discrepancy at {n}')
-        check(abs(difference-float(record['difference_percentage_points']))<1e-11,
-              '100,000-sample discrepancy record')
-    check('and $0.015$ percentage' in text,'reported largest-sample discrepancy')
     events=rows(ROOT/'results/clean_closure/event_table.csv')
     for method in ('R2_global','OR_kNN','mutual_kNN'):
         for event in ('first_connected','pre_completion','completion'):
@@ -162,11 +161,11 @@ def main(paper):
     for method in ('OR_kNN', 'mutual_kNN', 'R2_global'):
         budgets = [int(r['M']) for r in event_records if r['method'] == method
                    and r['profile'] == 'uniform' and r['event'] == 'first_connected']
-        check(len(budgets) == 20, f'Appendix F uniform prefix counts: {method}')
+        check(len(budgets) == 20, f'Appendix E uniform prefix counts: {method}')
         share = median((budget - consecutive) / budget for budget in budgets)
         nonconsecutive.append(f'{100 * share:.1f}')
     check(re.findall(r'\$([0-9.]+)\\%\$', clean_protocol) == nonconsecutive,
-          'Appendix F median non-consecutive edge shares')
+          'Appendix E median non-consecutive edge shares')
 
     noise_protocol = config['radial_noise']
     noise_text = section(text, r'\label{sec:radial-noise}', r'\section{')
@@ -308,9 +307,9 @@ def main(paper):
           == smooth_protocol['new_clouds']
           and 2 * smooth_protocol['new_clouds_per_curve'] == total_samples,
           'smooth-curve cohort totals')
-    appendix_e = section(text, r'\label{app:radius-enlargement}', r'\section{')
-    check(f'${total_samples:,}$ point sets in all'.replace(',', '{,}') in appendix_e,
-          'Appendix E smooth-curve cohort total')
+    radius_appendix = section(text, r'\label{app:radius-enlargement}', r'\section{')
+    check(f'${total_samples:,}$ point sets in all'.replace(',', '{,}') in radius_appendix,
+          'Appendix D smooth-curve cohort total')
     table=section(text,r'\label{tab:smooth-enlargement}',r'\end{table}').replace('{,}', ',')
     observed={}
     for line in table.splitlines():
@@ -355,8 +354,8 @@ def main(paper):
           'exceptional smooth-curve diagrams')
     spot_keys = {(r['curve'], int(r['n']), int(r['cloud'])) for r in spots}
     exceptional_keys = {(r['curve'], int(r['n']), int(r['cloud'])) for r in exception}
-    check(spot_keys.isdisjoint(exceptional_keys) and '$13{,}050$ full-diagram spot checks' in appendix_e,
-          'Appendix E separate full-diagram spot checks')
+    check(spot_keys.isdisjoint(exceptional_keys) and '$13{,}050$ full-diagram spot checks' in radius_appendix,
+          'Appendix D separate full-diagram spot checks')
     for curve,expected in (('ellipse',2),('peanut',39)):
         group=[r for r in exception if r['curve']==curve]
         check(len({r['cloud'] for r in group})==expected and len(group)==3*expected,'exception sample counts')
@@ -374,13 +373,6 @@ def main(paper):
         check(metadata['verification_script_sha256']==expected and
               re.fullmatch(r'[0-9a-f]{64}',metadata['generation_script_sha256']) is not None,
               f'{result} script provenance')
-    for ratio, lower, upper in [(4/9, .68503, .68514), (.5, .72134, .72136)]:
-        period = math.log(1/ratio)
-        frequency = 2*math.pi/period
-        mean = (1-ratio)/period
-        first = math.sqrt(math.pi*frequency/math.sinh(math.pi*frequency))
-        radius = 2*mean*first/(1-math.sqrt(2)*math.exp(-math.pi*frequency/2))
-        check(lower < mean-radius and mean+radius < upper, 'miss probability envelope')
     examples = json.loads((ROOT / 'results/small_examples_verification.json').read_text())
     checker = ROOT / 'code/verify_small_examples.py'
     check(examples['checker_sha256'] == hashlib.sha256(checker.read_bytes()).hexdigest(),
@@ -401,7 +393,7 @@ def main(paper):
     pdftext=subprocess.check_output(['pdftotext',str(pdf),'-'],text=True)
     check(int(re.search(r'^Pages:\s+(\d+)',pdfinfo,re.M)[1]) == manuscript_record['pages'],'PDF page count')
     check('Loop detection in graph-geodesic persistent homology' in pdftext and
-          '0.68503' in pdftext and '0.72136' in pdftext,'PDF identity')
+          all(span in pdftext for span in miss_ranges),'PDF identity')
     package=ROOT.parent
     overleaf=package/'focused-overleaf'
     check((overleaf/'main.tex').read_bytes()==(paper/'combined.tex').read_bytes(),'Overleaf source synchronization')
@@ -419,7 +411,7 @@ def main(paper):
     for name,want in manifest['sha256'].items():
         check(hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==want,f'release checksum: {name}')
     print('PASS: references, figure and appendix inventory, 8 Table 1 cells, 12 seed replays,')
-    print('      24 local/full-rank rechecks, clean-circle and 100,000-sample checks,')
+    print('      observed miss ranges, 24 local/full-rank rechecks and clean-circle checks,')
     print('      radial-noise, locality, peanut and radius checks, PDF identity,')
     print('      Overleaf synchronization and the complete release manifest.')
     print('This checks the reported evidence and document consistency, not the proofs.')

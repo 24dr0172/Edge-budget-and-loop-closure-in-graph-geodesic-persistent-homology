@@ -2,7 +2,7 @@
 
 Code and numerical evidence for the manuscript by Shivam Singh, Annesha Sen and S. P. Tiwari. The accompanying paper studies loop detection in graph-geodesic persistent homology for samples of simple closed curves, including circle orderings, radius enlargement, radial noise, and numerical locality checks.
 
-This release accompanies the 39-page manuscript. The manuscript record identifies the LaTeX source, compiled PDF and figure by SHA-256. The manuscript and its Overleaf project are distributed in the companion manuscript package. [Manuscript record](manuscript_record.json) and [v1.0.1 repository snapshot](https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology/tree/v1.0.1/final_release).
+This release accompanies the 32-page manuscript. The manuscript record identifies the LaTeX source, compiled PDF and figure by SHA-256. The manuscript and its Overleaf project are distributed in the companion manuscript package. [Manuscript record](manuscript_record.json) and [v1.0.2 repository snapshot](https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology/tree/v1.0.2/final_release).
 
 ## Install and verify
 
@@ -19,11 +19,11 @@ This command checks release hashes, rank summaries and selected seed replays, no
 
 ## Data map
 
-- **Table 1 and Theorem 4.** Table 1 uses the uniform rows of the paired rank sweep. Its arrays retain the connecting rank, closure rank and largest gap for each sample, including the cosine and trough profiles. The first three sizes use 20,000 point sets per profile and the last uses 5,000. The independent comparison after Theorem 4 uses 100,000 uniform samples per size. [Paired rank sweep](results/detection_rank_sweep/) and [independent uniform comparison](results/detection_rank_sweep/uniform_100k/).
-- **Appendix F.** Full diagrams for 60 clean-circle point sets at the first connected prefix, just before closure, and at closure in each ordering. The records also include the smallest connecting integer k for the two kNN rules. [Clean-circle events and counts](results/clean_closure/).
+- **Table 1.** Table 1 uses the uniform rows of the paired rank sweep. Its arrays retain the connecting rank, closure rank and largest gap for each sample, including the cosine and trough profiles. The first three sizes use 20,000 point sets per profile and the last uses 5,000. [Paired rank sweep](results/detection_rank_sweep/).
+- **Appendix E.** Full diagrams for 60 clean-circle point sets at the first connected prefix, just before closure, and at closure in each ordering. The records also include the smallest connecting integer k for the two kNN rules. [Clean-circle events and counts](results/clean_closure/).
 - **Table 2.** Paired radial-noise results for 400 clean point sets, four amplitudes and both kNN rules. The release also contains graph winding checks for the 258 graphs at amplitude 0.01 that met the half-lifetime cutoff. [Paired results](results/radial_noise_knn.csv) and [winding checks](results/radial_noise_winding.csv).
-- **Table 3 and Appendix E.** Circle misses are calculated from the consecutive chords. The entries at α = 2 for n = 4,096 and 32,768 each come from one million circle point sets. The ellipse and peanut entries use the consecutive-chord proxy with one million samples per curve and size. Full-diagram spot checks and the exceptional-sample diagrams assess agreement with diagram emptiness. [Circle runs](results/radius_enlargement/), [larger circle runs](results/radius_enlargement_extra/), [smooth-curve batches and diagrams](results/smooth_curve_enlargement/) and [exceptional samples and interpolation checks](results/smooth_curve_checks/).
-- **Appendix A.** The locality runs include the grid estimates used in Appendix E. [Locality results](results/noncircular_locality/).
+- **Table 3 and Appendix D.** Circle misses are calculated from the consecutive chords. The entries at α = 2 for n = 4,096 and 32,768 each come from one million circle point sets. The ellipse and peanut entries use the consecutive-chord proxy with one million samples per curve and size. Full-diagram spot checks and the exceptional-sample diagrams assess agreement with diagram emptiness. [Circle runs](results/radius_enlargement/), [larger circle runs](results/radius_enlargement_extra/), [smooth-curve batches and diagrams](results/smooth_curve_enlargement/) and [exceptional samples and interpolation checks](results/smooth_curve_checks/).
+- **Appendix A.** The locality runs include the grid estimates used in Appendix D. [Locality results](results/noncircular_locality/).
 - **Limitations.** At a = 0.9 and n = 512, the two rules use the same twenty samples. The first non-empty prefix came before cycle closure seven times for symmetric kNN and twice for mutual kNN. [First non-empty prefixes](results/first_nonempty/) and [paired closure diagrams](results/peanut_neck/).
 - **Finite examples.** The eight-point certificate for Remark 2 is under `dense_shortcut`. The same report contains checks for Appendix B and Example 1. [Small examples](results/small_examples_verification.json), [certificate for Remark 1](results/polygon_certificate.json) and [circle reductions](results/intrinsic_circle_verification.json).
 - **Figure 2.** Figure 1 is drawn directly in the manuscript source. [Arc-support figure](manuscript_figures/arc_support_fan.png).
@@ -46,6 +46,6 @@ The code guide gives full-cohort commands and single-seed replays for the clean-
 
 ## AI use, citation and license
 
-Generative-AI tools (Anthropic, OpenAI) were used for language editing, code prototyping and checking for gaps and errors in proofs. OpenAI Codex used numerical integration to check selected one-gap exceedance probabilities in Lemma C.1, which is used in the proof of Theorem 4. The authors checked the definitions, theorem statements, proofs and experimental results and take full responsibility for the manuscript.
+Generative-AI tools (Anthropic, OpenAI) were used for language editing, code prototyping and checking for gaps and errors in proofs. The authors checked the definitions, theorem statements, proofs and experimental results and take full responsibility for the manuscript.
 
 Cite Singh, Sen and Tiwari, *Loop detection in graph-geodesic persistent homology*; see [CITATION.cff](CITATION.cff). Code is under MIT; data, figures and documentation are under CC BY 4.0. See [LICENSE](LICENSE).

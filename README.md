@@ -1,6 +1,6 @@
 # Loop detection in graph-geodesic persistent homology
 
-Code and numerical evidence for the 39-page manuscript by Shivam Singh, Annesha Sen and S. P. Tiwari. The [v1.0.1 release](https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology/releases/tag/v1.0.1) accompanies this version.
+Code and numerical evidence for the 32-page manuscript by Shivam Singh, Annesha Sen and S. P. Tiwari. The [v1.0.2 release](https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology/releases/tag/v1.0.2) accompanies this version.
 
 - [Release guide](final_release/README.md) maps the manuscript tables and numerical checks to the saved evidence.
 - [Code and protocols](final_release/code/) contain the generators, verification scripts, experiment settings and pinned Python dependencies.

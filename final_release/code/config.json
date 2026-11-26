@@ -7,63 +7,137 @@
     "rips_threshold": "distance <= t",
     "arc_support_tolerance": "0 for peanut closure and 1e-10 in the locality check",
     "clean_circle_count_tolerance": "positive returned intervals, no lifetime cutoff",
-    "peanut_endpoint_replay_tolerance": 5e-8
+    "peanut_endpoint_replay_tolerance": 5e-08
   },
   "rank_table": {
-    "sizes": [128, 512, 4096, 32768],
-    "samples_per_profile": [20000, 20000, 20000, 5000],
-    "profiles": ["uniform", "strong_cosine", "localized_trough"],
+    "sizes": [
+      128,
+      512,
+      4096,
+      32768
+    ],
+    "samples_per_profile": [
+      20000,
+      20000,
+      20000,
+      5000
+    ],
+    "profiles": [
+      "uniform",
+      "strong_cosine",
+      "localized_trough"
+    ],
     "seed_formula": "202611160000000 + 100000*n + repetition (zero-based)",
     "pairing": "one uniform point set and phase shared across profiles; both graph rules share each sample"
   },
-  "uniform_rank_comparison": {
-    "samples_per_size": 100000,
-    "sizes": [128, 512, 4096, 32768],
-    "seed_formula": "202611150000+n",
-    "generator": "std::mt19937_64, open-interval uniforms converted to exponential spacings"
-  },
   "clean_circle": {
     "n": 512,
-    "seeds_inclusive": [20310101, 20310120],
+    "seeds_inclusive": [
+      20310101,
+      20310120
+    ],
     "phase_seed_offset": 50000017,
-    "profiles": ["uniform", "strong_cosine", "localized_trough"],
-    "events": ["first connected prefix", "prefix before cycle closure", "cycle closure", "smallest connecting k for both kNN rules"]
+    "profiles": [
+      "uniform",
+      "strong_cosine",
+      "localized_trough"
+    ],
+    "events": [
+      "first connected prefix",
+      "prefix before cycle closure",
+      "cycle closure",
+      "smallest connecting k for both kNN rules"
+    ]
   },
   "radial_noise": {
     "n": 512,
-    "seeds_inclusive": [20320301, 20320700],
-    "amplitudes": [0, 0.0005, 0.002, 0.01],
-    "distribution": {"family": "uniform", "interval": [-1, 1]},
+    "seeds_inclusive": [
+      20320301,
+      20320700
+    ],
+    "amplitudes": [
+      0,
+      0.0005,
+      0.002,
+      0.01
+    ],
+    "distribution": {
+      "family": "uniform",
+      "interval": [
+        -1,
+        1
+      ]
+    },
     "uniform_draw_seed_offset": 70000003,
     "displacement": "delta times the draw in the outward unit normal direction",
-    "cutoffs_of_noise_free_reference_lifetime": [0.25, 0.5],
+    "cutoffs_of_noise_free_reference_lifetime": [
+      0.25,
+      0.5
+    ],
     "pairing": "same clean cloud and noise draws across amplitudes, and the same observed cloud for both rules at each amplitude"
   },
   "locality": {
     "n": 512,
     "point_sets_per_curve": 20,
-    "curves": ["circle control", "2:1 ellipse", "a=0.4 peanut"],
+    "curves": [
+      "circle control",
+      "2:1 ellipse",
+      "a=0.4 peanut"
+    ],
     "seeds_inclusive": {
-      "ellipse": [20350101, 20350120],
-      "peanut": [20350201, 20350220],
-      "circle control": [20350301, 20350320]
+      "ellipse": [
+        20350101,
+        20350120
+      ],
+      "peanut": [
+        20350201,
+        20350220
+      ],
+      "circle control": [
+        20350301,
+        20350320
+      ]
     },
-    "locality_grid_sizes": [4000, 8000],
+    "locality_grid_sizes": [
+      4000,
+      8000
+    ],
     "thresholds_are_estimates": true
   },
   "peanut_detection": {
     "n": 512,
-    "seeds_inclusive": [20361021, 20361040],
-    "shape_parameters": [0, 0.4, 0.6, 0.8, 0.9],
+    "seeds_inclusive": [
+      20361021,
+      20361040
+    ],
+    "shape_parameters": [
+      0,
+      0.4,
+      0.6,
+      0.8,
+      0.9
+    ],
     "arc_grid_points": 400001,
     "search": "all connected prefixes in increasing order until the first nonempty H1 diagram",
     "pairing": "same seed and arc coordinates for all five shapes"
   },
   "radius_enlargement": {
-    "sizes": [128, 512, 4096, 32768],
-    "factors": [1.25, 1.5, 2.0],
+    "sizes": [
+      128,
+      512,
+      4096,
+      32768
+    ],
+    "factors": [
+      1.25,
+      1.5,
+      2.0
+    ],
     "circle_samples_per_size": 100000,
-    "large_circle_alpha_2_sizes": [4096, 32768],
+    "large_circle_alpha_2_sizes": [
+      4096,
+      32768
+    ],
     "large_circle_alpha_2_samples": 1000000,
     "ellipse_and_peanut_samples_per_size": 1000000,
     "ellipse_and_peanut_total_samples": 8000000,
@@ -75,7 +149,10 @@
   },
   "interpolation": {
     "arc_grid_points": 400001,
-    "reference_grid_points": [1600001, 3200001],
+    "reference_grid_points": [
+      1600001,
+      3200001
+    ],
     "probe_points_per_curve": 200001,
     "point_sets_per_curve": 1000,
     "candidate_gaps_per_set": 8,

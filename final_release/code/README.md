@@ -6,7 +6,6 @@ Run these commands from the release root after installing the pinned dependencie
 
 ```sh
 python3 tools/verify_release.py
-python3 code/check_tied_ranks.py
 python3 code/verify_intrinsic_circle.py
 python3 code/polygon_certificate.py
 python3 code/verify_small_examples.py --report /tmp/geodesic-small-examples.json
@@ -18,7 +17,7 @@ python3 code/smooth_curve_enlargement.py --verify
 PYTHONPATH=code python3 -c 'from radial_noise_knn import evaluate; print(*evaluate(20320301), sep="\n")'
 ```
 
-The first command checks the release hashes and saved evidence. The tied-rank check also evaluates the symmetric miss approximation at 512 and one billion points, as reported after Theorem 4. The small-example check includes the rational interval certificate for the eight-point shortcut in Remark 2. In the complete manuscript package, `python3 tools/verify_paper.py` also compares the manuscript and Overleaf files with the release.
+The first command checks the release hashes and saved evidence. The small-example check includes the rational interval certificate for the eight-point shortcut in Remark 2. In the complete manuscript package, `python3 tools/verify_paper.py` also compares the manuscript and Overleaf files with the release.
 
 `clean_circle.py --all` replays all 60 point sets. Remove `--closure-only` to replay the first non-empty prefix search for a peanut case. Use `--all` to replay all 300 method and sample combinations. The radial-noise command prints all eight graph records for one seed in the column order of the saved CSV. Both graph rules use the same noisy point set for each amplitude, and the seed reproduces the uniform draws on [−1, 1] used at every amplitude. [Saved radial-noise records](../results/radial_noise_knn.csv).
 
@@ -28,8 +27,6 @@ The million-sample circle runs at n = 4,096 and 32,768 replay the batch counts e
 
 ```sh
 python3 code/rank_table_sweep.py
-g++ -O3 -std=c++17 code/uniform_rank_sweep.cpp -o /tmp/targeted-rank-sweep
-python3 code/uniform_rank_check.py
 python3 code/radial_noise_knn.py --output results/radial_noise_knn.csv --workers 4
 python3 code/noise_winding_check.py
 python3 code/check_noncircular_locality.py

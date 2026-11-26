@@ -10,6 +10,7 @@ import importlib.util
 import json
 import math
 import re
+from statistics import median
 import subprocess
 import sys
 import hashlib
@@ -42,10 +43,15 @@ def main(paper):
     refs = re.findall(r'\\(?:ref|eqref)\{([^}]+)\}', text)
     citations = {c.strip() for block in re.findall(
         r'\\cite\w*\*?(?:\[[^\]]*\])*\{([^}]+)\}', text) for c in block.split(',')}
-    bibliography = set(re.findall(r'\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}', text))
+    bibliography = re.findall(r'\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}', text)
     check(len(labels) == len(set(labels)), 'duplicate labels')
     check(not (set(refs) - set(labels)), 'unresolved cross-references')
-    check(citations == bibliography, 'unresolved or unused bibliography entries')
+    check(len(bibliography) == len(set(bibliography)), 'duplicate bibliography keys')
+    check(citations == set(bibliography), 'unresolved or unused bibliography entries')
+    citation_number = {key: i for i, key in enumerate(bibliography, start=1)}
+    for block in re.findall(r'\\citep\*?(?:\[[^\]]*\])*\{([^}]+)\}', text):
+        numbers = [citation_number[key.strip()] for key in block.split(',')]
+        check(numbers == sorted(numbers), f'numeric citation order: {block}')
     check(all((ROOT / x).exists() for x in re.findall(r'\\path\{([^}]+)\}', text)),
           'manuscript release path missing')
     check(r'\title{Loop detection in graph-geodesic persistent homology}' in text, 'title')
@@ -65,16 +71,18 @@ def main(paper):
     spec = importlib.util.spec_from_file_location('detection_sweep', ROOT / 'code/rank_table_sweep.py')
     sweep = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(sweep)
+    import radial_noise_knn as noise_study
+
+    config = json.loads((ROOT / 'code/config.json').read_text())
     summary = {(int(r['n']),r['profile'],r['method']):r for r in rows(DATA/'summary.csv')}
     check(len(summary) == 24, 'rank summary inventory')
     table = section(text,r'\label{tab:rank-scaling}',r'\end{table}')
-    names = {'uniform':'Uniform','strong_cosine':'Cosine','localized_trough':'Trough'}
     method_names = {'OR_kNN':r'Symmetric $k$NN','mutual_kNN':r'Mutual $k$NN'}
     displayed = {}
     for line in table.splitlines():
         cells = [v.strip() for v in line.rstrip('\\ ').split('&')]
-        if len(cells)==6 and cells[0] in names.values():
-            displayed[(cells[0],cells[1])] = cells[2:]
+        if len(cells)==5 and cells[0] in method_names.values():
+            displayed[cells[0]] = cells[1:]
     for n, reps in sweep.SETTINGS:
         with np.load(DATA / f'samples_{n}.npz',allow_pickle=False) as data:
             ranks, gaps = data['ranks'], data['largest_gap']
@@ -97,9 +105,11 @@ def main(paper):
                 check(100*(hi-lo)/2 < (.7 if reps==20000 else 1.4), 'reported interval widths')
                 check(all(int(rec[f'plus{j}'])==int(np.count_nonzero(extra<=j)) for j in (1,2,3)),
                       'extra-rank counts')
-                cell=displayed[names[profile],method_names[method]][[128,512,4096,32768].index(n)]
+                if profile != "uniform":
+                    continue
+                cell=displayed[method_names[method]][[128,512,4096,32768].index(n)]
                 check(cell==f'{100*count/reps:.1f}', f'Table 1 entry {n}/{profile}/{method}')
-    check(len(displayed)==6, 'Table 1 rows')
+    check(len(displayed)==2, 'Table 1 rows')
     event_records=rows(ROOT/'results/clean_closure/events.csv')
     check(len(event_records)==660,'clean-circle event records')
     for method in ('R2_global','OR_kNN','mutual_kNN'):
@@ -109,6 +119,12 @@ def main(paper):
                   'clean-circle sample inventory')
             check(all(r['connected']=='True' and int(float(r['h1_bars']))==(1 if event=='completion' else 0) for r in group),
                   'clean-circle event outcomes')
+    for method, expected in (('OR_kNN', 22), ('mutual_kNN', 20)):
+        group = [r for r in event_records
+                 if r['method'] == method and r['event'] == 'smallest_connected_k']
+        check(len(group) == 60 and all(r['connected'] == 'True' for r in group)
+              and sum(float(r['h1_bars']) > 0 for r in group) == expected,
+              f'Appendix F first connected integer k: {method}')
     clouds=rows(ROOT/'results/clean_closure/clouds.csv')
     check(len(clouds)==60,'clean-circle cloud inventory')
     for cloud in clouds:
@@ -128,7 +144,7 @@ def main(paper):
               f'100,000-sample mutual discrepancy at {n}')
         check(abs(difference-float(record['difference_percentage_points']))<1e-11,
               '100,000-sample discrepancy record')
-    check('and about $0.015$ percentage' in text,'reported largest-sample discrepancy')
+    check('and $0.015$ percentage' in text,'reported largest-sample discrepancy')
     events=rows(ROOT/'results/clean_closure/event_table.csv')
     for method in ('R2_global','OR_kNN','mutual_kNN'):
         for event in ('first_connected','pre_completion','completion'):
@@ -140,6 +156,33 @@ def main(paper):
     audit=sweep.audit_local(29100000,24)
     check(audit['samples']==24 and audit['full_connectivity_checks']==48,'local/full rank replay')
 
+    clean_protocol = section(text, 'For the uniform samples we also counted', r'\FloatBarrier')
+    consecutive = config['clean_circle']['n'] - 1
+    nonconsecutive = []
+    for method in ('OR_kNN', 'mutual_kNN', 'R2_global'):
+        budgets = [int(r['M']) for r in event_records if r['method'] == method
+                   and r['profile'] == 'uniform' and r['event'] == 'first_connected']
+        check(len(budgets) == 20, f'Appendix F uniform prefix counts: {method}')
+        share = median((budget - consecutive) / budget for budget in budgets)
+        nonconsecutive.append(f'{100 * share:.1f}')
+    check(re.findall(r'\$([0-9.]+)\\%\$', clean_protocol) == nonconsecutive,
+          'Appendix F median non-consecutive edge shares')
+
+    noise_protocol = config['radial_noise']
+    noise_text = section(text, r'\label{sec:radial-noise}', r'\section{')
+    noise_bounds = re.search(r'independent uniform draws on\s+\$\[(-?\d+),\s*(-?\d+)\]\$', noise_text)
+    check(noise_bounds and noise_protocol['distribution'] ==
+          {'family': 'uniform', 'interval': list(map(int, noise_bounds.groups()))},
+          'radial-noise distribution in the manuscript and configuration')
+    check(noise_protocol['n'] == noise_study.N
+          and noise_protocol['amplitudes'] == list(noise_study.AMPLITUDES)
+          and noise_protocol['seeds_inclusive'] == [noise_study.SEEDS.start, noise_study.SEEDS.stop - 1]
+          and noise_protocol['uniform_draw_seed_offset'] == noise_study.graph.NOISE_SEED_OFFSET
+          and noise_protocol['cutoffs_of_noise_free_reference_lifetime'] == [.25, .5],
+          'radial-noise reproduction protocol')
+    median_limit = re.search(r'median\s+longest interval is less than \$([0-9.]+)\\%\$', noise_text)
+    check(median_limit, 'reported radial-noise median lifetime bound')
+    noise_seeds = set(noise_study.SEEDS)
     noise=rows(ROOT/'results/radial_noise_knn.csv')
     table=section(text,r'\label{tab:radial-noise}',r'\end{table}')
     observed={}
@@ -153,6 +196,8 @@ def main(paper):
         check(int(record['empty'])==int(ratio==0) and
               int(record['at_least_quarter'])==int(ratio>=.25) and
               int(record['at_least_half'])==int(ratio>=.5),'radial-noise lifetime flags')
+        check(record['at_least_quarter'] == record['at_least_half'],
+              'Table 2 quarter- and half-lifetime cutoffs agree')
         if float(record['delta'])==0:
             check(int(record['empty'])==1-int(record['all_consecutive']),'clean radial-noise baseline')
     winding=rows(ROOT/'results/radial_noise_winding.csv')
@@ -166,12 +211,18 @@ def main(paper):
               int(r['winding_one_fundamental_cycles'])>0 and
               3<=int(r['shortest_winding_one_cycle_vertices'])<512,'noise winding witness')
     baseline={(r['seed'],r['method']):r for r in noise if float(r['delta'])==0}
-    for delta in (0,.0005,.002,.01):
+    check(set(observed) == set(noise_study.AMPLITUDES), 'Table 2 noise amplitudes')
+    for delta in noise_study.AMPLITUDES:
         actual=[]
         for method in sweep.METHODS:
             group=[r for r in noise if float(r['delta'])==delta and r['method']==method]
-            check(len(group)==400 and len({r['seed'] for r in group})==400,'radial pairing')
+            check(len(group) == len(noise_seeds) and {int(r['seed']) for r in group} == noise_seeds,
+                  'radial pairing')
             actual += [sum(int(r[k]) for r in group) for k in ('empty','at_least_half','all_consecutive')]
+            if delta == .002:
+                ratio = median(float(r['longest_ratio']) for r in group)
+                check(100 * ratio < float(median_limit[1]),
+                      f'radial-noise median lifetime ratio: {method}')
             if delta==.01:
                 changed=sum(int(r['at_least_half']) and not int(baseline[r['seed'],method]['at_least_half']) for r in group)
                 check(changed==({'OR_kNN':80,'mutual_kNN':86}[method]),'paired noise transitions')
@@ -242,6 +293,24 @@ def main(paper):
     circle={(int(r['n']),round(1+float(r['epsilon']),2)):r for r in rows(ROOT/'results/radius_enlargement/summary.csv')}
     extra={(int(r['n']),float(r['alpha'])):r for r in rows(ROOT/'results/radius_enlargement_extra/summary.csv')}
     curves={(int(r['n']),float(r['alpha']),r['curve']):r for r in rows(ROOT/'results/smooth_curve_enlargement/summary.csv')}
+    radius_protocol = config['radius_enlargement']
+    check(set(extra) == {(n, 2.) for n in radius_protocol['large_circle_alpha_2_sizes']}
+          and all(int(r['samples']) == radius_protocol['large_circle_alpha_2_samples']
+                  for r in extra.values()), 'Table 3 larger circle cohorts')
+    samples_per_curve_and_size = {(n, curve, int(r['samples'])) for (n, _, curve), r in curves.items()}
+    check(samples_per_curve_and_size == {
+        (n, curve, radius_protocol['ellipse_and_peanut_samples_per_size'])
+        for n in radius_protocol['sizes'] for curve in ('ellipse', 'peanut')
+    }, 'Table 3 smooth-curve cohorts')
+    total_samples = sum(samples for _, _, samples in samples_per_curve_and_size)
+    smooth_protocol = json.loads((ROOT / 'results/smooth_curve_enlargement/config.json').read_text())
+    check(total_samples == radius_protocol['ellipse_and_peanut_total_samples']
+          == smooth_protocol['new_clouds']
+          and 2 * smooth_protocol['new_clouds_per_curve'] == total_samples,
+          'smooth-curve cohort totals')
+    appendix_e = section(text, r'\label{app:radius-enlargement}', r'\section{')
+    check(f'${total_samples:,}$ point sets in all'.replace(',', '{,}') in appendix_e,
+          'Appendix E smooth-curve cohort total')
     table=section(text,r'\label{tab:smooth-enlargement}',r'\end{table}').replace('{,}', ',')
     observed={}
     for line in table.splitlines():
@@ -278,11 +347,16 @@ def main(paper):
           for r in circle_control for m in ('radius','OR','mutual')),'circle support control')
 
     spots=rows(ROOT/'results/smooth_curve_enlargement/spot_checks.csv')
-    check(len(spots)==13050 and all(r['agrees']=='True' and r['connected']=='True' for r in spots),
+    check(len(spots)==13050 and all(r['agrees']=='True' and r['connected']=='True'
+          and r['r_conn_is_second_chord'] == 'True' for r in spots),
           'smooth-curve diagram spot checks')
     exception=rows(ROOT/'results/smooth_curve_checks/exceptional_diagrams.csv')
     check(len(exception)==123 and all(r['diagram_miss']=='True' and r['table_proxy_agrees']=='True' for r in exception),
           'exceptional smooth-curve diagrams')
+    spot_keys = {(r['curve'], int(r['n']), int(r['cloud'])) for r in spots}
+    exceptional_keys = {(r['curve'], int(r['n']), int(r['cloud'])) for r in exception}
+    check(spot_keys.isdisjoint(exceptional_keys) and '$13{,}050$ full-diagram spot checks' in appendix_e,
+          'Appendix E separate full-diagram spot checks')
     for curve,expected in (('ellipse',2),('peanut',39)):
         group=[r for r in exception if r['curve']==curve]
         check(len({r['cloud'] for r in group})==expected and len(group)==3*expected,'exception sample counts')
@@ -300,8 +374,21 @@ def main(paper):
         check(metadata['verification_script_sha256']==expected and
               re.fullmatch(r'[0-9a-f]{64}',metadata['generation_script_sha256']) is not None,
               f'{result} script provenance')
-    check(abs((4/9)*math.exp(-4/9)-.28496906152442425)<1e-15,'symmetric lower constant')
-    check(abs(.5*math.exp(-.5)-.3032653298563167)<1e-15,'mutual lower constant')
+    for ratio, lower, upper in [(4/9, .68503, .68514), (.5, .72134, .72136)]:
+        period = math.log(1/ratio)
+        frequency = 2*math.pi/period
+        mean = (1-ratio)/period
+        first = math.sqrt(math.pi*frequency/math.sinh(math.pi*frequency))
+        radius = 2*mean*first/(1-math.sqrt(2)*math.exp(-math.pi*frequency/2))
+        check(lower < mean-radius and mean+radius < upper, 'miss probability envelope')
+    examples = json.loads((ROOT / 'results/small_examples_verification.json').read_text())
+    checker = ROOT / 'code/verify_small_examples.py'
+    check(examples['checker_sha256'] == hashlib.sha256(checker.read_bytes()).hexdigest(),
+          'small-example checker provenance')
+    shortcut = examples['dense_shortcut']
+    check(shortcut['gap'] == '282/1000' and shortcut['betti_one'] == 2 and
+          shortcut['tetrahedra'] == [[1, 2, 7, 8], [5, 6, 7, 8], [3, 4, 5, 6]] and
+          shortcut['extra_edges'] == [[1, 4], [2, 3]], 'eight-point shortcut certificate')
     pdf=paper/'combined.pdf'
     manuscript_record=json.loads((ROOT/'manuscript_record.json').read_text())
     check(hashlib.sha256((paper/'combined.tex').read_bytes()).hexdigest()==manuscript_record['source_sha256'],
@@ -312,9 +399,9 @@ def main(paper):
           'manuscript figure identity')
     pdfinfo=subprocess.check_output(['pdfinfo',str(pdf)],text=True)
     pdftext=subprocess.check_output(['pdftotext',str(pdf),'-'],text=True)
-    check(re.search(r'^Pages:\s+\d+',pdfinfo,re.M) is not None,'PDF page count')
+    check(int(re.search(r'^Pages:\s+(\d+)',pdfinfo,re.M)[1]) == manuscript_record['pages'],'PDF page count')
     check('Loop detection in graph-geodesic persistent homology' in pdftext and
-          '0.2850' in pdftext and '0.3033' in pdftext,'PDF identity')
+          '0.68503' in pdftext and '0.72136' in pdftext,'PDF identity')
     package=ROOT.parent
     overleaf=package/'focused-overleaf'
     check((overleaf/'main.tex').read_bytes()==(paper/'combined.tex').read_bytes(),'Overleaf source synchronization')
@@ -331,7 +418,7 @@ def main(paper):
     check(set(manifest['sha256'])==actual,'release manifest inventory')
     for name,want in manifest['sha256'].items():
         check(hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==want,f'release checksum: {name}')
-    print('PASS: references, figure and appendix inventory, 24 Table 1 cells, 12 seed replays,')
+    print('PASS: references, figure and appendix inventory, 8 Table 1 cells, 12 seed replays,')
     print('      24 local/full-rank rechecks, clean-circle and 100,000-sample checks,')
     print('      radial-noise, locality, peanut and radius checks, PDF identity,')
     print('      Overleaf synchronization and the complete release manifest.')

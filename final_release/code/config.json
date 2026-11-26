@@ -2,10 +2,10 @@
   "python": "3.12",
   "numeric_conventions": {
     "edge_costs": "float64 Euclidean chord lengths",
-    "shortest_paths": "SciPy Dijkstra in float64",
-    "persistence": "Ripser.py, F2, float32 endpoints, retain all intervals with death > birth",
+    "shortest_paths": "SciPy Dijkstra in float64. Some checks use Floyd-Warshall or SciPy's automatic selection.",
+    "persistence": "Ripser.py over F2 with float32 endpoints. Retain every returned interval with death > birth.",
     "rips_threshold": "distance <= t",
-    "arc_support_tolerance": "0 for peanut closure; 1e-10 in the locality check",
+    "arc_support_tolerance": "0 for peanut closure and 1e-10 in the locality check",
     "clean_circle_count_tolerance": "positive returned intervals, no lifetime cutoff",
     "peanut_endpoint_replay_tolerance": 5e-8
   },
@@ -33,9 +33,11 @@
     "n": 512,
     "seeds_inclusive": [20320301, 20320700],
     "amplitudes": [0, 0.0005, 0.002, 0.01],
-    "normal_draw_seed_offset": 70000003,
+    "distribution": {"family": "uniform", "interval": [-1, 1]},
+    "uniform_draw_seed_offset": 70000003,
+    "displacement": "delta times the draw in the outward unit normal direction",
     "cutoffs_of_noise_free_reference_lifetime": [0.25, 0.5],
-    "pairing": "same point set and normal draws for all amplitudes"
+    "pairing": "same clean cloud and noise draws across amplitudes, and the same observed cloud for both rules at each amplitude"
   },
   "locality": {
     "n": 512,
@@ -61,13 +63,15 @@
     "sizes": [128, 512, 4096, 32768],
     "factors": [1.25, 1.5, 2.0],
     "circle_samples_per_size": 100000,
+    "large_circle_alpha_2_sizes": [4096, 32768],
     "large_circle_alpha_2_samples": 1000000,
     "ellipse_and_peanut_samples_per_size": 1000000,
+    "ellipse_and_peanut_total_samples": 8000000,
     "circle_seed": 20261024,
     "large_circle_seed": 20261104,
     "curve_master_seed": 20261027,
     "arc_grid_points": 400001,
-    "curve_results": "consecutive-chord proxy; full-diagram spot checks are saved separately"
+    "curve_results": "Independent cohorts for each curve and size. The three factors reuse each cohort. Table 3 uses consecutive-chord proxies, with full-diagram checks in separate records."
   },
   "interpolation": {
     "arc_grid_points": 400001,

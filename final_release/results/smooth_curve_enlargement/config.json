@@ -48,8 +48,9 @@
     },
     "method": "r_conn from the Euclidean minimum spanning tree; closed radius graph at alpha*r_conn; chord-weighted Dijkstra; unrestricted Ripser over F2; every bar with death > birth kept"
   },
-  "new_clouds": 4000000,
+  "new_clouds": 8000000,
+  "new_clouds_per_curve": 4000000,
   "discarded_clouds": 0,
   "script_sha256": "832c4779b4d7b66e2798d866cd079a354c57434148df0e5744721f1b49f503ed",
-  "verification_script_sha256": "d5a78cac3583e9e58408a708d616eb4e3d44473cff5d6ccabbc8d178d32a7509"
+  "verification_script_sha256": "b5e1f080fb63bb0d8b566561f4786b0d68b5d8a154a0d57b8e3a5f4213e2da4f"
 }

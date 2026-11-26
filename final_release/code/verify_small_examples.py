@@ -83,24 +83,61 @@ def check_ties():
                 scope='Finite corroborating cases; general polygon/rectangle arguments are in Appendix B.')
 
 
+def shortcut_distances(arc):
+    from verify_natural_instance import Interval, PI, trig
+    invpi=Interval(1/PI.high,1/PI.low)
+    chord=[[Interval(0) for _ in arc] for _ in arc]
+    for i,j in itertools.combinations(range(len(arc)),2):
+        gap=abs(arc[i]-arc[j]);gap=min(gap,1-gap)
+        chord[i][j]=chord[j][i]=trig(180*gap)*invpi
+    distances=[[Interval(0) if i==j else None for j in arc] for i in arc]
+    for i,j in ring(len(arc))+[(0,3)]:distances[i][j]=distances[j][i]=chord[i][j]
+    for k in range(len(arc)):
+        for i in range(len(arc)):
+            for j in range(len(arc)):
+                if distances[i][k] is None or distances[k][j] is None:continue
+                candidate=distances[i][k]+distances[k][j];old=distances[i][j]
+                distances[i][j]=candidate if old is None else Interval(min(old.low,candidate.low),min(old.high,candidate.high))
+    return chord, distances
+
+
+def dense_shortcut_certificate():
+    """Certify the closed Rips complex at the exact shortcut cost."""
+    from fractions import Fraction as Q
+    arc = [Q(k, 1000) for k in (9, 109, 358, 458, 498, 528, 810, 811)]
+    assert max((b-a) % 1 for a,b in zip(arc,arc[1:]+arc[:1])) == Q(282,1000)
+    chord, distances = shortcut_distances(arc)
+    threshold = chord[0][3]
+    assert Q('0.31423') < threshold.low <= threshold.high < Q('0.31424')
+    edges = {(1,4)}  # Direct edge attains the Euclidean lower bound identically.
+    for i,j in itertools.combinations(range(8),2):
+        if (i,j) == (0,3):
+            continue
+        d = distances[i][j]
+        if d.high < threshold.low:
+            edges.add((i+1,j+1))
+        else:
+            assert d.low > threshold.high
+    cliques = [(1,2,7,8),(5,6,7,8),(3,4,5,6)]
+    expected = {(1,4),(2,3)}
+    for simplex in cliques:
+        expected.update(itertools.combinations(simplex,2))
+    assert edges == expected
+    assert all(any(set(t) <= set(c) for c in cliques)
+               for t in itertools.combinations(range(1,9),3)
+               if set(itertools.combinations(t,2)) <= edges)
+    for i,j in [(1,3),(4,2),(1,5),(4,7)]:
+        assert distances[i-1][j-1].low > threshold.high
+    return dict(gap='282/1000', shortcut_cost=threshold.bounded(),
+                tetrahedra=cliques, extra_edges=[[1,4],[2,3]], betti_one=2)
+
+
 def shortcut_decimal_certificate():
     """Rational sine and min-plus bounds for Remark 2, not float comparisons."""
     from fractions import Fraction as Q
     from verify_natural_instance import Interval, PI, trig
     arc=list(map(Q,['0','0.051','0.442','0.491','0.543','0.953']))
-    invpi=Interval(1/PI.high,1/PI.low)
-    chord=[[Interval(0) for _ in arc] for _ in arc]
-    for i,j in itertools.combinations(range(6),2):
-        gap=abs(arc[i]-arc[j]);gap=min(gap,1-gap)
-        chord[i][j]=chord[j][i]=trig(180*gap)*invpi
-    distances=[[Interval(0) if i==j else None for j in arc] for i in arc]
-    for i,j in ring(6)+[(0,3)]:distances[i][j]=distances[j][i]=chord[i][j]
-    for k in range(6):
-        for i in range(6):
-            for j in range(6):
-                if distances[i][k] is None or distances[k][j] is None:continue
-                candidate=distances[i][k]+distances[k][j];old=distances[i][j]
-                distances[i][j]=candidate if old is None else Interval(min(old.low,candidate.low),min(old.high,candidate.high))
+    chord, distances = shortcut_distances(arc)
     bounds={(0,2):Q('0.35060'),(0,4):Q('0.35249'),(3,1):Q('0.34862'),(3,5):Q('0.35742')}
     margins=[distances[i][j].low-bound for (i,j),bound in bounds.items()]
     assert min(margins)>Q('0.00001')
@@ -118,6 +155,7 @@ def build_report():
                 independent_reduction_positive_tolerance=POSITIVE_TOL,
                 hexagon=check_hexagon(),unsupported_shortcut=witness,ties=check_ties(),
                 shortcut_decimal_certificate=shortcut_decimal_certificate(),
+                dense_shortcut=dense_shortcut_certificate(),
                 natural_ellipse=natural_report(),
                 checker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest())
 

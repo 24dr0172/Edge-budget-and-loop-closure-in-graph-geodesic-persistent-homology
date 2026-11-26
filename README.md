@@ -1,23 +1,21 @@
 # Loop detection in graph-geodesic persistent homology
 
-Code and numerical evidence for the paper by Shivam Singh, Annesha Sen and S. P. Tiwari. The current release is in [final_release/](final_release/).
+Code and numerical evidence for the 39-page manuscript by Shivam Singh, Annesha Sen and S. P. Tiwari. The [v1.0.1 release](https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology/releases/tag/v1.0.1) accompanies this version.
 
-- [Code and numerical protocols](final_release/code/) contain the generators, verification scripts, settings and pinned Python dependencies.
+- [Release guide](final_release/README.md) maps the manuscript tables and numerical checks to the saved evidence.
+- [Code and protocols](final_release/code/) contain the generators, verification scripts, experiment settings and pinned Python dependencies.
 - [Results](final_release/results/) contain the saved rank sweeps, diagrams, radial-noise and winding checks, and smooth-curve experiments.
-- [Manuscript figure](final_release/manuscript_figures/) contains the figure used by the paper.
-- [Release guide](final_release/README.md) maps the saved evidence to the paper and gives reproduction commands.
+- [Manuscript record](final_release/manuscript_record.json) identifies the LaTeX source, compiled PDF and figure by SHA-256. The manuscript and Overleaf files are distributed in the companion manuscript package.
 
-The manuscript and Overleaf project are maintained separately and are not included in this repository.
+## Verify the archive
 
-## Verify the release
-
-With Python 3.12, from the repository root:
+Run these commands from the repository root with Python 3.12.
 
 ```sh
-python3 -m venv /path/to/geodesic-env
-. /path/to/geodesic-env/bin/activate
+python3.12 -m venv .geodesic-env
+. .geodesic-env/bin/activate
 python3 -m pip install -r final_release/code/requirements.txt
 python3 final_release/tools/verify_release.py
 ```
 
-The verifier checks the release checksums and saved numerical evidence; it does not check the manuscript or prove the theorems. For full reproduction instructions, see the [code guide](final_release/code/README.md). See also the [citation](CITATION.cff) and [license](LICENSE).
+The verifier checks the release manifest and saved numerical evidence, including selected seed replays. [Reproduction commands](final_release/code/README.md) · [Citation](CITATION.cff) · [License](LICENSE)

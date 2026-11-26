@@ -124,6 +124,44 @@
     },
     "lower_bound_margin": 1.037787368040144e-05
   },
+  "dense_shortcut": {
+    "gap": "282/1000",
+    "shortcut_cost": {
+      "lower": "0.314232977616",
+      "upper": "0.314232977617"
+    },
+    "tetrahedra": [
+      [
+        1,
+        2,
+        7,
+        8
+      ],
+      [
+        5,
+        6,
+        7,
+        8
+      ],
+      [
+        3,
+        4,
+        5,
+        6
+      ]
+    ],
+    "extra_edges": [
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "betti_one": 2
+  },
   "natural_ellipse": {
     "status": "passed",
     "angles_degrees": [
@@ -702,5 +740,5 @@
     "proof_scope": "The paper gives all-field independence and an all-order impossibility argument; F2/F3/F5 calculations and enumeration corroborate them.",
     "checker_sha256": "cf929d8da7f4bb8e98e1df46a62f7de2c2a6e86b89d44bdb21d7e8792c86b6c4"
   },
-  "checker_sha256": "c1c26335dc54a93d720872d948e280cebd26db0986c18615c196fe1107d5b2f5"
+  "checker_sha256": "06300853483ddfacb9d15b6189f4c09a3af8ad5ff1894044a4669525df5d911d"
 }

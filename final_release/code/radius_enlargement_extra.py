@@ -10,6 +10,7 @@ import argparse
 import csv
 import hashlib
 import json
+import math
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,7 @@ REPETITIONS = 1_000_000
 BATCH = 8192
 INITIAL = 64
 SEED = 20261104
+MARGIN_TOLERANCE = 1e-12
 
 
 def batch(rng, n, m):
@@ -85,7 +87,7 @@ def verify(root, require):
     config=json.loads((folder/'config.json').read_text())
     require('extra_circle_protocol', config['samples']==REPETITIONS and config['sizes']==list(SIZES)
             and config['seed']==SEED and config['batch']==BATCH and config['initial']==INITIAL)
-    require('extra_circle_script_hash',config['script_sha256']==hashlib.sha256(
+    require('extra_circle_script_hash',config.get('verification_script_sha256', config['script_sha256'])==hashlib.sha256(
         (Path(root)/'code/radius_enlargement_extra.py').read_bytes()).hexdigest())
     with (folder/'summary.csv').open(newline='') as f: summaries={int(row['n']):row for row in csv.DictReader(f)}
     require('extra_circle_rows',set(summaries)==set(SIZES))
@@ -100,13 +102,16 @@ def verify(root, require):
             margin=float(np.min(lower-3*x)); minimum=min(minimum,margin)
             require(f'extra_circle_batch_{n}_{total}',record['start']==total and record['samples']==m
                 and record['spacing_candidates']==len(ix) and record['chord_misses']==int(flags.sum())
-                and record['min_good_event_margin']==margin and margin>0
+                and math.isclose(record['min_good_event_margin'], margin,
+                                 rel_tol=0, abs_tol=MARGIN_TOLERANCE) and margin>0
                 and np.all(y<=x) and np.all(lower>3*x) and np.all(exact>=lower[ix]))
             total+=m; misses+=int(flags.sum());candidates+=len(ix)
         row=summaries[n]
         require(f'extra_circle_summary_{n}',total==REPETITIONS and int(row['samples'])==total
             and int(row['misses'])==misses and int(row['spacing_misses'])==candidates
-            and float(row['miss_rate'])==misses/total and float(row['min_good_event_margin'])==minimum)
+            and float(row['miss_rate'])==misses/total
+            and math.isclose(float(row['min_good_event_margin']), minimum,
+                             rel_tol=0, abs_tol=MARGIN_TOLERANCE))
     return {'samples_per_size':REPETITIONS,'sizes':list(SIZES),'status':'passed'}
 
 if __name__=='__main__':

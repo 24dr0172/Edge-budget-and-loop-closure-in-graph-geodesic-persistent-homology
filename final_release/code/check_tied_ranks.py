@@ -49,3 +49,6 @@ if __name__ == '__main__':
     sizes = (128, 512, 4096, 32768)
     for rule, rates in tie_approximations(sizes).items():
         print(rule, ', '.join(f'n={n}: {rate:.1%}' for n, rate in zip(sizes, rates)))
+    symmetric_ties = tie_approximations((512, 10**9))['symmetric']
+    print(f'Symmetric miss approximation: n=512: {1-symmetric_ties[0]:.4f}, '
+          f'n=10^9: {1-symmetric_ties[1]:.4f}')

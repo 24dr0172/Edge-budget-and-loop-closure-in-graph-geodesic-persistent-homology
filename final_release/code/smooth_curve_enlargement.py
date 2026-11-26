@@ -335,7 +335,8 @@ def generate(root=ROOT, workers=4):
                                    added_alpha2_misses={str(k): v for k, v in SPOT_EXTRA_MISSES.items()},
                                    miss_search_clouds={str(k): v for k, v in SPOT_EXTRA_SCAN.items()},
                                    method='r_conn from the Euclidean minimum spanning tree; closed radius graph at alpha*r_conn; chord-weighted Dijkstra; unrestricted Ripser over F2; every bar with death > birth kept'),
-                  new_clouds=len(SIZES)*REPETITIONS, discarded_clouds=0,
+                  new_clouds=len(CURVES)*len(SIZES)*REPETITIONS,
+                  new_clouds_per_curve=len(SIZES)*REPETITIONS, discarded_clouds=0,
                   script_sha256=sha(__file__))
     (folder/'config.json').write_text(json.dumps(config, indent=2)+'\n')
     return summary
@@ -373,10 +374,18 @@ def verify(root, require, replay_batches=2):
     root = Path(root)
     folder = root/FOLDER
     config = json.loads((folder/'config.json').read_text())
+    clouds_per_curve = len(SIZES)*REPETITIONS
+    total_clouds = len(CURVES)*clouds_per_curve
+    if 'new_clouds_per_curve' in config:
+        cloud_counts_match = (config['new_clouds_per_curve'] == clouds_per_curve
+                              and config['new_clouds'] == total_clouds)
+    else:
+        # Older protocols stored the per-curve count under new_clouds.
+        cloud_counts_match = config['new_clouds'] == clouds_per_curve
     require('smooth_enlargement_protocol', config['sizes'] == list(SIZES) and config['alphas'] == list(ALPHAS)
             and config['samples_per_size'] == REPETITIONS and config['master_seed'] == MASTER_SEED
             and config.get('curve_streams') == CURVE_STREAMS
-            and config['new_clouds'] == len(SIZES)*REPETITIONS and config['discarded_clouds'] == 0)
+            and cloud_counts_match and config['discarded_clouds'] == 0)
     require('smooth_enlargement_script_hash', config.get('verification_script_sha256',config['script_sha256']) == sha(root/'code/smooth_curve_enlargement.py'))
     geometry = json.loads((folder/'curve_constants.json').read_text())
     locality = json.loads((root/'results/noncircular_locality/locality_check_summary.json').read_text())
@@ -432,7 +441,9 @@ def verify(root, require, replay_batches=2):
             clouds = sorted({int(r['cloud']) for r in q})
             require(f'smooth_enlargement_spot_scope_{curve}_{n}', clouds[:SPOT_ALL[n]] == list(range(SPOT_ALL[n])) and
                     len(clouds) == SPOT_ALL[n]+SPOT_EXTRA_MISSES[n] and len(q) == len(clouds)*len(ALPHAS))
-            require(f'smooth_enlargement_spot_agreement_{curve}_{n}', all(r['agrees'] == 'True' and r['connected'] == 'True' for r in q))
+            require(f'smooth_enlargement_spot_agreement_{curve}_{n}',
+                    all(r['agrees'] == 'True' and r['connected'] == 'True'
+                        and r['r_conn_is_second_chord'] == 'True' for r in q))
             counts[f'{curve}_{n}'] = dict(diagrams=len(q), misses=sum(r['chord_miss'] == 'True' for r in q),
                                          r_conn_second_chord=sum(r['r_conn_is_second_chord'] == 'True' for r in q)//len(ALPHAS),
                                          good_event_clouds=sum(r['good_event'] == 'True' for r in q)//len(ALPHAS))
@@ -445,8 +456,10 @@ def verify(root, require, replay_batches=2):
                 record = next(r for r in spots if r['curve'] == curve and int(r['n']) == n and
                               int(r['cloud']) == index and float(r['alpha']) == row['alpha'])
                 require(f"smooth_enlargement_spot_replay_{curve}_{n}_{index}_{row['alpha']:g}",
-                        all(str(row[k]) == record[k] for k in ('chord_miss', 'nonempty', 'h1_bars', 'agrees')))
-    return dict(status='passed', clouds=len(SIZES)*REPETITIONS, curves=list(CURVES), summary_rows=len(rows),
+                        all(str(row[k]) == record[k] for k in
+                            ('chord_miss', 'nonempty', 'h1_bars', 'agrees', 'r_conn_is_second_chord')))
+    return dict(status='passed', clouds=total_clouds, clouds_per_curve=clouds_per_curve,
+                curves=list(CURVES), summary_rows=len(rows),
                 replayed_batches=len(SIZES)*min(replay_batches, 2), spot_checks=counts,
                 inference='Finite-size check of the smooth-curve miss law; intervals are pointwise.')
 

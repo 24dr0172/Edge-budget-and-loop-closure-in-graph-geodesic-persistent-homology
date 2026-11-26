@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: "Please cite the paper when you use this code or data."
 title: "Loop detection in graph-geodesic persistent homology"
 type: software
+version: "1.0.1"
 authors:
   - family-names: Singh
     given-names: Shivam
@@ -9,7 +10,7 @@ authors:
     given-names: Annesha
   - family-names: Tiwari
     given-names: S. P.
-url: "https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology"
+url: "https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology/tree/v1.0.1/final_release"
 repository-code: "https://github.com/24dr0172/Edge-budget-and-loop-closure-in-graph-geodesic-persistent-homology"
 preferred-citation:
   type: unpublished
